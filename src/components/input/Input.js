@@ -3,35 +3,34 @@ import {
 } from '../../utils/Template-engine/templater';
 import {
 	template
-} from './button.tmpl';
+} from './input.tmpl';
 
 import './style.css';
 
-const button = new Templator(template);
+const input = new Templator(template);
 
-// const context = {
-// 	text: 
-// };
-
-class Button {
+class Input {
 	constructor(props) {
 		this.props = props;
 	}
 
 	render() {
 		const {
-			text,
-			className
+			className,
+			placeholder,
+			name,
+			value
 		} = this.props;
 
-		return button.getNode({
-			text,
-			className
+		return input.getNode({
+			className,
+			placeholder,
+			name,
+			value
 		});
 	}
-
 }
 
 export {
-	Button
+	Input
 };

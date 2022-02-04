@@ -23,6 +23,7 @@
     "express": "^4.17.2",
     "parcel": "^2.2.1",
     "postcss-cli": "^9.1.0",
+    "postcss-font-magician": "^3.0.0",
     "postcss-modules": "^4.3.0"
   },
   "dependencies": {
