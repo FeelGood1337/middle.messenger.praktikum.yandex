@@ -4,7 +4,9 @@
   "description": "Самостоятельный проект на курсе Яндекс Практикума",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel index.html -p 3000 --no-cash",
+    "dev": "parcel static/*.html",
+    "build": "parcel build static/index.html"
   },
   "repository": {
     "type": "git",
@@ -17,8 +19,11 @@
   },
   "homepage": "https://github.com/FeelGood1337/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
+    "autoprefixer": "^10.4.2",
     "express": "^4.17.2",
-    "parcel": "^2.2.1"
+    "parcel": "^2.2.1",
+    "postcss-cli": "^9.1.0",
+    "postcss-modules": "^4.3.0"
   },
   "dependencies": {
     "postcss": "^8.4.6"
