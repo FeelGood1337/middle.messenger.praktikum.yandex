@@ -16,6 +16,8 @@ class Templator {
 		let key = null;
 		const regExp = this._TEMPLATE_REGEXP;
 
+		const arrRegKey = [];
+		const arrData = [];
 		
 		while ((key = regExp.exec(tmpl))) {
 			if (key[1]) {
@@ -39,10 +41,16 @@ class Templator {
 					}
 				}
 
-				tmpl = tmpl.replace(new RegExp(key[0], "gi"), data);
+				// tmpl = tmpl.replace(new RegExp(key[0], "gi"), data);
+				// tmpl.replace(new RegExp(key[0], "gi"), data);
+				arrRegKey.push(key[0]);
+				arrData.push(data);
 			}
 			continue;
 		}
+
+		arrData.map((el, i) => tmpl = tmpl.replace(new RegExp(arrRegKey[i], "gi"), el));
+		
 		return tmpl;
 	}
 
