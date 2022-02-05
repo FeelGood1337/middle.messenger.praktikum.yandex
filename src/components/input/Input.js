@@ -17,14 +17,14 @@ class Input {
 	render() {
 		const {
 			className,
-			placeholder,
+			attributes,
 			name,
 			value
 		} = this.props;
 
 		return input.getNode({
 			className,
-			placeholder,
+			attributes,
 			name,
 			value
 		});

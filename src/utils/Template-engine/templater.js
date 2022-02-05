@@ -53,7 +53,7 @@ class Templator {
 			}
 			result = value;
 		}
-		return result || defaultValue
+		return result || defaultValue;
 	}
 
 	getNode(ctx) {

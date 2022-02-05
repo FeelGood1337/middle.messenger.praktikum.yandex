@@ -7,10 +7,10 @@ const btn = new Button({
 	className: 'btn btn__main',
 }).render();
 const input = new Input({
-	placeholder: 'Login',
 	className: 'input__auth',
+	attributes: 'placeholder="Login"',
 	name: 'login',
-	value: '1',
+	value: '',
 }).render();
 
 App.append(btn);
