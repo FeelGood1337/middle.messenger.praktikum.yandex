@@ -4,9 +4,9 @@
   "description": "Самостоятельный проект на курсе Яндекс Практикума",
   "main": "index.js",
   "scripts": {
-    "start": "parcel static/*.html -p 3000 --no-cache",
-    "dev": "parcel static/*.html",
-    "build": "parcel build static/index.html"
+    "start": "parcel static/index.html -p 3000 --no-cache",
+    "dev": "parcel static/index.html",
+    "build": "parcel build static/index.html --no-cache"
   },
   "repository": {
     "type": "git",
