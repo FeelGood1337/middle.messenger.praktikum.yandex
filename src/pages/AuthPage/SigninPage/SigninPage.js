@@ -11,6 +11,7 @@ import {
 import {
 	Button
 } from "../../../components/Button/Button";
+
 import {
 	LinkButton
 } from "../../../components/LinkButton/LinkButton";
@@ -57,7 +58,7 @@ class SigninPage {
 		return new LinkButton({
 			text: 'Регистрация',
 			className: 'auth__btn-link',
-			link: '/sigup'
+			link: 'signup.html'
 		}).render();
 	}
 

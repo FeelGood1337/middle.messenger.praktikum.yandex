@@ -34,8 +34,7 @@
 	margin-bottom: 8px;
 }
 
-.auth__input-login,
-.auth__input-password {
+.auth__input {
 	flex: 1;
 	height: 20px;
 	width: 100%;

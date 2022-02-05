@@ -3,6 +3,7 @@
 
 /* Pages */
 @import url("./pages/AuthPage/SigninPage/signin.css");
+@import url("./pages/AuthPage/SignupPage/signup.css");
 
 body {
 	margin: 0;
