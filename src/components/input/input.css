@@ -1,9 +1,14 @@
 .input {
 	font-family: "Helvetica", Arial, sans-serif;
 	font-size: 18px;
+	font-weight: normal;
 	line-height: 20px;
 	padding: 10px 16px;
 	border: none;
 	border-radius: 4px;
 	background-color: #f4f4f4;
+}
+
+.input::placeholder {
+	color: #A0A0A0;
 }

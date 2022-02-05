@@ -1,5 +1,5 @@
 export const template = `
-	<main class="main">
+	<main class="main signup-main">
 		<div class="signup-wrapper">
 			<div class="auth">
 				<h2 class="auth__title signup__title">{% titleText %}</h2>

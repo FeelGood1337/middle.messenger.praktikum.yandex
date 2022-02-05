@@ -1,7 +1,7 @@
 export const inputsProps = [
 	{
 		name: 'email',
-		className: 'auth__input signup__input-email',
+		className: 'auth__input signup-input signup__input-email',
 		labelText: 'Почта',
 		labelId: 'email',
 		attributes: `
@@ -15,7 +15,7 @@ export const inputsProps = [
 	},
 	{
 		name: 'login',
-		className: 'auth__input signup__input-login',
+		className: 'auth__input signup-input signup__input-login',
 		labelText: 'Логин',
 		labelId: 'login',
 		attributes: `
@@ -29,7 +29,7 @@ export const inputsProps = [
 	},
 	{
 		name: 'first_name',
-		className: 'auth__input signup__input-first_name',
+		className: 'auth__input signup-input signup__input-first_name',
 		labelText: 'Имя',
 		labelId: 'first_name',
 		attributes: `
@@ -43,7 +43,7 @@ export const inputsProps = [
 	},
 	{
 		name: 'second_name',
-		className: 'auth__input signup__input-second_name',
+		className: 'auth__input signup-input signup__input-second_name',
 		labelText: 'Фамилия',
 		labelId: 'second_name',
 		attributes: `
@@ -57,7 +57,7 @@ export const inputsProps = [
 	},
 	{
 		name: 'phone',
-		className: 'auth__input signup__input-phone',
+		className: 'auth__input signup-input signup__input-phone',
 		labelText: 'Телефон',
 		labelId: 'phone',
 		attributes: `
@@ -71,7 +71,7 @@ export const inputsProps = [
 	},
 	{
 		name: 'password',
-		className: 'auth__input signup__input-password',
+		className: 'auth__input signup-input signup__input-password',
 		labelText: 'Пароль',
 		labelId: 'password',
 		attributes: `
@@ -85,7 +85,7 @@ export const inputsProps = [
 	},
 	{
 		name: 'newPassword',
-		className: 'auth__input signup__input-newPassword',
+		className: 'auth__input signup-input signup__input-newPassword',
 		labelText: 'Пароль (ещё раз)',
 		labelId: 'newPassword',
 		attributes: `

@@ -50,7 +50,7 @@ class SignupPage {
 	getButton() {
 		return new Button({
 			text: 'Зарегистрировать',
-			className: 'auth__btn',
+			className: 'signup__btn',
 			isDisabled: true
 		}).render();
 	}

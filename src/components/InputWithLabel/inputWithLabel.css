@@ -7,4 +7,9 @@
 	line-height: 21px;
 	width: 72px;
 	display: inline-block;
+	order: 1;
+}
+
+.signup-input ~ .label {
+	width: 95px;
 }
