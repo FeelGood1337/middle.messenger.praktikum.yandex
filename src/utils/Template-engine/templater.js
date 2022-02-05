@@ -20,9 +20,11 @@ class Templator {
 			if (key[1]) {
 				const tmplValue = key[1].trim();
 				const data = this.get(ctx, tmplValue);
-				console.log(data);
-				// console.log(typeof data);
 
+				if (typeof data === "object") {
+					tmpl = tmpl.replace(new RegExp(key[0], "gi"), data.outerHTML);
+				}
+				
 				if (typeof data === "function") {
 					window[tmplValue] = data;
 					tmpl = tmpl.replace(

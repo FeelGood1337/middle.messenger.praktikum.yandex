@@ -9,10 +9,6 @@ import './button.css';
 
 const button = new Templator(template);
 
-// const context = {
-// 	text: 
-// };
-
 class Button {
 	constructor(props) {
 		this.props = props;

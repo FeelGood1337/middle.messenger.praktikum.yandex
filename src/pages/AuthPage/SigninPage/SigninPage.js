@@ -32,13 +32,15 @@ class SigninPage {
 		return inputsProps.map(({
 				name,
 				className,
-				attributes
+				attributes,
+				value
 			}) =>
 			new Input({
 				name,
 				className,
-				attributes
-			}).render()
+				attributes,
+				value
+			}).render().outerHTML
 		).join('');
 	}
 
@@ -46,9 +48,10 @@ class SigninPage {
 		return new Button({
 			text: 'Войти',
 			className: 'auth__btn',
-			disabled: 'disabled="false"'
+			disabled: "disabled=false"
 		}).render();
 	}
+
 
 	getLinkButton() {
 		return new LinkButton({
@@ -60,8 +63,6 @@ class SigninPage {
 	
 
 	render() {
-		// console.log(this.getButton());
-		// console.log(this.getInputs());
 		return signinPageTmpl.getNode({
 			titleText: 'Вход',
 			inputs: this.getInputs(),
