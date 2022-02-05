@@ -17,12 +17,14 @@ class LinkButton {
 	render() {
 		const {
 			text,
-			className
+			className,
+			link
 		} = this.props;
 
 		return linkButton.getNode({
 			text,
-			className
+			className,
+			link
 		});
 	}
 }

@@ -1,6 +1,7 @@
 import { Button } from './components/Button/Button';
 import { Input } from './components/Input/Input';
 import { LinkButton } from './components/LinkButton/LinkButton';
+import { SigninPage } from './pages/AuthPage/SigninPage/SigninPage';
 
 import './index.css';
 
@@ -19,7 +20,9 @@ const linkButton = new LinkButton({
 	text: 'Регистрация',
 	className: '',
 }).render();
+const signin = new SigninPage().render();
 
 App.append(btn);
 App.append(input);
 App.append(linkButton);
+App.append(signin);

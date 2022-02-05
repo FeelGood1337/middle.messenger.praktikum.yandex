@@ -20,6 +20,8 @@ class Templator {
 			if (key[1]) {
 				const tmplValue = key[1].trim();
 				const data = this.get(ctx, tmplValue);
+				console.log(data);
+				// console.log(typeof data);
 
 				if (typeof data === "function") {
 					window[tmplValue] = data;

@@ -21,12 +21,14 @@ class Button {
 	render() {
 		const {
 			text,
-			className
+			className,
+			disabled
 		} = this.props;
 
 		return button.getNode({
 			text,
-			className
+			className,
+			disabled
 		});
 	}
 
