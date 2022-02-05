@@ -10,7 +10,8 @@ body {
 	padding: 0;
 }
 
-#Chat-app {
+#Chat-app,
+#signup {
 	height: 100vh;
 }
 
