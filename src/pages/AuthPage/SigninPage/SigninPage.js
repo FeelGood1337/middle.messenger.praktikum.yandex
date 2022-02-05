@@ -57,7 +57,7 @@ class SigninPage {
 		return new LinkButton({
 			text: 'Регистрация',
 			className: 'auth__btn-link',
-			link: 'sigup'
+			link: '/sigup'
 		}).render();
 	}
 
