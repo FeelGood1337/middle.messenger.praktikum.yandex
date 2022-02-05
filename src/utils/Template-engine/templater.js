@@ -16,6 +16,7 @@ class Templator {
 		let key = null;
 		const regExp = this._TEMPLATE_REGEXP;
 
+		
 		while ((key = regExp.exec(tmpl))) {
 			if (key[1]) {
 				const tmplValue = key[1].trim();
@@ -24,7 +25,7 @@ class Templator {
 				if (typeof data === "object") {
 					tmpl = tmpl.replace(new RegExp(key[0], "gi"), data.outerHTML);
 				}
-				
+
 				if (typeof data === "function") {
 					window[tmplValue] = data;
 					tmpl = tmpl.replace(
@@ -42,7 +43,6 @@ class Templator {
 			}
 			continue;
 		}
-
 		return tmpl;
 	}
 
@@ -57,7 +57,7 @@ class Templator {
 			}
 			result = value;
 		}
-		return result || defaultValue;
+		return result ?? defaultValue;
 	}
 
 	getNode(ctx) {

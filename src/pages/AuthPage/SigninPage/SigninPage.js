@@ -48,7 +48,7 @@ class SigninPage {
 		return new Button({
 			text: 'Войти',
 			className: 'auth__btn',
-			disabled: "disabled=false"
+			isDisabled: true
 		}).render();
 	}
 

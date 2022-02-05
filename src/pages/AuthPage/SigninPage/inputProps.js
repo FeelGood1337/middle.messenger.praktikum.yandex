@@ -9,6 +9,7 @@ export const inputsProps = [
 			type="text"
 			id="login"
 			placeholder="login"
+			autocomplete="on"
 			required
 		`,
 		value: 'value=""'

@@ -18,13 +18,13 @@ class Button {
 		const {
 			text,
 			className,
-			disabled
+			isDisabled
 		} = this.props;
 
 		return button.getNode({
 			text,
 			className,
-			disabled
+			disabled: isDisabled ? 'disabled' : ''
 		});
 	}
 
