@@ -2,6 +2,8 @@ import { Button } from './components/Button/Button';
 import { Input } from './components/Input/Input';
 import { LinkButton } from './components/LinkButton/LinkButton';
 
+import './index.css';
+
 const App = document.getElementById('Chat-app');
 const btn = new Button({
 	text: 'Войти',
