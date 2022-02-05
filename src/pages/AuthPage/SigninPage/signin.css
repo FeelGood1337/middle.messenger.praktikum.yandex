@@ -1,0 +1,47 @@
+.auth-wrapper {
+	display: flex;
+	flex-direction: column;
+	max-width: 384px;
+	padding: 56px 32px 24px;
+	box-shadow: 0px 4px 30px rgba(108, 72, 0, 0.2);
+	border-radius: 16px;
+	background-color: #fff;
+	margin: 0 auto;
+	transform: translateY(50%);
+}
+
+.auth__title {
+	font-family: "Helvetica", Arial, sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 28px;
+	margin-bottom: 64px;
+	margin-top: 0;
+}
+
+.auth__form {
+	display: flex;
+	flex-direction: column;
+}
+
+.inner {
+	display: flex;
+	align-items: baseline;
+}
+
+.auth__input-login {
+	margin-bottom: 8px;
+}
+
+.auth__input-login,
+.auth__input-password {
+	flex: 1;
+}
+
+.auth__btn {
+	margin: 24px auto 0 72px;
+}
+
+.auth__btn-link {
+	margin: 164px 0 0 auto;
+}

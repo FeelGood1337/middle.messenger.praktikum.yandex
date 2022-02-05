@@ -1,0 +1,10 @@
+@import url("../Input/input.css");
+
+.label {
+	font-family: "Helvetica", Arial, sans-serif;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 21px;
+	width: 72px;
+	display: inline-block;
+}

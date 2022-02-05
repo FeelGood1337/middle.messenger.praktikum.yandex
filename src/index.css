@@ -1,2 +1,5 @@
 /* Fonts */
 @import url("../static/fonts/style.css");
+
+/* Pages */
+@import url("./pages/AuthPage/SigninPage/signin.css");

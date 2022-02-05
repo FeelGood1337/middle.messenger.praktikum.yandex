@@ -14,31 +14,31 @@ import {
 import {
 	LinkButton
 } from "../../../components/LinkButton/LinkButton";
+
 import {
-	Input
-} from "../../../components/Input/Input";
+	InputWithLabel
+} from "../../../components/InputWithLabel/InputWithLabel";
 
 import './signin.css';
 
 const signinPageTmpl = new Templator(template);
 
 class SigninPage {
-
-	constructor() {
-		
-	}
-
 	getInputs() {
 		return inputsProps.map(({
-				name,
 				className,
+				labelText,
+				labelId,
 				attributes,
+				name,
 				value
 			}) =>
-			new Input({
-				name,
+			new InputWithLabel({
 				className,
+				labelText,
+				labelId,
 				attributes,
+				name,
 				value
 			}).render().outerHTML
 		).join('');
@@ -60,7 +60,7 @@ class SigninPage {
 			link: 'sigup'
 		}).render();
 	}
-	
+
 
 	render() {
 		return signinPageTmpl.getNode({

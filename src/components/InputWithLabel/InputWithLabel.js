@@ -3,13 +3,13 @@ import {
 } from '../../utils/Template-engine/templater';
 import {
 	template
-} from './input.tmpl';
+} from './inputWithLabel.tmpl';
 
-import './input.css';
+import './inputWithLabel.css';
 
 const input = new Templator(template);
 
-class Input {
+class InputWithLabel {
 	constructor(props) {
 		this.props = props;
 	}
@@ -17,6 +17,8 @@ class Input {
 	render() {
 		const {
 			className,
+			labelText,
+			labelId,
 			attributes,
 			name,
 			value
@@ -26,6 +28,8 @@ class Input {
 
 		return input.getNode({
 			className,
+			labelText,
+			labelId,
 			attributes,
 			name,
 			value
@@ -34,5 +38,5 @@ class Input {
 }
 
 export {
-	Input
+	InputWithLabel
 };
