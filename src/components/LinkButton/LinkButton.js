@@ -3,17 +3,13 @@ import {
 } from '../../utils/Template-engine/templater';
 import {
 	template
-} from './button.tmpl';
+} from './linkButton.tmpl';
 
-import './button.css';
+import './linkButton.css';
 
-const button = new Templator(template);
+const linkButton = new Templator(template);
 
-// const context = {
-// 	text: 
-// };
-
-class Button {
+class LinkButton {
 	constructor(props) {
 		this.props = props;
 	}
@@ -24,14 +20,13 @@ class Button {
 			className
 		} = this.props;
 
-		return button.getNode({
+		return linkButton.getNode({
 			text,
 			className
 		});
 	}
-
 }
 
 export {
-	Button
+	LinkButton
 };

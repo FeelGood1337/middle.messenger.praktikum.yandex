@@ -5,7 +5,7 @@ import {
 	template
 } from './input.tmpl';
 
-import './style.css';
+import './input.css';
 
 const input = new Templator(template);
 

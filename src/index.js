@@ -1,5 +1,6 @@
 import { Button } from './components/Button/Button';
-import { Input } from './components/input/Input';
+import { Input } from './components/Input/Input';
+import { LinkButton } from './components/LinkButton/LinkButton';
 
 const App = document.getElementById('Chat-app');
 const btn = new Button({
@@ -12,6 +13,11 @@ const input = new Input({
 	name: 'login',
 	value: '',
 }).render();
+const linkButton = new LinkButton({
+	text: 'Регистрация',
+	className: '',
+}).render();
 
 App.append(btn);
 App.append(input);
+App.append(linkButton);

@@ -1,4 +1,4 @@
-const template = `
+export const template = `
 	<input 
 		class="input {% className %}"
 		{% attributes %}
@@ -6,7 +6,3 @@ const template = `
       	{% value %}
 	/>
 `;
-
-export {
-	template
-};
