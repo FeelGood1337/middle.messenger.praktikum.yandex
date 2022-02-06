@@ -26,12 +26,16 @@
 	color: #333;
 }
 
-.server-error__btn {
+.link-btn.server-error__btn {
 	background-color: transparent;
 	color: #000;
 	border: 1px solid #26A69A;
 	box-sizing: border-box;
 }
-.server-error__btn:hover {
+.link-btn.server-error__btn:hover {
 	box-shadow: none;
+}
+
+.server-error__btn .link-btn__svg {
+	display: none;
 }

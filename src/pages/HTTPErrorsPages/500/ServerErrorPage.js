@@ -1,6 +1,6 @@
 import { Templator } from "../../../utils/Template-engine/templater";
 import { template } from "./serverError.tmpl";
-import { Button } from "../../../components/Button/Button";
+import { LinkButton } from '../../../components/LinkButton/LinkButton';
 
 import './serverError.css';
 
@@ -9,10 +9,10 @@ const serverErrorTmpl = new Templator(template);
 class ServerErrorPage {
 
 	getButton() {
-		return new Button({
+		return new LinkButton({
 			text: "Назад к чатам",
-			className: "server-error__btn",
-			isDisabled: false
+			className: "server-error__btn btn",
+			link: 'index.html'
 		}).render();
 	}
 
@@ -20,7 +20,7 @@ class ServerErrorPage {
 		return serverErrorTmpl.getNode({
 			title: '500',
 			subTitle: 'Internal Server Error',
-			button: this.getButton()
+			linkButton: this.getButton()
 		});
 	}
 }
