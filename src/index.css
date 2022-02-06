@@ -4,14 +4,14 @@
 /* Pages */
 @import url("./pages/AuthPage/SigninPage/signin.css");
 @import url("./pages/AuthPage/SignupPage/signup.css");
+@import url("./pages/HTTPErrorsPages/500/serverError.css");
 
 body {
 	margin: 0;
 	padding: 0;
 }
 
-#Chat-app,
-#signup {
+#Chat-app {
 	height: 100vh;
 }
 

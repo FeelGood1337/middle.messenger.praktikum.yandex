@@ -1,0 +1,37 @@
+.server-error__wrapper {
+	font-family: "Helvetica", Arial, sans-serif;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: url("../../../../static/images/internal-server-error.png") no-repeat center center fixed;
+	background-size: cover;
+}
+
+.server-error__title {
+	font-size: 96px;
+	line-height: 110px;
+	margin: 24px 0 0;
+}
+
+.server-error__subtitle {
+	font-size: 48px;
+	line-height: 55px;
+	margin: 0 0 16px;
+}
+
+.server-error__title,
+.server-error__subtitle {
+	font-weight: bold;
+	color: #333;
+}
+
+.server-error__btn {
+	background-color: transparent;
+	color: #000;
+	border: 1px solid #26A69A;
+	box-sizing: border-box;
+}
+.server-error__btn:hover {
+	box-shadow: none;
+}

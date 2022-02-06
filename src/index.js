@@ -5,8 +5,8 @@ import './index.css';
 
 const App = document.getElementById('Chat-app');
 
-// const signin = new SigninPage().render();
-// App.append(signin);
+const signin = new SigninPage().render();
+App.append(signin);
 
-const signup = new SignupPage().render();
-App.append(signup);
+// const signup = new SignupPage().render();
+// App.append(signup);
