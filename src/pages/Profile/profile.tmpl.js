@@ -11,7 +11,10 @@ export const template = `
 				</section>
 				<div class="profile-paper">
 					<div class="profile-paper__content">
-
+						<div class="profile-paper__avatar-wrapper">
+							{% avatar %}
+							{% title %}
+						</div>
 					</div>
 				</div>
 			</div>
