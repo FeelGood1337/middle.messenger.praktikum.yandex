@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const app = express();
 const PORT = 3000;
@@ -7,7 +8,7 @@ const PORT = 3000;
 // 	res.send('Hello World!');
 // });
 
-app.use('/login', express.static(`${__dirname}/static`));
+app.use(express.static(path.join(__dirname, 'static')));
 
 app.listen(PORT, () => {
 	console.log(`Example app listening on port ${PORT}!`);

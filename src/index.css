@@ -4,6 +4,7 @@
 /* Pages */
 @import url("./pages/AuthPage/SigninPage/signin.css");
 @import url("./pages/AuthPage/SignupPage/signup.css");
+@import url("./pages/Profile/profile.css");
 
  /* HTTP Errors */
 @import url("./pages/HTTPErrorsPages/style.css");

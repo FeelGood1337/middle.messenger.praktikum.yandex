@@ -1,0 +1,30 @@
+.profile {
+	display: flex;
+	width: 100%;
+	min-height: 100vh;
+	background-color: #F4F4F4;
+}
+
+.profile__content {
+	width: 100%;
+	display: flex;
+}
+
+.section {
+	width: 56px;
+	min-width: 56px;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.profile-paper {
+	width: 100%;
+	border-radius: 24px 0px 0px 24px;
+	background-color: #fff;
+}
+
+.profile-paper__content {
+	width: 100%;
+}
