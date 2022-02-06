@@ -14,7 +14,8 @@
 @import url("../src/components/LinkButton/linkButton.css");
 @import url("../src/components/Input/input.css");
 @import url("../src/components/InputWithLabel/inputWithLabel.css");
-
+@import url("../src/components/Title/title.css");
+@import url("../src/components/Avatar/avatar.css");
 
 body {
 	margin: 0;
