@@ -18,7 +18,7 @@ class Templator {
 
 		const arrRegKey = [];
 		const arrData = [];
-		
+
 		while ((key = regExp.exec(tmpl))) {
 			if (key[1]) {
 				const tmplValue = key[1].trim();
@@ -41,8 +41,6 @@ class Templator {
 					}
 				}
 
-				// tmpl = tmpl.replace(new RegExp(key[0], "gi"), data);
-				// tmpl.replace(new RegExp(key[0], "gi"), data);
 				arrRegKey.push(key[0]);
 				arrData.push(data);
 			}

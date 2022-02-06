@@ -5,11 +5,13 @@
 	font-weight: normal;
 	font-size: 18px;
 	line-height: 21px;
-	width: 72px;
 	display: inline-block;
-	order: 1;
 }
 
-.signup-input ~ .label {
+.auth-label {
+	width: 72px;
+}
+
+.signup-label {
 	width: 95px;
 }

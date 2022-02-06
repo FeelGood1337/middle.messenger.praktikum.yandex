@@ -29,6 +29,7 @@ class SigninPage {
 		return inputsProps.map(({
 				className,
 				labelText,
+				labelClassName,
 				labelId,
 				attributes,
 				name,
@@ -36,6 +37,7 @@ class SigninPage {
 			}) =>
 			new InputWithLabel({
 				className,
+				labelClassName,
 				labelText,
 				labelId,
 				attributes,

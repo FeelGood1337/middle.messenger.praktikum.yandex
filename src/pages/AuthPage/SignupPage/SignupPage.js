@@ -30,6 +30,7 @@ class SignupPage {
 	getInputs() {
 		return inputsProps.map(({
 				className,
+				labelClassName,
 				labelText,
 				labelId,
 				attributes,
@@ -38,6 +39,7 @@ class SignupPage {
 			}) =>
 			new InputWithLabel({
 				className,
+				labelClassName,
 				labelText,
 				labelId,
 				attributes,

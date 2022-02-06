@@ -17,6 +17,7 @@ class InputWithLabel {
 	render() {
 		const {
 			className,
+			labelClassName,
 			labelText,
 			labelId,
 			attributes,
@@ -28,6 +29,7 @@ class InputWithLabel {
 
 		return input.getNode({
 			className,
+			labelClassName,
 			labelText,
 			labelId,
 			attributes,

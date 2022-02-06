@@ -2,7 +2,7 @@ export const inputsProps = [
 	{
 		name: 'login',
 		className: 'auth__input auth__input-login',
-		labelClassName: 'auth__label-login',
+		labelClassName: 'auth-label',
 		labelText: 'Логин',
 		labelId: 'login',
 		attributes: `
@@ -17,7 +17,7 @@ export const inputsProps = [
 	{
 		name: 'password',
 		className: 'auth__input auth__input-password',
-		labelClassName: 'auth__label-password',
+		labelClassName: 'auth-label',
 		labelText: 'Пароль',
 		labelId: 'password',
 		attributes: `
