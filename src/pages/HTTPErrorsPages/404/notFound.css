@@ -1,0 +1,4 @@
+.not-found {
+	background: url("../../../../static/images/not_found.png") no-repeat center center fixed;
+	background-size: cover;
+}

@@ -4,7 +4,16 @@
 /* Pages */
 @import url("./pages/AuthPage/SigninPage/signin.css");
 @import url("./pages/AuthPage/SignupPage/signup.css");
-@import url("./pages/HTTPErrorsPages/500/serverError.css");
+
+ /* HTTP Errors */
+@import url("./pages/HTTPErrorsPages/style.css");
+
+/* Components */
+@import url("../src/components/Button/button.css");
+@import url("../src/components/LinkButton/linkButton.css");
+@import url("../src/components/Input/input.css");
+@import url("../src/components/InputWithLabel/inputWithLabel.css");
+
 
 body {
 	margin: 0;

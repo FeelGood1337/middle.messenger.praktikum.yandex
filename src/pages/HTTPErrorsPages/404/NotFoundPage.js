@@ -1,13 +1,12 @@
 import { Templator } from "../../../utils/Template-engine/templater";
-import { template } from "./serverError.tmpl";
+import { template } from "./notFound.tmpl";
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 
-import './serverError.css';
+import './notFound.css'
 
-const serverErrorTmpl = new Templator(template);
+const notFoundErrorTmpl = new Templator(template);
 
-class ServerErrorPage {
-
+class NotFoundPage {
 	getButton() {
 		return new LinkButton({
 			text: "Назад к чатам",
@@ -17,12 +16,12 @@ class ServerErrorPage {
 	}
 
 	render() {
-		return serverErrorTmpl.getNode({
-			title: '500',
-			subTitle: 'Internal Server Error',
+		return notFoundErrorTmpl.getNode({
+			title: '404',
+			subTitle: 'Page not found',
 			linkButton: this.getButton()
 		});
 	}
 }
 
-export { ServerErrorPage };
+export { NotFoundPage }
