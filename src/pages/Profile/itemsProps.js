@@ -1,4 +1,4 @@
-export const itemsProps = [
+const itemsProps = [
 	[
 		{
 			tag: 'p',
@@ -72,3 +72,23 @@ export const itemsProps = [
 		}
 	],
 ];
+
+const btnsProps = [
+	{
+		className: 'btn-item btn-item_accent',
+		text: 'Изменить данные',
+		link: '/'
+	},
+	{
+		className: 'btn-item btn-item_accent',
+		text: 'Изменить пароль',
+		link: '/'
+	},
+	{
+		className: 'btn-item btn-item_red',
+		text: 'Выйти',
+		link: '/'
+	},
+];
+
+export { itemsProps, btnsProps };

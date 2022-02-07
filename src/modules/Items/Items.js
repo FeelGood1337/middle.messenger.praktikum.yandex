@@ -14,7 +14,7 @@ class Items {
 
 		if (Array.isArray(items)) {
 			const liList = [];
-			items.map((el, i) => {
+			items.map(el => {
 				liList.push(
 					itemsTmpl.getNode({
 						className,
@@ -22,9 +22,13 @@ class Items {
 					})
 				)
 			});
-			console.log(liList);
 			return liList;
 		}
+
+		return itemsTmpl.getNode({
+			className,
+			items
+		});
 
 	};
 }

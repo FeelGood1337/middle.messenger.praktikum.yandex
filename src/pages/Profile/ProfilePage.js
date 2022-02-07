@@ -1,11 +1,12 @@
 import { Templator } from "../../utils/Template-engine/templater";
 import { template } from "./profile.tmpl";
-import { itemsProps } from "./itemsProps";
+import { itemsProps, btnsProps } from "./itemsProps";
 
 import { Title } from "../../components/Title/Title";
 import { Avatar } from "../../components/Avatar/Avatar";
 import { Items } from "../../modules/Items/Items";
 import { Element } from "../../modules/Element/Element";
+import { LinkButton } from "../../components/LinkButton/LinkButton";
 
 import avatar from '../../../static/images/Avatar.svg';
 
@@ -30,7 +31,7 @@ class ProfilePage {
 		}).render();
 	}
 
-	getElement() {
+	getTextElement() {
 		return itemsProps.map(arr => arr.map(el => {
 			return new Element({
 				tag: el.tag,
@@ -40,21 +41,41 @@ class ProfilePage {
 		}).join(''));
 	}
 
-	getItems() {
-		const items = this.getElement();
+	getTextItems() {
+		const items = this.getTextElement();
 		return new Items({
 			className: 'fields-items__item',
 			items
 		}).render();
 	}
 
+	getLinkButton(text, className, link) {
+		return new LinkButton({
+			text,
+			className,
+			link
+		}).render();
+	}
+
+	getBtnItems() {
+		return btnsProps.map(({
+			className,
+			text,
+			link
+		}) => 
+		new Items({
+			className: 'fields-items__item item-btn',
+			items: this.getLinkButton(text, className, link)
+		}).render());
+	}
+
 	render() {
-		// debugger
 		return profileTmpl.getNode({
 			profileSvgClass: 'profile-svg',
 			title: this.getTitle(),
 			avatar: this.getAvatar(),
-			items: [...this.getItems()]
+			items: [...this.getTextItems()],
+			btnItems: [...this.getBtnItems()]
 		});
 	}
 }

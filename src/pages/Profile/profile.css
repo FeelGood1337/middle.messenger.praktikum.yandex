@@ -60,6 +60,10 @@
 
 .fields-items {
 	margin-bottom: 56px;
+}
+
+.fields-items,
+.btns-items {
 	max-width: 510px;
 	width: 510px;
 }
@@ -74,7 +78,8 @@
 	border-bottom: 1px solid #EAEAEA;
 }
 
-.profile-text {
+.profile-text,
+.btn-item {
 	font-size: 14px;
 	font-weight: normal;
 	line-height: 16px;
@@ -83,4 +88,16 @@
 
 .profile-text_grey {
 	color: #A0A0A0;
+}
+
+.btn-item .link-btn__svg {
+	display: none;
+}
+
+.btn-item_accent {
+	color: #26A69A;
+}
+
+.btn-item_red {
+	color: #E57373;
 }
