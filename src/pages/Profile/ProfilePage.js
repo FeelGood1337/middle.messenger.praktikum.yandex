@@ -26,7 +26,7 @@ class ProfilePage {
 
 	getAvatar() {
 		return new Avatar({
-			link: '#',
+			link: 'profile.html',
 			imgPath: avatar,
 		}).render();
 	}
