@@ -1,5 +1,6 @@
 import { Templator } from "../../utils/Template-engine/templater";
 import { template } from "./profile.tmpl";
+import { itemsProps } from "./itemsProps";
 
 import { Title } from "../../components/Title/Title";
 import { Avatar } from "../../components/Avatar/Avatar";
@@ -11,10 +12,6 @@ import avatar from '../../../static/images/Avatar.svg';
 import './profile.css';
 
 const profileTmpl = new Templator(template);
-
-const itemsProps = [
-	{}
-];
 
 class ProfilePage {
 
@@ -33,23 +30,31 @@ class ProfilePage {
 		}).render();
 	}
 
-	getElement(tag, className, content) {
-		return new Element({
-			tag,
-			className,
-			content
-		}).render().outerHTML;
+	getElement() {
+		return itemsProps.map(arr => arr.map(el => {
+			return new Element({
+				tag: el.tag,
+				className: el.className,
+				content: el.content
+			}).render().outerHTML
+		}).join(''));
 	}
 
 	getItems() {
-
+		const items = this.getElement();
+		return new Items({
+			className: 'item',
+			items
+		}).render();
 	}
 
 	render() {
+		// debugger
 		return profileTmpl.getNode({
 			profileSvgClass: 'profile-svg',
 			title: this.getTitle(),
 			avatar: this.getAvatar(),
+			items: [...this.getItems()]
 		});
 	}
 }

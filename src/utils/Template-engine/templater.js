@@ -25,6 +25,14 @@ class Templator {
 				const data = this.get(ctx, tmplValue);
 
 				if (typeof data === "object") {
+					const element = document.createElement('div');
+					if (Array.isArray(data)) {
+						data.map(el => {
+							element.insertAdjacentHTML('beforeend', el.outerHTML);
+						});
+						tmpl = tmpl.replace(new RegExp(key[0], "gi"), element.outerHTML);
+					}
+					// debugger
 					tmpl = tmpl.replace(new RegExp(key[0], "gi"), data.outerHTML);
 				}
 
@@ -48,7 +56,7 @@ class Templator {
 		}
 
 		arrData.map((el, i) => tmpl = tmpl.replace(new RegExp(arrRegKey[i], "gi"), el));
-		
+
 		return tmpl;
 	}
 

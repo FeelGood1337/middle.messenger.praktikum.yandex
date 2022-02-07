@@ -13,7 +13,17 @@ class Items {
 		const { className, items } = this.props;
 
 		if (Array.isArray(items)) {
-			console.log(items);
+			const liList = [];
+			items.map((el, i) => {
+				liList.push(
+					itemsTmpl.getNode({
+						className,
+						items: el
+					})
+				)
+			});
+			console.log(liList);
+			return liList;
 		}
 
 	};
