@@ -8,7 +8,7 @@ const PORT = 3000;
 // 	res.send('Hello World!');
 // });
 
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, '/static')));
 
 app.listen(PORT, () => {
 	console.log(`Example app listening on port ${PORT}!`);

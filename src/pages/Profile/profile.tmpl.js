@@ -15,6 +15,10 @@ export const template = `
 							{% avatar %}
 							{% title %}
 						</div>
+						<div class="profile-paper__fields-wrapper">
+							<ul class="fields-items">{% items %}</ul>
+							<ul class="btns-items">{% btnItems %}</ul>
+						</div>
 					</div>
 				</div>
 			</div>

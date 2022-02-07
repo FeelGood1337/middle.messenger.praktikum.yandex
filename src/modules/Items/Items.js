@@ -1,0 +1,22 @@
+import { Templator } from "../../utils/Template-engine/templater";
+import { template } from "./items.tmpl";
+
+const itemsTmpl = new Templator(template);
+
+class Items {
+	constructor(props) {
+		this.props = props;
+	}
+
+	render() {
+
+		const { className, items } = this.props;
+
+		if (Array.isArray(items)) {
+			console.log(items);
+		}
+
+	};
+}
+
+export { Items };

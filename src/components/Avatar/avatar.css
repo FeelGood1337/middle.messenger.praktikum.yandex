@@ -1,0 +1,16 @@
+.avatar__img {
+	clip-path: circle();
+}
+
+/* .avatar {
+	max-width: 130px;
+	width: 130px;
+	max-height: 130px;
+	height: 130px;
+	position: absolute;
+	z-index: 10;
+	top: 0;
+	left: 0;
+	border-radius: 50%;
+} */
+
