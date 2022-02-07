@@ -32,7 +32,6 @@ class Templator {
 						});
 						tmpl = tmpl.replace(new RegExp(key[0], "gi"), element.outerHTML);
 					}
-					// debugger
 					tmpl = tmpl.replace(new RegExp(key[0], "gi"), data.outerHTML);
 				}
 

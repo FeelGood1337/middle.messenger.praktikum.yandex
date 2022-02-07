@@ -2,72 +2,72 @@ export const itemsProps = [
 	[
 		{
 			tag: 'p',
-			className: 'profile-label__email',
+			className: 'profile-text profile-label__email',
 			content: 'Почта'
 		},
 		{
 			tag: 'p',
-			className: 'profile-content__email',
+			className: 'profile-text profile-text_grey  profile-content__email',
 			content: 'exaple@example.com'
 		}
 	],
 	[
 		{
 			tag: 'p',
-			className: 'profile-label__login',
+			className: 'profile-text profile-label__login',
 			content: 'Логин'
 		},
 		{
 			tag: 'p',
-			className: 'profile-contents__login',
+			className: 'profile-text profile-text_grey  profile-contents__login',
 			content: 'svlasov'
 		}
 	],
 	[
 		{
 			tag: 'p',
-			className: 'profile-label__name',
+			className: 'profile-text profile-label__name',
 			content: 'Имя'
 		},
 		{
 			tag: 'p',
-			className: 'profile-content__name',
+			className: 'profile-text profile-text_grey  profile-content__name',
 			content: 'Сергей'
 		}
 	],
 	[
 		{
 			tag: 'p',
-			className: 'profile-label__second-name',
+			className: 'profile-text profile-label__second-name',
 			content: 'Фамилия'
 		},
 		{
 			tag: 'p',
-			className: 'profile-content__second-name',
+			className: 'profile-text profile-text_grey  profile-content__second-name',
 			content: 'Власов'
 		}
 	],
 	[
 		{
 			tag: 'p',
-			className: 'profile-label__chat-name',
+			className: 'profile-text profile-label__chat-name',
 			content: 'Имя в чате'
 		},
 		{
 			tag: 'p',
-			className: 'profile-content__chat-name',
+			className: 'profile-text profile-text_grey  profile-content__chat-name',
 			content: 'svlasov'
 		}
 	],
 	[
 		{
 			tag: 'p',
-			className: 'profile-label__phone',
+			className: 'profile-text profile-label__phone',
 			content: 'Телефон'
 		},
 		{
 			tag: 'p',
-			className: 'profile-content__phone',
+			className: 'profile-text profile-text_grey  profile-content__phone',
 			content: '+7 (999) 999 99 99'
 		}
 	],

@@ -1,3 +1,3 @@
 export const template = `
-	<li class="item {% className %}">{% items %}</li>
+	<li class="{% className %} item">{% items %}</li>
 `;

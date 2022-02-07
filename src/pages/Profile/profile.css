@@ -2,6 +2,7 @@
 	display: flex;
 	width: 100%;
 	min-height: 100vh;
+	font-family: "Helvetica", Arial, sans-serif;
 	background-color: #F4F4F4;
 }
 
@@ -55,4 +56,31 @@
 .btns-items {
 	margin: 0;
 	padding: 0;
+}
+
+.fields-items {
+	margin-bottom: 56px;
+	max-width: 510px;
+	width: 510px;
+}
+
+.item {
+	list-style-type: none;
+	display: flex;
+	justify-content: space-between;
+}
+
+.item:not(:last-child) {
+	border-bottom: 1px solid #EAEAEA;
+}
+
+.profile-text {
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 16px;
+	margin: 10px 0 7px;
+}
+
+.profile-text_grey {
+	color: #A0A0A0;
 }

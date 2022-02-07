@@ -43,7 +43,7 @@ class ProfilePage {
 	getItems() {
 		const items = this.getElement();
 		return new Items({
-			className: 'item',
+			className: 'fields-items__item',
 			items
 		}).render();
 	}
