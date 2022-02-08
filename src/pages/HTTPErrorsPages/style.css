@@ -1,5 +1,5 @@
-@import url("404/notFound.css");
-@import url("500/serverError.css");
+@import '404/notFound.css';
+@import '500/serverError.css';
 
 .http-error__wrapper {
 	font-family: "Helvetica", Arial, sans-serif;
