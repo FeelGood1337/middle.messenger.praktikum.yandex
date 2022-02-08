@@ -9,6 +9,6 @@
 	background-color: #f4f4f4;
 }
 
-::placeholder {
+.input::placeholder {
 	color: #A0A0A0;
 }
