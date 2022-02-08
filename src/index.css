@@ -14,7 +14,7 @@
 /* Components */
 @import '../src/components/Button/button.css';
 @import '../src/components/LinkButton/linkButton.css';
-/* @import '../src/components/Input/input.css'; */
+@import '../src/components/Input/input.css';
 @import '../src/components/InputWithLabel/inputWithLabel.css';
 @import '../src/components/Title/title.css';
 @import '../src/components/Avatar/avatar.css';
