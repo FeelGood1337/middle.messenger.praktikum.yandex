@@ -38,6 +38,14 @@
 	margin: 24px auto 0 72px;
 }
 
+.auth__btn > .link-btn__svg {
+	display: none;
+}
+
+.auth__btn > .link-btn__text {
+	margin: 0;
+}
+
 .auth__btn-link {
 	margin: 164px 0 0 auto;
 }

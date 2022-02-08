@@ -48,10 +48,10 @@ class SigninPage {
 	}
 
 	getButton() {
-		return new Button({
+		return new LinkButton({
 			text: 'Войти',
-			className: 'auth__btn',
-			isDisabled: true
+			className: 'btn auth__btn',
+			link: 'profile.html'
 		}).render();
 	}
 
