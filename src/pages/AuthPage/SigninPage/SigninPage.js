@@ -1,24 +1,9 @@
-import {
-	Templator
-} from "../../../utils/Template-engine/templater";
-import {
-	template
-} from "./signin.tmpl";
-import {
-	inputsProps
-} from "./inputProps";
+import { Templator } from "../../../utils/Template-engine/templater";
+import { template } from "./signin.tmpl";
+import { inputsProps } from "./inputProps";
 
-import {
-	Button
-} from "../../../components/Button/Button";
-
-import {
-	LinkButton
-} from "../../../components/LinkButton/LinkButton";
-
-import {
-	InputWithLabel
-} from "../../../components/InputWithLabel/InputWithLabel";
+import { LinkButton } from "../../../components/LinkButton/LinkButton";
+import { InputWithLabel } from "../../../components/InputWithLabel/InputWithLabel";
 
 import './signin.css';
 

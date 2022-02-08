@@ -1,9 +1,5 @@
-import {
-	Templator
-} from '../../utils/Template-engine/templater';
-import {
-	template
-} from './inputWithLabel.tmpl';
+import { Templator } from '../../utils/Template-engine/templater';
+import { template } from './inputWithLabel.tmpl';
 
 import './inputWithLabel.css';
 
