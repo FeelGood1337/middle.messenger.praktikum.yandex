@@ -4,8 +4,8 @@ import { itemsProps, btnsProps } from "./itemsProps";
 
 import { Title } from "../../components/Title/Title";
 import { Avatar } from "../../components/Avatar/Avatar";
-import { Items } from "../../modules/Items/Items";
-import { Element } from "../../modules/Element/Element";
+import { Items } from "../../components/Items/Items";
+import { Element } from "../../components/Element/Element";
 import { LinkButton } from "../../components/LinkButton/LinkButton";
 
 import avatar from '../../../static/images/Avatar.svg';

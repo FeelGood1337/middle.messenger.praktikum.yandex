@@ -1,6 +1,7 @@
 import { Templator } from "../../../utils/Template-engine/templater";
 import { template } from './signup.tmpl';
 import { inputsProps } from "./inputProps";
+
 import { Button } from "../../../components/Button/Button";
 import { LinkButton } from "../../../components/LinkButton/LinkButton";
 import { InputWithLabel } from "../../../components/InputWithLabel/InputWithLabel";
@@ -10,6 +11,7 @@ import './signup.css';
 const signupPageTmpl = new Templator(template);
 
 class SignupPage {
+	
 	getInputs() {
 		return inputsProps.map(({
 				className,
