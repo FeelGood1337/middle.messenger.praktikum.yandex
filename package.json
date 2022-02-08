@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/FeelGood1337/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
+    "@parcel/resolver-glob": "^2.2.1",
     "autoprefixer": "^10.4.2",
     "express": "^4.17.2",
     "parcel": "^2.2.1",
