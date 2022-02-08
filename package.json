@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Самостоятельный проект на курсе Яндекс Практикума",
   "scripts": {
-    "start": "parcel static/*.html -p 3000 --no-cache",
-    "dev": "parcel static/*.html",
+    "start": "node server.js",
+    "dev": "parcel static/*.html -p 3000 --no-cache",
     "build": "parcel build static/*.html --no-cache"
   },
   "repository": {
