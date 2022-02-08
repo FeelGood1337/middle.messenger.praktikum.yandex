@@ -6,7 +6,7 @@
     "node": "16.13.2"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "npm run build && node server.js",
     "dev": "parcel static/*.html -p 3000 --no-cache",
     "build": "parcel build static/*.html"
   },
