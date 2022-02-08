@@ -20,16 +20,13 @@
   "devDependencies": {
     "@parcel/resolver-default": "^2.2.1",
     "@parcel/resolver-glob": "^2.2.1",
+    "@parcel/transformer-postcss": "^2.2.1",
     "autoprefixer": "^10.4.2",
     "express": "^4.17.2",
     "parcel": "^2.2.1",
+    "postcss": "^8.4.6",
     "postcss-calc": "^8.2.4",
-    "postcss-cli": "^9.1.0",
     "postcss-font-magician": "^3.0.0",
-    "postcss-modules": "^4.3.0",
     "postcss-nested": "^5.0.6"
-  },
-  "dependencies": {
-    "postcss": "^8.4.6"
   }
 }
