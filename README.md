@@ -1,6 +1,8 @@
 ### Vlasov · Chat
 ---
 
+## **Ссылка на проект**
+![https://awesome-visvesvaraya-a332fa.netlify.app](https://awesome-visvesvaraya-a332fa.netlify.app)
 ## Описание
 
 Месседжер для общения. Выполняется в рамках курса на платформе Яндекс Практикума.
