@@ -5,5 +5,12 @@ module.exports = {
     require("autoprefixer"),
     require("postcss-nested"),
     require("postcss-calc"),
+    require("postcss-import"),
+    require("postcss-url")({
+      url: "inline"
+    }),
+    require("cssnano")({
+      preset: "default",
+    }),
   ]
 };

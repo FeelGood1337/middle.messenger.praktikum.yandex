@@ -8,6 +8,8 @@
 
  /* HTTP Errors */
 @import './pages/HTTPErrorsPages/style.css';
+@import './pages/HTTPErrorsPages/404/notFound.css';
+@import './pages/HTTPErrorsPages/500/serverError.css';
 
 /* Components */
 @import '../src/components/Button/button.css';

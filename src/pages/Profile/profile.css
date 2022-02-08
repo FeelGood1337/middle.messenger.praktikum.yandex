@@ -94,10 +94,10 @@
 	display: none;
 }
 
-.btn-item_accent {
+.link-btn.btn-item_accent {
 	color: #26A69A;
 }
 
-.btn-item_red {
+.link-btn.btn-item_red {
 	color: #E57373;
 }

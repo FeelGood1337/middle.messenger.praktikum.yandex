@@ -34,8 +34,9 @@
 	width: 100%;
 }
 
-.auth__btn {
+.btn.auth__btn {
 	margin: 24px auto 0 72px;
+	color: #fff;
 }
 
 .auth__btn > .link-btn__svg {
