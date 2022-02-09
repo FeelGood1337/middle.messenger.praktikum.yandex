@@ -12,7 +12,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value=""'
+		value: '""'
 	},
 	{
 		name: 'login',
@@ -27,7 +27,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value=""'
+		value: '""'
 	},
 	{
 		name: 'first_name',
@@ -42,7 +42,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value=""'
+		value: '""'
 	},
 	{
 		name: 'second_name',
@@ -57,7 +57,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value=""'
+		value: '""'
 	},
 	{
 		name: 'phone',
@@ -72,7 +72,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value=""'
+		value: '""'
 	},
 	{
 		name: 'password',
@@ -87,7 +87,7 @@ export const inputsProps = [
 			autocomplete="new-password"
 			required
 		`,
-		value: 'value=""'
+		value: '""'
 	},
 	{
 		name: 'newPassword',
@@ -102,6 +102,6 @@ export const inputsProps = [
 			autocomplete="new-password"
 			required
 		`,
-		value: 'value=""'
+		value: '""'
 	}
 ];

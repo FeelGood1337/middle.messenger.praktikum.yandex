@@ -12,7 +12,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value="example@example.ru"'
+		value: 'example@example.ru'
 	},
 	{
 		name: 'login',
@@ -27,7 +27,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value="svlasov"'
+		value: 'svlasov'
 	},
 	{
 		name: 'first_name',
@@ -42,7 +42,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value="Сергей"'
+		value: 'Сергей'
 	},
 	{
 		name: 'second_name',
@@ -57,7 +57,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value="Власов"'
+		value: 'Власов'
 	},
 	{
 		name: 'display_name',
@@ -70,7 +70,7 @@ export const inputsProps = [
 			id="display_name"
 			placeholder="Ваше имя в чате"
 		`,
-		value: 'value="svlasov1337"'
+		value: 'svlasov1337'
 	},
 	{
 		name: 'phone',
@@ -84,6 +84,6 @@ export const inputsProps = [
 			placeholder="+7"
 			autocomplete="on"
 		`,
-		value: 'value="+7 (999) 999 99 99"'
+		value: '+7 (999) 999 99 99'
 	}
 ];

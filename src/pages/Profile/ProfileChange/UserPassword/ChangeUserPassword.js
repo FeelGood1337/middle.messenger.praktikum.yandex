@@ -61,7 +61,7 @@ class ChangeUserPassword {
 		return new Title({
 			tag: 'h2',
 			className: 'auth__title signup__title',
-			text: 'Изменить данные',
+			text: 'Изменить пароль',
 		}).render();
 	}
 

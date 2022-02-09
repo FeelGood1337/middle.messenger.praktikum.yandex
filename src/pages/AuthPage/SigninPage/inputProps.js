@@ -12,7 +12,7 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: 'value=""'
+		value: '""'
 	},
 	{
 		name: 'password',
@@ -27,6 +27,6 @@ export const inputsProps = [
 			autocomplete="new-password"
 			required
 		`,
-		value: 'value=""'
+		value: '""'
 	}
 ];
