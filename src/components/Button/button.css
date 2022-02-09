@@ -1,0 +1,29 @@
+:root {
+	--btn-hover-shadow: 0px 4px 30px rgba(108, 72, 0, 0.2);
+	--btn-bg-color: #26A69A;
+	--btn-text-color: #fff;
+	--btn-font-size: 18px;
+	--btn-line-height: 20px;
+	--btn-border-radius: 4px;
+	--btn-height: 40px;
+	--btn-padding: 0 32px;
+}
+
+.btn {
+	font-family: "Helvetica", Arial, sans-serif;
+	font-size: var(--btn-font-size);
+	font-weight: bold;
+	line-height: var(--btn-line-height);
+	background-color: var(--btn-bg-color);
+	border: none;
+	text-align: center;
+	border-radius: var(--btn-border-radius);
+	height: var(--btn-height);
+	padding: var(--btn-padding);
+	color: var(--btn-text-color);
+	cursor: pointer;
+}
+
+.btn:hover {
+	box-shadow: var(--btn-hover-shadow);
+}

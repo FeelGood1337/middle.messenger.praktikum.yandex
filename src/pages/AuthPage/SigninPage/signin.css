@@ -1,0 +1,61 @@
+:root {
+	--auth-wrapper-box-shadow: 0px 4px 30px rgba(108, 72, 0, 0.2);
+	--auth-wrapper-bg-color: #fff;
+	--auth-btn-color: #fff;
+	--auth-wrapper-max-width: 384px;
+	--auth-wrapper-padding: 56px 32px 24px;
+	--auth-wrapper-border-radius: 16px;
+}
+
+.auth-wrapper {
+	display: flex;
+	flex-direction: column;
+	max-width: var(--auth-wrapper-max-width);
+	padding: var(--auth-wrapper-padding);
+	box-shadow: var(--auth-wrapper-box-shadow);
+	border-radius: var(--auth-wrapper-border-radius);
+	background-color: var(--auth-wrapper-bg-color);
+	box-sizing: border-box;
+}
+
+.auth__title {
+	font-family: "Helvetica", Arial, sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	line-height: 28px;
+	margin-bottom: 64px;
+	margin-top: 0;
+}
+
+.auth__form {
+	display: flex;
+	flex-direction: column;
+}
+
+.inner {
+	display: flex;
+	align-items: baseline;
+}
+
+.auth__input {
+	flex: 1;
+	height: 20px;
+	width: 100%;
+}
+
+.btn.auth__btn {
+	margin: 24px auto 0 72px;
+	color: var(--auth-btn-color);
+}
+
+.auth__btn > .link-btn__svg {
+	display: none;
+}
+
+.auth__btn > .link-btn__text {
+	margin: 0;
+}
+
+.auth__btn-link {
+	margin: 164px 0 0 auto;
+}

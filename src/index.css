@@ -1,0 +1,40 @@
+/* Fonts */
+@import '../static/fonts/style.css';
+
+/* Pages */
+@import './pages/AuthPage/SigninPage/signin.css';
+@import './pages/AuthPage/SignupPage/signup.css';
+@import './pages/Profile/profile.css';
+
+ /* HTTP Errors */
+@import './pages/HTTPErrorsPages/style.css';
+@import './pages/HTTPErrorsPages/404/notFound.css';
+@import './pages/HTTPErrorsPages/500/serverError.css';
+
+/* Components */
+@import '../src/components/Button/button.css';
+@import '../src/components/LinkButton/linkButton.css';
+@import '../src/components/input/input.css';
+@import '../src/components/InputWithLabel/inputWithLabel.css';
+@import '../src/components/Title/title.css';
+@import '../src/components/Avatar/avatar.css';
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#Chat-app {
+	height: 100vh;
+}
+
+.main {
+	height: 100%;
+}
+
+.signup-main,
+.signin-main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

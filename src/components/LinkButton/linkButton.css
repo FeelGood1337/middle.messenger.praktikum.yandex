@@ -1,0 +1,18 @@
+:root {
+	--link-btn-color: #000;
+	--link-btn-text-margin-right: 8px;
+	--link-btn-text-font-size: 14px;
+}
+
+.link-btn {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: var(--link-btn-color);
+}
+
+.link-btn__text {
+	font-family: "Helvetica", Arial, sans-serif;
+	margin-right: var(--link-btn-text-margin-right);
+	font-size: var(--link-btn-text-font-size);
+}

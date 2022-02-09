@@ -1,0 +1,44 @@
+:root {
+	--bg-color: rgba(32, 33, 36, 0.6);
+	--avatar-width: 130px;
+	--avatar-heigh: 130px;
+	--avatar-edit-height: 33%;
+	--avatar-border-radius: 50%;
+}
+
+.avatar__img {
+	clip-path: circle();
+}
+
+.avatar {
+	max-width: var(--avatar-width);
+	width: var(--avatar-width);
+	max-height: var(--avatar-heigh);
+	height: var(--avatar-heigh);
+	border-radius: var(--avatar-border-radius);
+	overflow: hidden;
+	position: relative;
+	user-select: none;
+}
+
+.avatar-edit {
+	transition: opacity .2s ease-in-out;
+	background-color: var(--bg-color);
+	bottom: 0;
+	height: var(--avatar-edit-height);
+	left: 0;
+	opacity: 0;
+	position: absolute;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.avatar-icon {
+	opacity: .8;
+}
+
+.avatar:hover > .avatar-edit {
+	opacity: 1;
+}

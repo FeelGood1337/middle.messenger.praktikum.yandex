@@ -1,0 +1,23 @@
+:root {
+	--input-bg-color: #f4f4f4;
+	--input-placeholder-color: #A0A0A0;
+	--input-font-size: 18px;
+	--input-line-height: 20px;
+	--input-padding: 10px 16px;
+	--input-border-radius: 4px;
+}
+
+.input {
+	font-family: "Helvetica", Arial, sans-serif;
+	font-size: var(--input-font-size);
+	font-weight: normal;
+	line-height: var(--input-line-height);
+	padding: var(--input-padding);
+	border: none;
+	border-radius: var(--input-border-radius);
+	background-color: var(--input-bg-color);
+}
+
+.input::placeholder {
+	color: var(--input-placeholder-color);
+}

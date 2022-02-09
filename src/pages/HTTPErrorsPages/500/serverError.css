@@ -1,0 +1,4 @@
+.server-error {
+	background: url("../../../../static/images/internal-server-error.png") no-repeat center center fixed;
+	background-size: cover;
+}
