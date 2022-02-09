@@ -1,11 +1,16 @@
+:root {
+	--signup-wrapper-box-shadow: 0px 4px 30px rgba(108, 72, 0, 0.2);
+	--signup-wrapper-bg-color: #fff;
+}
+
 .signup-wrapper {
 	display: flex;
 	flex-direction: column;
 	max-width: 448px;
 	padding: 48px 32px 24px;
-	box-shadow: 0px 4px 30px rgba(108, 72, 0, 0.2);
+	box-shadow: var(--signup-wrapper-box-shadow);
 	border-radius: 16px;
-	background-color: #fff;
+	background-color: var(--signup-wrapper-bg-color);
 	box-sizing: border-box;
 }
 

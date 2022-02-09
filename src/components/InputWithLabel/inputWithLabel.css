@@ -1,15 +1,22 @@
+:root {
+	--label-font-size: 18px;
+	--label-line-height: 21px;
+	--label-auth-width: 72px;
+	--label-signup-width: 95px;
+}
+
 .label {
 	font-family: "Helvetica", Arial, sans-serif;
 	font-weight: normal;
-	font-size: 18px;
-	line-height: 21px;
+	font-size: var(--label-font-size);
+	line-height: var(--label-line-height);
 	display: inline-block;
 }
 
 .auth-label {
-	width: 72px;
+	width: var(--label-auth-width);
 }
 
 .signup-label {
-	width: 95px;
+	width: var(--label-signup-width);
 }

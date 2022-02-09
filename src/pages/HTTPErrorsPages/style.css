@@ -1,6 +1,12 @@
 @import '404/notFound.css';
 @import '500/serverError.css';
 
+:root {
+	--http-error-titles-color: #333;
+	--link-btn-http-error-color: #000;
+	--link-btn-http-error-border: 1px solid #26A69A;
+}
+
 .http-error__wrapper {
 	font-family: "Helvetica", Arial, sans-serif;
 	height: 100%;
@@ -24,13 +30,13 @@
 .http-error__title,
 .http-error__subtitle {
 	font-weight: bold;
-	color: #333;
+	color: var(--http-error-titles-color);
 }
 
 .link-btn.http-error__btn {
 	background-color: transparent;
-	color: #000;
-	border: 1px solid #26A69A;
+	color: var(--link-btn-http-error-color);
+	border: var(--link-btn-http-error-border);
 	box-sizing: border-box;
 }
 .link-btn.http-error__btn:hover {

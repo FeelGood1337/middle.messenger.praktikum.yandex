@@ -80,13 +80,6 @@ class Templator {
 
 		return element.firstChild;
 	}
-
-	// getNode(ctx) {
-	// 	const element = document.createElement('div');
-	// 	element.insertAdjacentHTML('beforeend', this.compile(ctx).trim());
-
-	// 	return element.firstChild;
-	// }
 }
 
 export {
