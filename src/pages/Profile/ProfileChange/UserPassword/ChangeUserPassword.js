@@ -1,9 +1,9 @@
-import { Templator } from "../../../../utils/Template-engine/templater"; 
-import { template } from "./userPassword.tmpl";
+import { Templator } from '../../../../utils/Template-engine/templater'; 
+import { template } from './userPassword.tmpl';
 import { inputsProps } from './inputProps';
 
-import { Avatar } from "../../../../components/Avatar/Avatar";
-import { Title } from "../../../../components/Title/Title";
+import { Avatar } from '../../../../components/Avatar/Avatar';
+import { Title } from '../../../../components/Title/Title';
 import { InputWithLabel } from '../../../../components/InputWithLabel/InputWithLabel';
 import { Button } from '../../../../components/Button/Button';
 
@@ -20,7 +20,7 @@ class ChangeUserPassword {
 				labelId,
 				attributes,
 				name,
-				value
+				value,
 		}) => 
 			new InputWithLabel({
 				className,
@@ -29,7 +29,7 @@ class ChangeUserPassword {
 				labelId,
 				attributes,
 				name,
-				value
+				value,
 			}).render().outerHTML
 		).join('');
 	}
@@ -45,7 +45,7 @@ class ChangeUserPassword {
 		return new Title({
 			tag: 'h2',
 			className: 'profile-title',
-			text: 'Изменить пароль'
+			text: 'Изменить пароль',
 		}).render();
 	}
 
@@ -53,7 +53,7 @@ class ChangeUserPassword {
 		return new Button({
 			text: 'Сохранить',
 			className: 'signup__btn',
-			isDisabled: true
+			isDisabled: true,
 		}).render();
 	}
 
@@ -61,7 +61,7 @@ class ChangeUserPassword {
 		return new Title({
 			tag: 'h2',
 			className: 'auth__title signup__title',
-			text: 'Изменить данные'
+			text: 'Изменить данные',
 		}).render();
 	}
 
@@ -73,13 +73,13 @@ class ChangeUserPassword {
 	}
 
 	render() {
-		return changeUserPasswordTmpl.getNode({
+		return changeUserPasswordTmpl.compile({
 			profileSvgClass: 'profile-svg',
 			title: this.getTitle(),
 			avatar: this.getAvatar(),
 			inputs: this.getInputs(),
 			button: this.getButton()
-		});
+		}).getNode();
 	}
 }
 

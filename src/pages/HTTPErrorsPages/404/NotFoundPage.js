@@ -1,5 +1,5 @@
-import { Templator } from "../../../utils/Template-engine/templater";
-import { template } from "./notFound.tmpl";
+import { Templator } from '../../../utils/Template-engine/templater';
+import { template } from './notFound.tmpl';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 
 import './notFound.css'
@@ -11,16 +11,16 @@ class NotFoundPage {
 		return new LinkButton({
 			text: "Назад к чатам",
 			className: "http-error__btn btn",
-			link: 'index.html'
+			link: 'index.html',
 		}).render();
 	}
 
 	render() {
-		return notFoundErrorTmpl.getNode({
+		return notFoundErrorTmpl.compile({
 			title: '404',
 			subTitle: 'Page not found',
-			linkButton: this.getButton()
-		});
+			linkButton: this.getButton(),
+		}).getNode();
 	}
 }
 

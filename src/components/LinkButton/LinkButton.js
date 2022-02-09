@@ -14,14 +14,14 @@ class LinkButton {
 		const {
 			text,
 			className,
-			link
+			link,
 		} = this.props;
 
-		return linkButton.getNode({
+		return linkButton.compile({
 			text,
 			className,
-			link
-		});
+			link,
+		}).getNode();
 	}
 }
 

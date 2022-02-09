@@ -1,4 +1,4 @@
-import { ProfilePage } from "./ProfilePage";
+import { ProfilePage } from './ProfilePage';
 
 const App = document.getElementById('Chat-app');
 

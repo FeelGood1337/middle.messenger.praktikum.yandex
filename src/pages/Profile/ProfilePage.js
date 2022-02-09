@@ -1,12 +1,12 @@
-import { Templator } from "../../utils/Template-engine/templater";
-import { template } from "./profile.tmpl";
-import { itemsProps, btnsProps } from "./itemsProps";
+import { Templator } from '../../utils/Template-engine/templater';
+import { template } from './profile.tmpl';
+import { itemsProps, btnsProps } from './itemsProps';
 
-import { Title } from "../../components/Title/Title";
-import { Avatar } from "../../components/Avatar/Avatar";
-import { Items } from "../../components/Items/Items";
-import { Element } from "../../components/Element/Element";
-import { LinkButton } from "../../components/LinkButton/LinkButton";
+import { Title } from '../../components/Title/Title';
+import { Avatar } from '../../components/Avatar/Avatar';
+import { Items } from '../../components/Items/Items';
+import { Element } from '../../components/Element/Element';
+import { LinkButton } from '../../components/LinkButton/LinkButton';
 
 import avatar from '../../../static/images/Avatar.svg';
 
@@ -20,7 +20,7 @@ class ProfilePage {
 		return new Title({
 			tag: 'h2',
 			className: 'profile-title',
-			text: 'Сергей'
+			text: 'Сергей',
 		}).render();
 	}
 
@@ -36,7 +36,7 @@ class ProfilePage {
 			return new Element({
 				tag: el.tag,
 				className: el.className,
-				content: el.content
+				content: el.content,
 			}).render().outerHTML
 		}).join(''));
 	}
@@ -45,7 +45,7 @@ class ProfilePage {
 		const items = this.getTextElement();
 		return new Items({
 			className: 'fields-items__item',
-			items
+			items,
 		}).render();
 	}
 
@@ -53,7 +53,7 @@ class ProfilePage {
 		return new LinkButton({
 			text,
 			className,
-			link
+			link,
 		}).render();
 	}
 
@@ -61,22 +61,22 @@ class ProfilePage {
 		return btnsProps.map(({
 			className,
 			text,
-			link
+			link,
 		}) => 
 		new Items({
 			className: 'fields-items__item item-btn',
-			items: this.getLinkButton(text, className, link)
+			items: this.getLinkButton(text, className, link),
 		}).render());
 	}
-
+	
 	render() {
-		return profileTmpl.getNode({
+		return profileTmpl.compile({
 			profileSvgClass: 'profile-svg',
 			title: this.getTitle(),
 			avatar: this.getAvatar(),
 			items: [...this.getTextItems()],
-			btnItems: [...this.getBtnItems()]
-		});
+			btnItems: [...this.getBtnItems()],
+		}).getNode();
 	}
 }
 

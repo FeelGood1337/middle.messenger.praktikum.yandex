@@ -14,14 +14,14 @@ class Button {
 		const {
 			text,
 			className,
-			isDisabled
+			isDisabled,
 		} = this.props;
 
-		return button.getNode({
+		return button.compile({
 			text,
 			className,
-			disabled: isDisabled ? 'disabled' : ''
-		});
+			disabled: isDisabled ? 'disabled' : '',
+		}).getNode();
 	}
 
 }

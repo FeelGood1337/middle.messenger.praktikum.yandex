@@ -1,5 +1,5 @@
-import { Templator } from "../../utils/Template-engine/templater";
-import { template } from "./element.tmpl";
+import { Templator } from '../../utils/Template-engine/templater';
+import { template } from './element.tmpl';
 
 const elementTmpl = new Templator(template);
 
@@ -11,11 +11,11 @@ class Element {
 	render() {
 		const { tag, className, content } = this.props;
 
-		return elementTmpl.getNode({
+		return elementTmpl.compile({
 			tag,
 			className,
-			content
-		});
+			content,
+		}).getNode();
 	}
 }
 

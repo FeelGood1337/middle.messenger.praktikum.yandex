@@ -1,4 +1,4 @@
-import { SignupPage } from "./SignupPage";
+import { SignupPage } from './SignupPage';
 
 const App = document.getElementById('Chat-app');
 

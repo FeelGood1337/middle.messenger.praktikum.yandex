@@ -1,10 +1,10 @@
-import { Templator } from "../../../utils/Template-engine/templater";
+import { Templator } from '../../../utils/Template-engine/templater';
 import { template } from './signup.tmpl';
-import { inputsProps } from "./inputProps";
+import { inputsProps } from './inputProps';
 
-import { Button } from "../../../components/Button/Button";
-import { LinkButton } from "../../../components/LinkButton/LinkButton";
-import { InputWithLabel } from "../../../components/InputWithLabel/InputWithLabel";
+import { Button } from '../../../components/Button/Button';
+import { LinkButton } from '../../../components/LinkButton/LinkButton';
+import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabel';
 
 import './signup.css';
 
@@ -20,7 +20,7 @@ class SignupPage {
 				labelId,
 				attributes,
 				name,
-				value
+				value,
 			}) =>
 			new InputWithLabel({
 				className,
@@ -29,7 +29,7 @@ class SignupPage {
 				labelId,
 				attributes,
 				name,
-				value
+				value,
 			}).render().outerHTML
 		).join('');
 	}
@@ -38,7 +38,7 @@ class SignupPage {
 		return new Button({
 			text: 'Зарегистрировать',
 			className: 'signup__btn',
-			isDisabled: true
+			isDisabled: true,
 		}).render();
 	}
 
@@ -47,17 +47,17 @@ class SignupPage {
 		return new LinkButton({
 			text: 'Войти',
 			className: 'signup__btn-link',
-			link: 'index.html'
+			link: 'index.html',
 		}).render();
 	}
 
 	render() {
-		return signupPageTmpl.getNode({
+		return signupPageTmpl.compile({
 			titleText: 'Регистрация',
 			inputs: this.getInputs(),
 			button: this.getButton(),
-			linkButton: this.getLinkButton()
-		});
+			linkButton: this.getLinkButton(),
+		}).getNode();
 	}
 }
 

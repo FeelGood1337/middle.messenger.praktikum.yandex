@@ -1,5 +1,5 @@
-import { Templator } from "../../utils/Template-engine/templater";
-import { template } from "./avatar.tmpl";
+import { Templator } from '../../utils/Template-engine/templater';
+import { template } from './avatar.tmpl';
 
 import './avatar.css';
 
@@ -14,10 +14,10 @@ class Avatar {
 	render() {
 		const { link, imgPath } = this.props;
 
-		return avatarTmpl.getNode({
+		return avatarTmpl.compile({
 			link,
-			imgPath
-		});
+			imgPath,
+		}).getNode();
 	}
 
 }

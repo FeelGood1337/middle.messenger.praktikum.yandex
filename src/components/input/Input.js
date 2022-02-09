@@ -15,17 +15,17 @@ class Input {
 			className,
 			attributes,
 			name,
-			value
+			value,
 		} = this.props;
 
 
 
-		return input.getNode({
+		return input.compile({
 			className,
 			attributes,
 			name,
-			value
-		});
+			value,
+		}).getNode();
 	}
 }
 

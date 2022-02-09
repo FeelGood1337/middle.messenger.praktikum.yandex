@@ -18,20 +18,20 @@ class InputWithLabel {
 			labelId,
 			attributes,
 			name,
-			value
+			value,
 		} = this.props;
 
 
 
-		return input.getNode({
+		return input.compile({
 			className,
 			labelClassName,
 			labelText,
 			labelId,
 			attributes,
 			name,
-			value
-		});
+			value,
+		}).getNode();
 	}
 }
 

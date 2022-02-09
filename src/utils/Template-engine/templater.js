@@ -4,11 +4,12 @@ class Templator {
 
 	constructor(template) {
 		this._template = template;
+		this.html = '';
 	}
 
 	compile(ctx) {
-		const html = this._compileTemplate(ctx)
-		return html;
+		this.html = this._compileTemplate(ctx)
+		return this;
 	}
 
 	_compileTemplate = (ctx) => {
@@ -58,7 +59,7 @@ class Templator {
 
 		return tmpl;
 	}
-
+	
 	get(obj, path, defaultValue) {
 		const keys = path.split('.');
 		let result = obj;
@@ -73,12 +74,19 @@ class Templator {
 		return result ?? defaultValue;
 	}
 
-	getNode(ctx) {
+	getNode() {
 		const element = document.createElement('div');
-		element.insertAdjacentHTML('beforeend', this.compile(ctx).trim());
+		element.insertAdjacentHTML('beforeend', this.html.trim());
 
 		return element.firstChild;
 	}
+
+	// getNode(ctx) {
+	// 	const element = document.createElement('div');
+	// 	element.insertAdjacentHTML('beforeend', this.compile(ctx).trim());
+
+	// 	return element.firstChild;
+	// }
 }
 
 export {

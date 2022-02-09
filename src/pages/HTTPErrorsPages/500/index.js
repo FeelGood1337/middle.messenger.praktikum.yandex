@@ -1,4 +1,4 @@
-import { ServerErrorPage } from "./ServerErrorPage";
+import { ServerErrorPage } from './ServerErrorPage';
 
 import '../../../index.css';
 

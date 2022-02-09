@@ -1,5 +1,5 @@
-import { Templator } from "../../utils/Template-engine/templater";
-import { template } from "./title.tmpl";
+import { Templator } from '../../utils/Template-engine/templater';
+import { template } from './title.tmpl';
 
 const titleTmpl = new Templator(template);
 
@@ -12,11 +12,11 @@ class Title {
 
 		const { tag, className, text } = this.props;
 
-		return titleTmpl.getNode({
+		return titleTmpl.compile({
 			tag,
 			className,
-			text
-		});
+			text,
+		}).getNode();
 	}
 
 }

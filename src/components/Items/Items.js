@@ -1,5 +1,5 @@
-import { Templator } from "../../utils/Template-engine/templater";
-import { template } from "./items.tmpl";
+import { Templator } from '../../utils/Template-engine/templater';
+import { template } from './items.tmpl';
 
 const itemsTmpl = new Templator(template);
 
@@ -16,19 +16,19 @@ class Items {
 			const liList = [];
 			items.map(el => {
 				liList.push(
-					itemsTmpl.getNode({
+					itemsTmpl.compile({
 						className,
-						items: el
-					})
+						items: el,
+					}).getNode()
 				)
 			});
 			return liList;
 		}
 
-		return itemsTmpl.getNode({
+		return itemsTmpl.compile({
 			className,
-			items
-		});
+			items,
+		}).getNode();
 
 	};
 }

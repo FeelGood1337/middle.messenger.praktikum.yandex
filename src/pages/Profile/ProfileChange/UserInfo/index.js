@@ -1,4 +1,4 @@
-import { ChangeUserInfo } from "./ChangeUserInfo";
+import { ChangeUserInfo } from './ChangeUserInfo';
 
 const App = document.getElementById('Chat-app');
 

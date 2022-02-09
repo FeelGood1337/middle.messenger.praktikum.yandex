@@ -1,5 +1,5 @@
-import { Templator } from "../../../utils/Template-engine/templater";
-import { template } from "./serverError.tmpl";
+import { Templator } from '../../../utils/Template-engine/templater';
+import { template } from './serverError.tmpl';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 
 import './serverError.css';
@@ -12,16 +12,16 @@ class ServerErrorPage {
 		return new LinkButton({
 			text: "Назад к чатам",
 			className: "http-error__btn btn",
-			link: 'index.html'
+			link: 'index.html',
 		}).render();
 	}
 
 	render() {
-		return serverErrorTmpl.getNode({
+		return serverErrorTmpl.compile({
 			title: '500',
 			subTitle: 'Internal Server Error',
-			linkButton: this.getButton()
-		});
+			linkButton: this.getButton(),
+		}).getNode();
 	}
 }
 
