@@ -1,29 +1,51 @@
-class Templator {
+type TObjectKeys = {
+	[key: string]: any;
+}
+
+interface ITemplator {
+	_TEMPLATE_REGEXP: RegExp;
+	_REGEXP_CTX: RegExp;
+	_template: string;
+	_html: string;
+	compile(ctx: TObjectKeys): any;
+	_compileTemplate(ctx: TObjectKeys): string;
+	get(
+		obj: TObjectKeys, 
+		path: string, 
+		defaultValue?: string | boolean | Function | undefined
+	): string | boolean | Function | undefined | TObjectKeys;
+	getNode(): ChildNode | HTMLElement;
+}
+
+
+class Templator implements ITemplator {
 	_TEMPLATE_REGEXP = /\{\%(.*?)\%\}/gi;
 	_REGEXP_CTX = /\(\)\(\%(.*?)\%\)/gi;
+	_template: string;
+	_html: string;
 
-	constructor(template) {
+	constructor(template:string) {
 		this._template = template;
-		this.html = '';
+		this._html = '';
 	}
 
-	compile(ctx) {
-		this.html = this._compileTemplate(ctx)
+	compile(ctx: TObjectKeys) {
+		this._html = this._compileTemplate(ctx)
 		return this;
 	}
 
-	_compileTemplate = (ctx) => {
+	_compileTemplate(ctx: TObjectKeys) {
 		let tmpl = this._template;
 		let key = null;
 		const regExp = this._TEMPLATE_REGEXP;
 
-		const arrRegKey = [];
-		const arrData = [];
+		const arrRegKey: string[] = [];
+		const arrData: string[] = [];
 
 		while ((key = regExp.exec(tmpl))) {
 			if (key[1]) {
-				const tmplValue = key[1].trim();
-				const data = this.get(ctx, tmplValue);
+				const tmplValue: any = key[1].trim();
+				const data: any = this.get(ctx, tmplValue);
 
 				if (typeof data === "object") {
 					const element = document.createElement('div');
@@ -60,7 +82,7 @@ class Templator {
 		return tmpl;
 	}
 	
-	get(obj, path, defaultValue) {
+	get(obj: TObjectKeys, path: string, defaultValue?: string | boolean | Function | undefined) {
 		const keys = path.split('.');
 		let result = obj;
 		for (const key of keys) {
@@ -76,9 +98,9 @@ class Templator {
 
 	getNode() {
 		const element = document.createElement('div');
-		element.insertAdjacentHTML('beforeend', this.html.trim());
+		element.insertAdjacentHTML('beforeend', this._html.trim());
 
-		return element.firstChild;
+		return element.firstChild as HTMLElement;
 	}
 }
 

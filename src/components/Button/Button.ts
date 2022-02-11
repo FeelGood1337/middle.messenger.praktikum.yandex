@@ -3,10 +3,24 @@ import { template } from './button.tmpl';
 
 import './button.css';
 
+type TProps = {
+	text: string;
+	className: string;
+	isDisabled: boolean;
+}
+
+interface IButton {
+	props: TProps;
+	render(): ChildNode | HTMLElement;
+}
+
 const button = new Templator(template);
 
-class Button {
-	constructor(props) {
+class Button implements IButton {
+
+	props: TProps;
+
+	constructor(props: TProps) {
 		this.props = props;
 	}
 
@@ -21,7 +35,7 @@ class Button {
 			text,
 			className,
 			disabled: isDisabled ? 'disabled' : '',
-		}).getNode();
+		}).getNode() as HTMLButtonElement;
 	}
 
 }

@@ -3,22 +3,28 @@ import { template } from './inputWithLabel.tmpl';
 
 import './inputWithLabel.css';
 
-const input = new Templator(template);
 
 type TProps = {
-	[key: string]: string;
+	className: string;
+	labelClassName: string;
+	labelText: string;
+	labelId: string;
+	attributes: string;
+	name: string;
+	value: string;
 }
 
 interface IInputWithLabel {
 	props: TProps;
-	render(): ChildNode | HTMLElement; 
+	render(): ChildNode | HTMLElement;
 }
 
+const input = new Templator(template);
 class InputWithLabel implements IInputWithLabel {
 
 	props: TProps;
-	
-	constructor(props: TProps = {}) {
+
+	constructor(props: TProps) {
 		this.props = props;
 	}
 
@@ -42,7 +48,7 @@ class InputWithLabel implements IInputWithLabel {
 			name,
 			value,
 		}).getNode() as HTMLElement;
-	} 
+	}
 }
 
 export {
