@@ -1,4 +1,4 @@
-export const template = `
+export const template: string = `
 	<div class="inner">
 		<label 
 			class="label {% labelClassName %}" 

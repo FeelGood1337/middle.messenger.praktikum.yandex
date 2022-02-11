@@ -5,8 +5,20 @@ import './inputWithLabel.css';
 
 const input = new Templator(template);
 
-class InputWithLabel {
-	constructor(props) {
+type TProps = {
+	[key: string]: string;
+}
+
+interface IInputWithLabel {
+	props: TProps;
+	render(): ChildNode | HTMLElement; 
+}
+
+class InputWithLabel implements IInputWithLabel {
+
+	props: TProps;
+	
+	constructor(props: TProps = {}) {
 		this.props = props;
 	}
 
@@ -21,8 +33,6 @@ class InputWithLabel {
 			value,
 		} = this.props;
 
-
-
 		return input.compile({
 			className,
 			labelClassName,
@@ -31,8 +41,8 @@ class InputWithLabel {
 			attributes,
 			name,
 			value,
-		}).getNode();
-	}
+		}).getNode() as HTMLElement;
+	} 
 }
 
 export {
