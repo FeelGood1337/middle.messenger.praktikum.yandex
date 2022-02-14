@@ -1,3 +1,4 @@
+import { v4 as makeUUID } from 'uuid';
 import { EventBus, IEventBus } from "../EventBus/EventBus";
 
 type TProps = {
@@ -17,6 +18,7 @@ interface IBlock {
 	EVENTS: TEvents<IEvents>;
 	_element: HTMLElement;
 	_meta: { tagName: string; props: TProps };
+	_id: string;
 	props: TProps;
 	eventBus(): IEventBus;
 	_registerEvents(eventBus: IEventBus): void;
@@ -28,6 +30,7 @@ interface IBlock {
 	_componentDidUpdate(oldProps: TProps, newProps: TProps): void;
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean;
 	setProps(nextProps: TProps): void;
+	_addEvents(): void;
 	_render(): void;
 	render(): string;
 	getContent(): HTMLElement;
@@ -46,7 +49,8 @@ class Block implements IBlock {
 	};
 
 	_element: HTMLElement = null;
-	_meta: { tagName: string, props: TProps } = null;
+	_meta: { tagName: string, props: TProps };
+	_id: string = '';
 
 	props: TProps;
 	eventBus: () => IEventBus;
@@ -59,7 +63,10 @@ class Block implements IBlock {
 			props,
 		};
 
-		this.props = this._makePropsProxy(props);
+		// Генерируем уникальный UUID V4
+		this._id = makeUUID();
+
+		this.props = this._makePropsProxy({ ...props, __id: this._id });
 
 		this.eventBus = () => eventBus;
 
@@ -111,13 +118,27 @@ class Block implements IBlock {
 		return this._element;
 	}
 
+	_addEvents(): void {
+		const { events = {} } = this.props;
+
+		Object.keys(events).forEach(eventName => {
+			this._element.addEventListener(eventName, events[eventName]);
+		});
+	}
+
 	_render(): void {
 		const block = this.render();
 		// Это небезопасный метод для упрощения логики
 		// Используйте шаблонизатор из npm или напишите свой безопасный
 		// Нужно компилировать не в строку (или делать это правильно),
-		// либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду
+		// либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду -
+
+		// Удалить старые события через removeEventListener -
+
 		this._element.innerHTML = block;
+
+		// Навесить новые события через addEventListener +
+		this._addEvents();
 	}
 
 	// Переопределяется пользователем. Необходимо вернуть разметку
@@ -128,16 +149,40 @@ class Block implements IBlock {
 	}
 
 	_makePropsProxy(props: TProps): TProps {
-		// Ещё один способ передачи this, но он больше не применяется с приходом ES6+
-		const self = this;
-
-		// Здесь вам предстоит реализовать метод
-		return props;
+		const checkPrivateProp = (prop: string) => prop.startsWith('_');
+		return new Proxy(props, {
+			get(target: TProps, prop: string) {
+				if (checkPrivateProp(prop)) {
+					throw new Error("Нет прав");
+				} else {
+					const value = target[prop];
+					return (typeof value === 'function') ? value.bind(target) : value;
+				}
+			},
+			set(target: TProps, prop: string, val: string): boolean {
+				if (checkPrivateProp(prop)) {
+					throw new Error("Нет прав");
+				} else {
+					target[prop] = val;
+					return true;
+				}
+			},
+			deleteProperty(target: TProps, prop: string): boolean {
+				if (checkPrivateProp(prop)) {
+					throw new Error("Нет прав");
+				} else {
+					delete target[prop];
+					return true;
+				}
+			}
+		});
 	}
 
 	_createDocumentElement(tagName: string): HTMLElement {
 		// Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
-		return document.createElement(tagName);
+		const element = document.createElement(tagName);
+		element.setAttribute('data-id', this._id);
+		return element;
 	}
 
 	show(): void {
