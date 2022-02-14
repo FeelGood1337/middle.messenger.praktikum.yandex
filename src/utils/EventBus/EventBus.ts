@@ -45,3 +45,5 @@ class EventBus implements IEventBus {
 	}
 
 }
+
+export { EventBus, IEventBus };
