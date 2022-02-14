@@ -12,6 +12,7 @@ type TEvents<T extends object> = {
 interface IEvents {
 	INIT: string;
 	FLOW_CMD: string;
+	FLOW_CDU: string;
 	FLOW_RENDER: string;
 }
 interface IBlock {
@@ -45,6 +46,7 @@ class Block implements IBlock {
 	static EVENTS: TEvents<IEvents> = {
 		INIT: 'init',
 		FLOW_CMD: 'flow:component-did-mount',
+		FLOW_CDU: "flow:component-did-update",
 		FLOW_RENDER: 'flow:render',
 	};
 
@@ -68,7 +70,7 @@ class Block implements IBlock {
 
 		this.props = this._makePropsProxy({ ...props, __id: this._id });
 
-		this.eventBus = () => eventBus;
+		this.eventBus = (): IEventBus => eventBus;
 
 		this._registerEvents(eventBus);
 		eventBus.emit(Block.EVENTS.INIT);
@@ -77,6 +79,7 @@ class Block implements IBlock {
 	_registerEvents(eventBus: IEventBus): void {
 		eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
 		eventBus.on(Block.EVENTS.FLOW_CMD, this._componentDidMount.bind(this));
+		eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
 		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
 
@@ -92,6 +95,7 @@ class Block implements IBlock {
 
 	_componentDidMount(): void {
 		this.componentDidMount();
+		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
 	componentDidMount(): void { }
@@ -100,7 +104,13 @@ class Block implements IBlock {
 		this.eventBus().emit(Block.EVENTS.FLOW_CMD);
 	}
 
-	_componentDidUpdate(oldProps: TProps, newProps: TProps): void { }
+	_componentDidUpdate(oldProps: TProps, newProps: TProps): void {
+		const response = this.componentDidUpdate(oldProps, newProps);
+		if (!response) {
+			return;
+		}
+		this._render();
+	}
 
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
 		return true;
@@ -159,11 +169,12 @@ class Block implements IBlock {
 					return (typeof value === 'function') ? value.bind(target) : value;
 				}
 			},
-			set(target: TProps, prop: string, val: string): boolean {
+			set: (target: any, prop: string, val: string): boolean => {
 				if (checkPrivateProp(prop)) {
 					throw new Error("Нет прав");
 				} else {
 					target[prop] = val;
+					this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
 					return true;
 				}
 			},
