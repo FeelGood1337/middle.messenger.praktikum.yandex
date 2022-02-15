@@ -1,7 +1,7 @@
 import { v4 as makeUUID } from 'uuid';
 import { EventBus, IEventBus } from '../EventBus/EventBus';
 import { isEqual } from '../isEqual/isEqual';
- 
+
 type TProps = {
 	[key: string]: any;
 };
@@ -17,7 +17,7 @@ interface IEvents {
 	FLOW_RENDER: string;
 }
 interface IBlock {
-	_element: HTMLElement | null;
+	_element: HTMLElement;
 	_meta: { tagName: string; props: TProps };
 	_id: string;
 	props: TProps;
@@ -50,7 +50,7 @@ class Block implements IBlock {
 		FLOW_RENDER: 'flow:render',
 	};
 
-	_element: HTMLElement | null = null;
+	_element: HTMLElement;
 	readonly _meta: { tagName: string, props: TProps };
 	_id: string = '';
 
@@ -138,7 +138,7 @@ class Block implements IBlock {
 
 	_removeEvents(): void {
 		const { events = {} } = this.props;
-		
+
 		Object.keys(events).forEach(eventName => {
 			(this._element as HTMLElement).removeEventListener(eventName, events[eventName]);
 		});
@@ -147,6 +147,9 @@ class Block implements IBlock {
 	_render(): void {
 		const block = this.render();
 
+		// this._element.firstElementChild
+		// 	? this._element.replaceChild(block, this._element.firstElementChild)
+		// 	: this._element.append(block)
 		// Удалить старые события через removeEventListener +
 		this._removeEvents();
 
