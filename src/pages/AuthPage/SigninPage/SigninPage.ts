@@ -5,6 +5,7 @@ import { inputsProps } from './inputProps';
 
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabel';
+import { Title } from '../../../components/Title/Title';
 
 import './signin.css';
 
@@ -14,7 +15,11 @@ class SigninPage extends Block {
 
 	constructor() {
 		super('div', {
-			titleText: 'Вход',
+			title: new Title({
+				tag: 'h2',
+				className: 'auth__title',
+				text: 'Вход',
+			}).render(),
 			button: new LinkButton({
 				text: 'Войти',
 				className: 'btn auth__btn',
@@ -50,9 +55,9 @@ class SigninPage extends Block {
 
 
 	render() {
-		const { titleText, button, inputs, linkButton } = this.props;
+		const { title, button, inputs, linkButton } = this.props;
 		return signinPageTmpl.compile({
-			titleText,
+			title,
 			inputs,
 			button,
 			linkButton,

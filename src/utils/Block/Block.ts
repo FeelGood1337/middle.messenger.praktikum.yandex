@@ -136,14 +136,19 @@ class Block implements IBlock {
 		});
 	}
 
+	_removeEvents(): void {
+		const { events = {} } = this.props;
+		
+		Object.keys(events).forEach(eventName => {
+			(this._element as HTMLElement).removeEventListener(eventName, events[eventName]);
+		});
+	}
+
 	_render(): void {
 		const block = this.render();
-		// Это небезопасный метод для упрощения логики
-		// Используйте шаблонизатор из npm или напишите свой безопасный
-		// Нужно компилировать не в строку (или делать это правильно),
-		// либо сразу превращать в DOM-элементы и возвращать из compile DOM-ноду -
 
-		// Удалить старые события через removeEventListener -
+		// Удалить старые события через removeEventListener +
+		this._removeEvents();
 
 		(this._element as HTMLElement).innerHTML = block.outerHTML;
 

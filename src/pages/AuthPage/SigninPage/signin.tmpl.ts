@@ -2,7 +2,7 @@ export const template: string = `
 	<main class="main signin-main">
 		<div class="auth-wrapper">
 			<div class="auth">
-				<h2 class="auth__title">{% titleText %}</h2>
+				{% title %}
 				<form class="auth__form">
 					<div class="form__wrapper">{% inputs %}</div>
 					{% button %}
