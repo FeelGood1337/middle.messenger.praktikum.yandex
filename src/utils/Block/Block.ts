@@ -1,6 +1,7 @@
 import { v4 as makeUUID } from 'uuid';
-import { EventBus, IEventBus } from "../EventBus/EventBus";
-
+import { EventBus, IEventBus } from '../EventBus/EventBus';
+import { isEqual } from '../isEqual/isEqual';
+ 
 type TProps = {
 	[key: string]: any;
 };
@@ -16,8 +17,7 @@ interface IEvents {
 	FLOW_RENDER: string;
 }
 interface IBlock {
-	EVENTS: TEvents<IEvents>;
-	_element: HTMLElement;
+	_element: HTMLElement | null;
 	_meta: { tagName: string; props: TProps };
 	_id: string;
 	props: TProps;
@@ -50,8 +50,8 @@ class Block implements IBlock {
 		FLOW_RENDER: 'flow:render',
 	};
 
-	_element: HTMLElement = null;
-	_meta: { tagName: string, props: TProps };
+	_element: HTMLElement | null = null;
+	readonly _meta: { tagName: string, props: TProps };
 	_id: string = '';
 
 	props: TProps;
@@ -113,7 +113,7 @@ class Block implements IBlock {
 	}
 
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
-		return true;
+		return !isEqual(oldProps, newProps);
 	}
 
 	setProps = (nextProps: TProps): void => {
@@ -125,14 +125,14 @@ class Block implements IBlock {
 	};
 
 	get element(): HTMLElement {
-		return this._element;
+		return this._element as HTMLElement;
 	}
 
 	_addEvents(): void {
 		const { events = {} } = this.props;
 
 		Object.keys(events).forEach(eventName => {
-			this._element.addEventListener(eventName, events[eventName]);
+			(this._element as HTMLElement).addEventListener(eventName, events[eventName]);
 		});
 	}
 
@@ -145,7 +145,7 @@ class Block implements IBlock {
 
 		// Удалить старые события через removeEventListener -
 
-		this._element.innerHTML = block;
+		(this._element as HTMLElement).innerHTML = block.outerHTML;
 
 		// Навесить новые события через addEventListener +
 		this._addEvents();

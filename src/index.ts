@@ -1,8 +1,12 @@
 import { SigninPage } from './pages/AuthPage/SigninPage/SigninPage';
+import { render } from './utils/renderDOM';
 
 import './index.css';
 
-const App: HTMLDivElement = document.getElementById('Chat-app') as HTMLDivElement;
-
-const signin: HTMLElement = new SigninPage().render() as HTMLElement;
-App.append(signin);
+const signin = new SigninPage();
+render("#Chat-app", signin);
+// setTimeout(() => {
+// 	signin.setProps({
+// 		titleText: 'NEW TITLE',
+// 	});
+// }, 4000);

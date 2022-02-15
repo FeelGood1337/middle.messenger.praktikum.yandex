@@ -1,4 +1,4 @@
-export const template = `
+export const template: string = `
 	<main class="main signin-main">
 		<div class="auth-wrapper">
 			<div class="auth">

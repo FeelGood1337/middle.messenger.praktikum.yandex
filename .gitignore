@@ -43,6 +43,7 @@ dist
 build
 bower_components
 .parcel-cache
+.vscode
 
 *.sublime*
 

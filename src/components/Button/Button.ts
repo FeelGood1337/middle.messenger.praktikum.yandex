@@ -1,3 +1,4 @@
+import { Block } from '../../utils/Block/Block';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './button.tmpl';
 
@@ -16,11 +17,11 @@ interface IButton {
 
 const button = new Templator(template);
 
-class Button implements IButton {
-
+class Button extends Block implements IButton {
 	props: TProps;
 
 	constructor(props: TProps) {
+		super('button', props);
 		this.props = props;
 	}
 

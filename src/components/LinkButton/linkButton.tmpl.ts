@@ -1,4 +1,4 @@
-export const template = `
+export const template: string = `
 	<a class="link-btn {% className %}" href="{% link %}">
 		<span class="link-btn__text">{% text %}</span>
 		<svg class="link-btn__svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

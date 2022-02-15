@@ -1,6 +1,6 @@
-import { IBlock } from "./Block/Block";
+// import { IBlock } from './Block/Block';
 
-export function render(query: string, block: IBlock): Element {
+export function render(query: string, block: any): Element {
 	const root = document.querySelector(query) as Element;
 	root.appendChild(block.getContent());
 
