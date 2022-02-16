@@ -53,6 +53,15 @@ class SignupPage extends Block {
 		});
 	}
 
+	componentDidMount() {
+		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
+			// const { getContent } = this.props;
+			// console.log(this.props);
+			// const formButton: HTMLButtonElement = getContent().querySelector('.signup__btn');
+			// console.log(formButton);
+		})
+	}
+
 	render() {
 		const { title, inputs, button, linkButton } = this.props;
 		return signupPageTmpl.compile({
