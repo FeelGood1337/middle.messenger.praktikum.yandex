@@ -1,3 +1,4 @@
+import { Block } from '../../utils/Block/Block';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './avatar.tmpl';
 
@@ -15,11 +16,11 @@ interface IAvatar {
 
 const avatarTmpl = new Templator(template);
 
-class Avatar implements IAvatar {
-
+class Avatar extends Block implements IAvatar {
 	props: TProps;
 
 	constructor(props: TProps) {
+		super('div', props);
 		this.props = props;
 	}
 
@@ -29,7 +30,7 @@ class Avatar implements IAvatar {
 		return avatarTmpl.compile({
 			link,
 			imgPath,
-		}).getNode() as HTMLElement;
+		}).getNode();
 	}
 
 }

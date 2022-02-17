@@ -2,7 +2,7 @@
 	"compileOnSave": true,
 	"compilerOptions": {
 		"sourceMap": true,
-		"target": "es6",
+		"target": "es2021",
 		"removeComments": true,
 		"allowJs": true,
 		"strict": true,

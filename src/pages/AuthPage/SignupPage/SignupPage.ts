@@ -43,7 +43,7 @@ class SignupPage extends Block {
 			button: new Button({
 				text: 'Зарегистрировать',
 				className: 'signup__btn',
-				isDisabled: true,
+				isDisabled: false,
 			}).render(),
 			linkButton: new LinkButton({
 				text: 'Войти',
@@ -53,14 +53,23 @@ class SignupPage extends Block {
 		});
 	}
 
-	componentDidMount() {
-		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			// const { getContent } = this.props;
-			// console.log(this.props);
-			// const formButton: HTMLButtonElement = getContent().querySelector('.signup__btn');
-			// console.log(formButton);
-		})
-	}
+	// handleSigninClick(event: any) {
+	// 	event.preventDefault();
+	// 	console.log(event);
+	// }
+
+	// handleSigninChange(event: any) {
+	// 	console.log(event.target.value);
+	// }
+
+	// componentDidMount() {
+	// 	this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
+	// 		const formButton: HTMLButtonElement = this.getContent().querySelector('.signup__btn') as HTMLButtonElement;
+	// 		const inputFirstname: HTMLInputElement = this.getContent().querySelector('#first_name') as HTMLInputElement;
+	// 		formButton.onclick = this.handleSigninClick.bind(this);
+	// 		inputFirstname.onchange = this.handleSigninChange.bind(this);
+	// 	})
+	// }
 
 	render() {
 		const { title, inputs, button, linkButton } = this.props;

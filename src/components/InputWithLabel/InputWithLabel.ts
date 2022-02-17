@@ -1,3 +1,4 @@
+import { Block } from '../../utils/Block/Block';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './inputWithLabel.tmpl';
 
@@ -20,11 +21,11 @@ interface IInputWithLabel {
 }
 
 const input = new Templator(template);
-class InputWithLabel implements IInputWithLabel {
-
+class InputWithLabel extends Block implements IInputWithLabel {
 	props: TProps;
 
 	constructor(props: TProps) {
+		super('div', props);
 		this.props = props;
 	}
 
@@ -47,7 +48,7 @@ class InputWithLabel implements IInputWithLabel {
 			attributes,
 			name,
 			value,
-		}).getNode() as HTMLElement;
+		}).getNode();
 	}
 }
 

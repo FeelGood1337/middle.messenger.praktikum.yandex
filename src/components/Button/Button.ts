@@ -35,8 +35,8 @@ class Button extends Block implements IButton {
 		return button.compile({
 			text,
 			className,
-			disabled: isDisabled ? 'disabled' : '',
-		}).getNode() as HTMLButtonElement;
+			disabled: isDisabled ? 'disable' : '', // бага при фелсе
+		}).getNode();
 	}
 
 }
