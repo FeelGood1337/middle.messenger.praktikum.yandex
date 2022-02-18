@@ -1,8 +1,5 @@
 import { Block } from '../../utils/Block/Block';
-import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './title.tmpl';
-
-const titleTmpl = new Templator(template);
 
 type TProps = {
 	text: string;
@@ -24,11 +21,12 @@ class Title extends Block implements ITitle {
 
 	render() {
 		const { tag, className, text } = this.props;
-		return titleTmpl.compile({
+		
+		return this.compile(template, {
 			tag,
 			className,
 			text,
-		}).getNode();
+		});
 	}
 
 }

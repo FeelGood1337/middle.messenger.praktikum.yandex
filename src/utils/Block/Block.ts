@@ -1,6 +1,7 @@
 import { v4 as makeUUID } from 'uuid';
 import { EventBus, IEventBus } from '../EventBus/EventBus';
 import { isEqual } from '../isEqual/isEqual';
+import { Templator } from '../Template-engine/templater';
 
 type TProps = {
 	[key: string]: any;
@@ -17,26 +18,24 @@ interface IEvents {
 	FLOW_RENDER: string;
 }
 interface IBlock {
-	_element: HTMLElement;
-	_meta: { tagName: string; props: TProps };
-	_id: string;
 	props: TProps;
+	children: TProps;
 	eventBus(): IEventBus;
-	_registerEvents(eventBus: IEventBus): void;
-	_createResources(): void;
+	// _registerEvents(eventBus: IEventBus): void;
+	// _createResources(): void;
 	init(): void;
-	_componentDidMount(): void;
+	// _componentDidMount(): void;
 	componentDidMount(): void;
 	dispatchComponentDidMount(): void;
-	_componentDidUpdate(oldProps: TProps, newProps: TProps): void;
+	// _componentDidUpdate(oldProps: TProps, newProps: TProps): void;
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean;
-	setProps(nextProps: TProps): void;
-	_addEvents(): void;
-	_render(): void;
+	// setProps(nextProps: TProps): void;
+	// _addEvents(): void;
+	// _render(): void;
 	render(): string;
 	getContent(): HTMLElement;
-	_makePropsProxy(props: TProps): TProps;
-	_createDocumentElement(tagName: string): HTMLElement;
+	// _makePropsProxy(props: TProps): TProps;
+	// _createDocumentElement(tagName: string): HTMLElement;
 	show(): void;
 	hide(): void;
 }
@@ -50,15 +49,19 @@ class Block implements IBlock {
 		FLOW_RENDER: 'flow:render',
 	};
 
-	_element: HTMLElement;
-	readonly _meta: { tagName: string, props: TProps };
-	_id: string = '';
+	private _element: HTMLElement;
+	private readonly _meta: { tagName: string, props: TProps };
+	private _id: string = '';
+	// private _arrId: string = '';
 
 	props: TProps;
+	children: TProps;
 	eventBus: () => IEventBus;
 
-	constructor(tagName = 'div', props: TProps = {}) {
+	constructor(tagName = 'div', propsAndChildren: TProps = {}) {
 		const eventBus = new EventBus();
+
+		const { children, props } = this._getChildren(propsAndChildren);
 
 		this._meta = {
 			tagName,
@@ -67,8 +70,10 @@ class Block implements IBlock {
 
 		// Генерируем уникальный UUID V4
 		this._id = makeUUID();
+		// this._arrId = makeUUID();
 
-		this.props = this._makePropsProxy({ ...props, __id: this._id });
+		this.props = this._makePropsProxy({ ...props, _id: this._id });
+		this.children = children;
 
 		this.eventBus = (): IEventBus => eventBus;
 
@@ -76,14 +81,67 @@ class Block implements IBlock {
 		eventBus.emit(Block.EVENTS.INIT);
 	}
 
-	_registerEvents(eventBus: IEventBus): void {
+	private _getChildren(propsAndChildren: TProps): TProps {
+		const children: TProps = {};
+		const props: TProps = {};
+
+		Object.entries(propsAndChildren).forEach(([key, value]) => {
+
+			if (Array.isArray(value)) {
+				children[key] = value;
+			}
+
+			if (value instanceof Block) {
+				children[key] = value;
+			} else {
+				props[key] = value;
+			}
+		});
+
+		return { children, props };
+
+	}
+
+	compile(template: string, props: TProps): any {
+		const propsAndStubs = { ...props };
+
+		Object.entries(this.children).forEach(([key, child]) => {
+			propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+		});
+		// console.log(propsAndStubs);
+
+		const fragment = this._createDocumentElement('template');
+
+		fragment.innerHTML = new Templator(template).compile(propsAndStubs).getNode().outerHTML;
+
+		let stub: any = null;
+		Object.values(this.children).forEach(child => {
+			
+			if (Array.isArray(child)) {
+				child.map(el => {
+					stub = (fragment as any).content.querySelector(`[data-id="${el._id}"]`);
+					stub.replaceWith(this.element);
+				});
+
+			} else {
+				stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
+				stub.replaceWith(this.element);
+			}
+			
+		});
+
+		return (fragment as any).content;
+
+	}
+
+	private _registerEvents(eventBus: IEventBus): void {
 		eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
 		eventBus.on(Block.EVENTS.FLOW_CMD, this._componentDidMount.bind(this));
 		eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
 		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
 
-	_createResources(): void {
+	private _createResources(): void {
 		const { tagName } = this._meta;
 		this._element = this._createDocumentElement(tagName);
 	}
@@ -93,8 +151,12 @@ class Block implements IBlock {
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
-	_componentDidMount(): void {
+	private _componentDidMount(): void {
 		this.componentDidMount();
+
+		Object.values(this.children).forEach(child => {
+			child.dispatchComponentDidMount();
+		});
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
@@ -104,7 +166,7 @@ class Block implements IBlock {
 		this.eventBus().emit(Block.EVENTS.FLOW_CMD);
 	}
 
-	_componentDidUpdate(oldProps: TProps, newProps: TProps): void {
+	private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
 		if (!response) {
 			return;
@@ -128,7 +190,7 @@ class Block implements IBlock {
 		return this._element as HTMLElement;
 	}
 
-	_addEvents(): void {
+	private _addEvents(): void {
 		const { events = {} } = this.props;
 
 		Object.keys(events).forEach(eventName => {
@@ -136,7 +198,7 @@ class Block implements IBlock {
 		});
 	}
 
-	_removeEvents(): void {
+	private _removeEvents(): void {
 		const { events = {} } = this.props;
 
 		Object.keys(events).forEach(eventName => {
@@ -144,18 +206,18 @@ class Block implements IBlock {
 		});
 	}
 
-	_render(): void {
+	private _render(): void {
 		const block = this.render();
+
+		this._removeEvents();
+		this._element.innerHTML = '';
 
 		// this._element.firstElementChild
 		// 	? this._element.replaceChild(block, this._element.firstElementChild)
 		// 	: this._element.append(block)
-		// Удалить старые события через removeEventListener +
-		this._removeEvents();
 
-		(this._element as HTMLElement).innerHTML = block.outerHTML;
+		this._element.appendChild(block);
 
-		// Навесить новые события через addEventListener +
 		this._addEvents();
 	}
 
@@ -166,10 +228,10 @@ class Block implements IBlock {
 		return this.element;
 	}
 
-	_makePropsProxy(props: TProps): TProps {
+	private _makePropsProxy(props: TProps): TProps {
 		const checkPrivateProp = (prop: string) => prop.startsWith('_');
 		return new Proxy(props, {
-			get(target: TProps, prop: string) {
+			get: (target: TProps, prop: string) => {
 				if (checkPrivateProp(prop)) {
 					throw new Error("Нет прав");
 				} else {
@@ -197,7 +259,7 @@ class Block implements IBlock {
 		});
 	}
 
-	_createDocumentElement(tagName: string): HTMLElement {
+	private _createDocumentElement(tagName: string): HTMLElement {
 		// Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
 		const element = document.createElement(tagName);
 		element.setAttribute('data-id', this._id);

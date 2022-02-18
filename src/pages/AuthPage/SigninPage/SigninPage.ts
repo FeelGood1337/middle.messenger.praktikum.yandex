@@ -1,5 +1,4 @@
 import { Block } from '../../../utils/Block/Block';
-import { Templator } from '../../../utils/Template-engine/templater';
 import { template } from './signin.tmpl';
 import { inputsProps } from './inputProps';
 
@@ -9,8 +8,6 @@ import { Title } from '../../../components/Title/Title';
 
 import './signin.css';
 
-const signinPageTmpl = new Templator(template);
-
 class SigninPage extends Block {
 
 	constructor() {
@@ -19,17 +16,17 @@ class SigninPage extends Block {
 				tag: 'h2',
 				className: 'auth__title',
 				text: 'Вход',
-			}).render(),
+			}),
 			button: new LinkButton({
 				text: 'Войти',
 				className: 'btn auth__btn',
 				link: 'profile.html',
-			}).render(),
+			}),
 			linkButton: new LinkButton({
 				text: 'Регистрация',
 				className: 'auth__btn-link',
 				link: 'signup.html',
-			}).render(),
+			}),
 			inputs: inputsProps.map(({
 				className,
 				labelText,
@@ -47,21 +44,40 @@ class SigninPage extends Block {
 					attributes,
 					name,
 					value,
-				}).render().outerHTML
-			).join(''),
+				})
+			),
 
+		});
+	}
+
+	handleSigninClick(event: any) {
+		event.preventDefault();
+		console.log('event');
+	}
+
+	componentDidMount() {
+		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
+			const formButton: HTMLButtonElement = this.getContent()
+				.querySelector('.auth__btn') as HTMLButtonElement;
+			formButton.onclick = this.handleSigninClick.bind(this);
 		});
 	}
 
 
 	render() {
-		const { title, button, inputs, linkButton } = this.props;
-		return signinPageTmpl.compile({
+		const {
 			title,
-			inputs,
 			button,
+			inputs, 
+			linkButton
+		} = this.props;
+
+		return this.compile(template, {
+			title,
+			button,
+			inputs,
 			linkButton,
-		}).getNode();
+		});
 	}
 }
 
