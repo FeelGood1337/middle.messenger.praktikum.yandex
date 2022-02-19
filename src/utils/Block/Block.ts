@@ -21,21 +21,12 @@ interface IBlock {
 	props: TProps;
 	children: TProps;
 	eventBus(): IEventBus;
-	// _registerEvents(eventBus: IEventBus): void;
-	// _createResources(): void;
 	init(): void;
-	// _componentDidMount(): void;
 	componentDidMount(): void;
 	dispatchComponentDidMount(): void;
-	// _componentDidUpdate(oldProps: TProps, newProps: TProps): void;
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean;
-	// setProps(nextProps: TProps): void;
-	// _addEvents(): void;
-	// _render(): void;
 	render(): string;
 	getContent(): HTMLElement;
-	// _makePropsProxy(props: TProps): TProps;
-	// _createDocumentElement(tagName: string): HTMLElement;
 	show(): void;
 	hide(): void;
 }
@@ -86,9 +77,11 @@ class Block implements IBlock {
 		const props: TProps = {};
 
 		Object.entries(propsAndChildren).forEach(([key, value]) => {
-
 			if (Array.isArray(value)) {
-				children[key] = value;
+				const _zId = makeUUID();
+				// const finalArr = value.map(el => ({ ...el, _zId }));
+				// children[key] = finalArr;
+				children[key] = [...value, { _zId }];
 			}
 
 			if (value instanceof Block) {
@@ -104,30 +97,44 @@ class Block implements IBlock {
 
 	compile(template: string, props: TProps): any {
 		const propsAndStubs = { ...props };
+		let propsStrTmpl: string = '';
 
 		Object.entries(this.children).forEach(([key, child]) => {
-			propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+			if (Array.isArray(child)) {
+				let ID = '';
+				child.map(el => {
+					if (el._zId !== undefined) {
+						ID = el._zId;
+					}
+					propsStrTmpl += `<div data-id="${el._id}"></div>`;
+				});
+				propsAndStubs[key] = `<div data-id="${ID}">${propsStrTmpl}</div>`;
+			} else {
+				propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+			}
+			// propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
 		});
-		// console.log(propsAndStubs);
 
 		const fragment = this._createDocumentElement('template');
 
 		fragment.innerHTML = new Templator(template).compile(propsAndStubs).getNode().outerHTML;
 
-		let stub: any = null;
 		Object.values(this.children).forEach(child => {
-			
 			if (Array.isArray(child)) {
-				child.map(el => {
-					stub = (fragment as any).content.querySelector(`[data-id="${el._id}"]`);
-					stub.replaceWith(this.element);
-				});
+				let cnt: number = 0;
+				const [zID] = Object.values(child[child.length - 1]);
+				const stub = (fragment as any).content.querySelector(`[data-id="${zID}"]`);
 
+				child.splice(child.length - 1, 1);
+
+				for (const val of stub.children) {
+					val.replaceWith(child[cnt].getContent());
+					child.length - 1 > cnt ? cnt += 1 : cnt;
+				}
 			} else {
-				stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
-				stub.replaceWith(this.element);
+				const stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
+				stub.replaceWith(child.getContent());
 			}
-			
 		});
 
 		return (fragment as any).content;
@@ -155,7 +162,14 @@ class Block implements IBlock {
 		this.componentDidMount();
 
 		Object.values(this.children).forEach(child => {
-			child.dispatchComponentDidMount();
+			if (Array.isArray(child)) {
+				child.map(el => {
+					el.dispatchComponentDidMount();
+				})
+			} else {
+				child.dispatchComponentDidMount();
+			}
+
 		});
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
@@ -163,7 +177,7 @@ class Block implements IBlock {
 	componentDidMount(): void { }
 
 	dispatchComponentDidMount(): void {
-		this.eventBus().emit(Block.EVENTS.FLOW_CMD);
+		this.eventBus().emit(Block.EVENTS.FLOW_CDU);
 	}
 
 	private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {

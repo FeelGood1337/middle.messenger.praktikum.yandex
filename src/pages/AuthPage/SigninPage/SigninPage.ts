@@ -68,7 +68,7 @@ class SigninPage extends Block {
 		const {
 			title,
 			button,
-			inputs, 
+			inputs,
 			linkButton
 		} = this.props;
 
