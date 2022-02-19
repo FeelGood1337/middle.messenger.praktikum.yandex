@@ -1,5 +1,4 @@
 import { Block } from '../../../utils/Block/Block';
-import { Templator } from '../../../utils/Template-engine/templater';
 import { template } from './signup.tmpl';
 import { inputsProps } from './inputProps';
 
@@ -10,8 +9,6 @@ import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabe
 
 import './signup.css';
 
-const signupPageTmpl = new Templator(template);
-
 class SignupPage extends Block {
 
 	constructor() {
@@ -20,7 +17,17 @@ class SignupPage extends Block {
 				tag: 'h2',
 				className: 'auth__title signup__title',
 				text: 'Регистрация',
-			}).render(),
+			}),
+			button: new Button({
+				text: 'Зарегистрировать',
+				className: 'signup__btn',
+				isDisabled: false,
+			}),
+			linkButton: new LinkButton({
+				text: 'Войти',
+				className: 'signup__btn-link',
+				link: 'index.html',
+			}),
 			inputs: inputsProps.map(({
 				className,
 				labelClassName,
@@ -38,18 +45,8 @@ class SignupPage extends Block {
 					attributes,
 					name,
 					value,
-				}).render().outerHTML
-			).join(''),
-			button: new Button({
-				text: 'Зарегистрировать',
-				className: 'signup__btn',
-				isDisabled: false,
-			}).render(),
-			linkButton: new LinkButton({
-				text: 'Войти',
-				className: 'signup__btn-link',
-				link: 'index.html',
-			}).render(),
+				})
+			),
 		});
 	}
 
@@ -73,13 +70,12 @@ class SignupPage extends Block {
 
 	render() {
 		const { title, inputs, button, linkButton } = this.props;
-		return signupPageTmpl.compile({
+		return this.compile(template, {
 			title,
 			inputs,
 			button,
 			linkButton,
-		}).getNode();
-	}
+		});
 }
 
 export {

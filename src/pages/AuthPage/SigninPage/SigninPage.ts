@@ -50,18 +50,18 @@ class SigninPage extends Block {
 		});
 	}
 
-	handleSigninClick(event: any) {
-		event.preventDefault();
-		console.log('event');
-	}
+	// handleSigninClick(event: any) {
+	// 	event.preventDefault();
+	// 	console.log('event');
+	// }
 
-	componentDidMount() {
-		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const formButton: HTMLButtonElement = this.getContent()
-				.querySelector('.auth__btn') as HTMLButtonElement;
-			formButton.onclick = this.handleSigninClick.bind(this);
-		});
-	}
+	// componentDidMount() {
+	// 	this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
+	// 		const formButton: HTMLButtonElement = this.getContent()
+	// 			.querySelector('.auth__btn') as HTMLButtonElement;
+	// 		formButton.onclick = this.handleSigninClick.bind(this);
+	// 	});
+	// }
 
 
 	render() {

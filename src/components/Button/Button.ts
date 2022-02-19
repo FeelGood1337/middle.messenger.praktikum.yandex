@@ -1,5 +1,4 @@
 import { Block } from '../../utils/Block/Block';
-// import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './button.tmpl';
 
 import './button.css';
@@ -14,9 +13,6 @@ interface IButton {
 	props: TProps;
 	render(): ChildNode | HTMLElement;
 }
-
-// const button = new Templator(template);
-
 class Button extends Block implements IButton {
 	props: TProps;
 
@@ -25,23 +21,18 @@ class Button extends Block implements IButton {
 		this.props = props;
 	}
 
-	render(): any {
+	render() {
 		const {
 			text,
 			className,
 			isDisabled,
 		} = this.props;
 
-		this.compile(template, {
+		return this.compile(template, {
 			text,
 			className,
 			disabled: isDisabled ? 'disable' : '', // бага при фелсе
 		});
-		// return button.compile({
-		// 	text,
-		// 	className,
-		// 	disabled: isDisabled ? 'disable' : '', // бага при фелсе
-		// }).getNode();
 	}
 
 }
