@@ -76,6 +76,7 @@ class SignupPage extends Block {
 			button,
 			linkButton,
 		});
+	}
 }
 
 export {
