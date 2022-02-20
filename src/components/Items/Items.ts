@@ -1,9 +1,8 @@
 import { Block } from '../../utils/Block/Block';
-import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './items.tmpl';
 
 type TProps = {
-	items: string;
+	items: any;
 	className: string;
 }
 
@@ -11,8 +10,6 @@ interface IItems {
 	props: TProps;
 	render(): ChildNode | HTMLElement | HTMLElement[];
 }
-
-const itemsTmpl = new Templator(template);
 
 class Items extends Block implements IItems {
 	props: TProps;
@@ -29,19 +26,19 @@ class Items extends Block implements IItems {
 			const liList: HTMLElement[] = [];
 			items.map(el => {
 				liList.push(
-					itemsTmpl.compile({
+					this.compile(template, {
 						className,
 						items: el,
-					}).getNode()
+					})
 				)
 			});
 			return liList;
 		}
 
-		return itemsTmpl.compile({
+		return this.compile(template, {
 			className,
 			items,
-		}).getNode();
+		});
 
 	};
 }
