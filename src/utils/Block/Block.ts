@@ -43,7 +43,6 @@ class Block implements IBlock {
 	private _element: HTMLElement;
 	private readonly _meta: { tagName: string, props: TProps };
 	private _id: string = '';
-	// private _arrId: string = '';
 
 	props: TProps;
 	children: TProps;
@@ -61,7 +60,6 @@ class Block implements IBlock {
 
 		// Генерируем уникальный UUID V4
 		this._id = makeUUID();
-		// this._arrId = makeUUID();
 
 		this.props = this._makePropsProxy({ ...props, _id: this._id });
 		this.children = children;
@@ -70,75 +68,6 @@ class Block implements IBlock {
 
 		this._registerEvents(eventBus);
 		eventBus.emit(Block.EVENTS.INIT);
-	}
-
-	private _getChildren(propsAndChildren: TProps): TProps {
-		const children: TProps = {};
-		const props: TProps = {};
-
-		Object.entries(propsAndChildren).forEach(([key, value]) => {
-			if (Array.isArray(value)) {
-				const _zId = makeUUID();
-				// const finalArr = value.map(el => ({ ...el, _zId }));
-				// children[key] = finalArr;
-				children[key] = [...value, { _zId }];
-			}
-
-			if (value instanceof Block) {
-				children[key] = value;
-			} else {
-				props[key] = value;
-			}
-		});
-
-		return { children, props };
-
-	}
-
-	compile(template: string, props: TProps): any {
-		const propsAndStubs = { ...props };
-		let propsStrTmpl: string = '';
-
-		Object.entries(this.children).forEach(([key, child]) => {
-			if (Array.isArray(child)) {
-				let ID = '';
-				child.map(el => {
-					if (el._zId !== undefined) {
-						ID = el._zId;
-					}
-					propsStrTmpl += `<div data-id="${el._id}"></div>`;
-				});
-				propsAndStubs[key] = `<div data-id="${ID}">${propsStrTmpl}</div>`;
-			} else {
-				propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
-			}
-			// propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
-		});
-
-		const fragment = this._createDocumentElement('template');
-
-		fragment.innerHTML = new Templator(template).compile(propsAndStubs).getNode().outerHTML;
-
-		Object.values(this.children).forEach(child => {
-			if (Array.isArray(child)) {
-				let cnt: number = 0;
-				const [zID] = Object.values(child[child.length - 1]);
-				const stub = (fragment as any).content.querySelector(`[data-id="${zID}"]`);
-
-				child.splice(child.length - 1, 1);
-
-				for (const val of stub.children) {
-					val.replaceWith(child[cnt].getContent());
-					child.length - 1 > cnt ? cnt += 1 : cnt;
-				}
-			} else {
-				const stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
-				stub.replaceWith(child.getContent());
-			}
-		});
-
-		return (fragment as any).content;
-
 	}
 
 	private _registerEvents(eventBus: IEventBus): void {
@@ -220,22 +149,85 @@ class Block implements IBlock {
 		});
 	}
 
+	private _getChildren(propsAndChildren: TProps): TProps {
+		const children: TProps = {};
+		const props: TProps = {};
+
+		Object.entries(propsAndChildren).forEach(([key, value]) => {
+			if (Array.isArray(value)) {
+				const _zId = makeUUID();
+				children[key] = [...value, { _zId }];
+			}
+
+			if (value instanceof Block) {
+				children[key] = value;
+			} else {
+				props[key] = value;
+			}
+		});
+
+		return { children, props };
+
+	}
+
+	compile(template: string, props: TProps): any {
+		const propsAndStubs = { ...props };
+		let propsStrTmpl: string = '';
+
+		Object.entries(this.children).forEach(([key, child]) => {
+			if (Array.isArray(child)) {
+				let ID = '';
+				child.map(el => {
+					if (el._zId !== undefined) {
+						ID = el._zId;
+					}
+					propsStrTmpl += `<div data-id="${el._id}"></div>`;
+				});
+				propsAndStubs[key] = `<div data-id="${ID}">${propsStrTmpl}</div>`;
+			} else {
+				propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+			}
+		});
+
+		const fragment = this._createDocumentElement('template');
+
+		fragment.innerHTML = new Templator(template).compile(propsAndStubs).getNode().outerHTML;
+
+		Object.values(this.children).forEach(child => {
+			if (Array.isArray(child)) {
+				let cnt: number = 0;
+				const [zID] = Object.values(child[child.length - 1]);
+				child.splice(child.length - 1, 1);
+				const stub = (fragment as any).content.querySelector(`[data-id="${zID}"]`);
+				stub.removeChild(stub.lastElementChild);
+
+				for (const val of stub.childNodes) {
+					if (!(val.dataset.id === 'undefined')) {
+						val.replaceWith(child[cnt].getContent().firstElementChild);
+					}
+					child.length - 1 > cnt ? cnt += 1 : cnt;
+				}
+			} else {
+				const stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
+				stub.replaceWith(child.getContent().firstElementChild);
+			}
+		});
+
+		return (fragment as any).content;
+
+	}
+
 	private _render(): void {
 		const block = this.render();
 
 		this._removeEvents();
+
 		this._element.innerHTML = '';
-
-		// this._element.firstElementChild
-		// 	? this._element.replaceChild(block, this._element.firstElementChild)
-		// 	: this._element.append(block)
-
 		this._element.appendChild(block);
 
 		this._addEvents();
 	}
 
-	// Переопределяется пользователем. Необходимо вернуть разметку
 	render(): any { }
 
 	getContent(): HTMLElement {
@@ -274,9 +266,9 @@ class Block implements IBlock {
 	}
 
 	private _createDocumentElement(tagName: string): HTMLElement {
-		// Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
 		const element = document.createElement(tagName);
 		element.setAttribute('data-id', this._id);
+		element.setAttribute('id', 'Chat-app');
 		return element;
 	}
 
