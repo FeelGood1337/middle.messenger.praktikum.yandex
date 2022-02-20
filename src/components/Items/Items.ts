@@ -22,19 +22,6 @@ class Items extends Block implements IItems {
 	render() {
 		const { className, items } = this.props;
 
-		if (Array.isArray(items)) {
-			const liList: HTMLElement[] = [];
-			items.map(el => {
-				liList.push(
-					this.compile(template, {
-						className,
-						items: el,
-					})
-				)
-			});
-			return liList;
-		}
-
 		return this.compile(template, {
 			className,
 			items,

@@ -2,14 +2,14 @@ import { Block } from '../../utils/Block/Block';
 import { template } from './element.tmpl';
 
 type TProps = {
-	tag: string;
-	className: string;
-	content: string;
+  tag: string;
+  className: string;
+  content: string;
 }
 
 interface IElement {
-	props: TProps;
-	render(): ChildNode | HTMLElement;
+  props: TProps;
+  render(): ChildNode | HTMLElement;
 }
 
 class Element extends Block implements IElement {

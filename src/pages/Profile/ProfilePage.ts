@@ -13,22 +13,12 @@ import avatar from '../../../static/images/Avatar.svg';
 import './profile.css';
 
 
-function getTextElement() {
-	return itemsProps.map(arr => arr.map(el => {
-		return new Element({
-			tag: el.tag,
-			className: el.className,
-			content: el.content,
-		})
-	}));
-}
-
-function getTextItems() {
-	const items = getTextElement();
-	return new Items({
-		className: 'fields-items__item',
-		items,
-	});
+function getTextElement(tag: string, className: string, content: any) {
+	return new Element({
+		tag,
+		className,
+		content,
+	})
 }
 
 function getLinkButton(text: string, className: string, link: string) {
@@ -39,16 +29,41 @@ function getLinkButton(text: string, className: string, link: string) {
 	});
 }
 
+function getTextItems() {
+	return itemsProps.map(el => el.map(({
+		tag,
+		className,
+		content
+	}) =>
+		new Items({
+			className: 'fields-items__item',
+			items: getTextElement(tag, className, content),
+		})
+	));
+
+	// return itemsProps.map(({
+	// 	tag,
+	// 	className,
+	// 	content
+	// }) =>
+	// 	new Items({
+	// 		className: 'fields-items__item',
+	// 		items: getTextElement(tag, className, content),
+	// 	})
+	// );
+}
+
 function getBtnItems() {
 	return btnsProps.map(({
-		className,
 		text,
+		className,
 		link,
 	}) =>
 		new Items({
 			className: 'fields-items__item item-btn',
 			items: getLinkButton(text, className, link),
-		}));
+		})
+	);
 }
 
 class ProfilePage extends Block {
@@ -65,13 +80,20 @@ class ProfilePage extends Block {
 				link: 'profile.html',
 				imgPath: avatar,
 			}),
-			// items: [...getTextItems() as any],
-			btnItems: [...getBtnItems()],
+			items: getTextItems(),
+			btnItems: getBtnItems(),
 		});
 	}
 
 	render() {
-		const { profileSvgClass, title, avatar, items, btnItems } = this.props;
+		const {
+			profileSvgClass,
+			title,
+			avatar,
+			items,
+			btnItems
+		} = this.props;
+
 		return this.compile(template, {
 			profileSvgClass,
 			title,

@@ -172,16 +172,20 @@ class Block implements IBlock {
 
 	compile(template: string, props: TProps): any {
 		const propsAndStubs = { ...props };
-		let propsStrTmpl: string = '';
-
+		
 		Object.entries(this.children).forEach(([key, child]) => {
 			if (Array.isArray(child)) {
+				let propsStrTmpl: string = '';
 				let ID = '';
 				child.map(el => {
 					if (el._zId !== undefined) {
 						ID = el._zId;
 					}
-					propsStrTmpl += `<div data-id="${el._id}"></div>`;
+					if (Array.isArray(el)) {
+						el.map(item => propsStrTmpl += `<div data-id="${item._id}"></div>`);
+					} else {
+						propsStrTmpl += `<div data-id="${el._id}"></div>`;
+					}
 				});
 				propsAndStubs[key] = `<div data-id="${ID}">${propsStrTmpl}</div>`;
 			} else {
@@ -203,7 +207,14 @@ class Block implements IBlock {
 
 				for (const val of stub.childNodes) {
 					if (!(val.dataset.id === 'undefined')) {
-						val.replaceWith(child[cnt].getContent().firstElementChild);
+						if (Array.isArray(child[cnt])) {
+							child[cnt].map((el: any) => {
+								console.log(el);
+								val.replaceWith(el.getContent().firstElementChild)
+							});
+						} else {
+							val.replaceWith(child[cnt].getContent().firstElementChild);
+						}
 					}
 					child.length - 1 > cnt ? cnt += 1 : cnt;
 				}
@@ -219,7 +230,7 @@ class Block implements IBlock {
 
 	private _render(): void {
 		const block = this.render();
-
+		
 		this._removeEvents();
 
 		this._element.innerHTML = '';
