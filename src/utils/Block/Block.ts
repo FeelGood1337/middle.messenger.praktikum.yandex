@@ -172,7 +172,7 @@ class Block implements IBlock {
 
 	compile(template: string, props: TProps): any {
 		const propsAndStubs = { ...props };
-		
+
 		Object.entries(this.children).forEach(([key, child]) => {
 			if (Array.isArray(child)) {
 				let propsStrTmpl: string = '';
@@ -181,11 +181,7 @@ class Block implements IBlock {
 					if (el._zId !== undefined) {
 						ID = el._zId;
 					}
-					if (Array.isArray(el)) {
-						el.map(item => propsStrTmpl += `<div data-id="${item._id}"></div>`);
-					} else {
-						propsStrTmpl += `<div data-id="${el._id}"></div>`;
-					}
+					propsStrTmpl += `<div data-id="${el._id}"></div>`;
 				});
 				propsAndStubs[key] = `<div data-id="${ID}">${propsStrTmpl}</div>`;
 			} else {
@@ -207,17 +203,13 @@ class Block implements IBlock {
 
 				for (const val of stub.childNodes) {
 					if (!(val.dataset.id === 'undefined')) {
-						if (Array.isArray(child[cnt])) {
-							child[cnt].map((el: any) => {
-								console.log(el);
-								val.replaceWith(el.getContent().firstElementChild)
-							});
-						} else {
-							val.replaceWith(child[cnt].getContent().firstElementChild);
-						}
+						val.replaceWith(child[cnt].getContent().firstElementChild);
 					}
 					child.length - 1 > cnt ? cnt += 1 : cnt;
 				}
+
+				this._moveChildToNewParent(stub);
+
 			} else {
 				const stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
 				stub.replaceWith(child.getContent().firstElementChild);
@@ -228,9 +220,17 @@ class Block implements IBlock {
 
 	}
 
+	private _moveChildToNewParent(stub: any): void {
+		const fragment = document.createDocumentFragment();
+		while (stub.firstChild) {
+			fragment.appendChild(stub.firstChild);
+		}
+		stub.parentNode.replaceChild(fragment, stub);
+	}
+
 	private _render(): void {
 		const block = this.render();
-		
+
 		this._removeEvents();
 
 		this._element.innerHTML = '';

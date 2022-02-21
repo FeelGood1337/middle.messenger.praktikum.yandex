@@ -13,7 +13,7 @@ import avatar from '../../../static/images/Avatar.svg';
 import './profile.css';
 
 
-function getTextElement(tag: string, className: string, content: any) {
+function getTextElement(tag: string, className: string, content: string) {
 	return new Element({
 		tag,
 		className,
@@ -30,27 +30,23 @@ function getLinkButton(text: string, className: string, link: string) {
 }
 
 function getTextItems() {
-	return itemsProps.map(el => el.map(({
-		tag,
-		className,
-		content
-	}) =>
-		new Items({
+	const itemsList: Items[] = [];
+	Object.values(itemsProps).map(el => {
+		const arr: Element[] = [];
+		el.map(({
+			tag,
+			className,
+			content,
+		}) =>
+			arr.push(getTextElement(tag, className, content))
+		)
+		itemsList.push(new Items({
 			className: 'fields-items__item',
-			items: getTextElement(tag, className, content),
-		})
-	));
+			items: arr,
+		}));
+	});
 
-	// return itemsProps.map(({
-	// 	tag,
-	// 	className,
-	// 	content
-	// }) =>
-	// 	new Items({
-	// 		className: 'fields-items__item',
-	// 		items: getTextElement(tag, className, content),
-	// 	})
-	// );
+	return itemsList;
 }
 
 function getBtnItems() {
