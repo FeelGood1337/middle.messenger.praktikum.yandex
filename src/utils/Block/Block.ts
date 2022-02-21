@@ -229,12 +229,12 @@ class Block implements IBlock {
 	}
 
 	private _render(): void {
-		const block = this.render();
+		const fragment = this.render();
 
 		this._removeEvents();
 
 		this._element.innerHTML = '';
-		this._element.appendChild(block);
+		this._element.append(fragment);
 
 		this._addEvents();
 	}

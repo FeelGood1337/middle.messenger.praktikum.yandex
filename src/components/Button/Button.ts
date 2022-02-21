@@ -7,6 +7,7 @@ type TProps = {
 	text: string;
 	className: string;
 	isDisabled: boolean;
+	events?: any;
 }
 
 interface IButton {

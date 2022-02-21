@@ -1,4 +1,4 @@
-export const template = `
+export const template: string = `
 	<main class="main">
 		<div class="profile">
 			<div class="profile__content">
