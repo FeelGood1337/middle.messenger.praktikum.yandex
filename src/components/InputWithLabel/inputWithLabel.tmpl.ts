@@ -10,7 +10,7 @@ export const template: string = `
 			class="input {% className %}" 
 			{% attributes %} 
 			name="{% name %}" 
-			value="{% value %}" 
+			value={% value %} 
 		/>
 	</div>
 `;

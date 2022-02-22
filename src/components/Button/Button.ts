@@ -6,7 +6,7 @@ import './button.css';
 type TProps = {
 	text: string;
 	className: string;
-	isDisabled: boolean;
+	isDisabled: string;
 	events?: any;
 }
 
@@ -23,12 +23,6 @@ class Button extends Block implements IButton {
 	}
 
 	render() {
-		// const {
-		// 	text,
-		// 	className,
-		// 	isDisabled,
-		// } = this.props;
-
 		return this.compile(template, { ...this.props });
 	}
 

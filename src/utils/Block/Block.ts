@@ -39,7 +39,6 @@ class Block implements IBlock {
 	};
 
 	private _element: HTMLElement;
-	// private readonly _meta: { props: TProps };
 	private _id: string = '';
 
 	protected props: TProps;
@@ -50,10 +49,6 @@ class Block implements IBlock {
 		const eventBus = new EventBus();
 
 		const { children, props } = this._getChildren(propsAndChildren);
-
-		// this._meta = {
-		// 	props,
-		// };
 
 		// Генерируем уникальный UUID V4
 		this._id = makeUUID();
@@ -74,13 +69,7 @@ class Block implements IBlock {
 		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
 
-	// private _createResources(): void {
-	// 	const { tagName } = this._meta;
-	// 	this._element = this._createDocumentElement(tagName);
-	// }
-
 	init(): void {
-		// this._createResources();
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
@@ -235,11 +224,6 @@ class Block implements IBlock {
 		}
 
 		this._element = newElement;
-
-		// this._removeEvents();
-
-		// this._element.innerHTML = '';
-		// this._element.append(fragment);
 
 		this._addEvents();
 	}

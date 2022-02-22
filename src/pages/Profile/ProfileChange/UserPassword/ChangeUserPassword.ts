@@ -46,7 +46,7 @@ class ChangeUserPassword extends Block {
 			button: new Button({
 				text: 'Сохранить',
 				className: 'signup__btn',
-				isDisabled: true,
+				isDisabled: 'true',
 			}),
 		});
 	}
