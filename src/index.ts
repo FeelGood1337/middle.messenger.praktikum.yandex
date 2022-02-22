@@ -4,4 +4,4 @@ import { render } from './utils/renderDOM';
 import './index.css';
 
 const signin = new SigninPage();
-render("#body", signin);
+render("#Chat-app", signin);

@@ -11,7 +11,7 @@ import './signin.css';
 class SigninPage extends Block {
 
 	constructor() {
-		super('div', {
+		super({
 			title: new Title({
 				tag: 'h2',
 				className: 'auth__title',
@@ -50,34 +50,8 @@ class SigninPage extends Block {
 		});
 	}
 
-	// handleSigninClick(event: any) {
-	// 	event.preventDefault();
-	// 	console.log('event');
-	// }
-
-	// componentDidMount() {
-	// 	this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-	// 		const formButton: HTMLButtonElement = this.getContent()
-	// 			.querySelector('.auth__btn') as HTMLButtonElement;
-	// 		formButton.onclick = this.handleSigninClick.bind(this);
-	// 	});
-	// }
-
-
 	render() {
-		const {
-			title,
-			button,
-			inputs,
-			linkButton
-		} = this.props;
-
-		return this.compile(template, {
-			title,
-			button,
-			inputs,
-			linkButton,
-		});
+		return this.compile(template, { ...this.props });
 	}
 }
 

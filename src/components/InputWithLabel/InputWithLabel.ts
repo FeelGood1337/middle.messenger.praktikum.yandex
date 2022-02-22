@@ -22,30 +22,12 @@ class InputWithLabel extends Block implements IInputWithLabel {
 	props: TProps;
 
 	constructor(props: TProps) {
-		super('div', props);
+		super(props);
 		this.props = props;
 	}
 
 	render() {
-		const {
-			className,
-			labelClassName,
-			labelText,
-			labelId,
-			attributes,
-			name,
-			value,
-		} = this.props;
-
-		return this.compile(template, {
-			className,
-			labelClassName,
-			labelText,
-			labelId,
-			attributes,
-			name,
-			value,
-		});
+		return this.compile(template, { ...this.props });
 	}
 }
 

@@ -12,7 +12,7 @@ import './signup.css';
 class SignupPage extends Block {
 
 	constructor() {
-		super('div', {
+		super({
 			title: new Title({
 				tag: 'h2',
 				className: 'auth__title signup__title',
@@ -50,32 +50,8 @@ class SignupPage extends Block {
 		});
 	}
 
-	// handleSigninClick(event: any) {
-	// 	event.preventDefault();
-	// 	console.log(event);
-	// }
-
-	// handleSigninChange(event: any) {
-	// 	console.log(event.target.value);
-	// }
-
-	// componentDidMount() {
-	// 	this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-	// 		const formButton: HTMLButtonElement = this.getContent().querySelector('.signup__btn') as HTMLButtonElement;
-	// 		const inputFirstname: HTMLInputElement = this.getContent().querySelector('#first_name') as HTMLInputElement;
-	// 		formButton.onclick = this.handleSigninClick.bind(this);
-	// 		inputFirstname.onchange = this.handleSigninChange.bind(this);
-	// 	})
-	// }
-
 	render() {
-		const { title, inputs, button, linkButton } = this.props;
-		return this.compile(template, {
-			title,
-			inputs,
-			button,
-			linkButton,
-		});
+		return this.compile(template, { ...this.props });
 	}
 }
 

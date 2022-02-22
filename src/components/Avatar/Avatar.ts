@@ -17,17 +17,12 @@ class Avatar extends Block implements IAvatar {
 	props: TProps;
 
 	constructor(props: TProps) {
-		super('div', props);
+		super(props);
 		this.props = props;
 	}
 
 	render() {
-		const { link, imgPath } = this.props;
-
-		return this.compile(template, {
-			link,
-			imgPath,
-		});
+		return this.compile(template, { ...this.props });
 	}
 
 }

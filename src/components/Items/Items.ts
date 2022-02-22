@@ -15,18 +15,12 @@ class Items extends Block implements IItems {
 	props: TProps;
 
 	constructor(props: TProps) {
-		super('li', props);
+		super(props);
 		this.props = props;
 	}
 
 	render() {
-		const { className, items } = this.props;
-
-		return this.compile(template, {
-			className,
-			items,
-		});
-
+		return this.compile(template, { ...this.props });
 	};
 }
 

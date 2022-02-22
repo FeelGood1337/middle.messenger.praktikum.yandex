@@ -10,7 +10,7 @@ import './serverError.css';
 class ServerErrorPage extends Block {
 
 	constructor() {
-		super('div', {
+		super({
 			title: new Title({
 				tag: 'h1',
 				className: 'http-error__title',
@@ -30,12 +30,7 @@ class ServerErrorPage extends Block {
 	}
 
 	render() {
-		const { title, subTitle, linkButton } = this.props;
-		return this.compile(template, {
-			title,
-			subTitle,
-			linkButton,
-		});
+		return this.compile(template, { ...this.props });
 	}
 }
 

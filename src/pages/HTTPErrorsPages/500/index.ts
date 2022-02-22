@@ -4,4 +4,4 @@ import { render } from '../../../utils/renderDOM';
 import '../../../index.css';
 
 const serverError = new ServerErrorPage();
-render("#body", serverError);
+render("#Chat-app", serverError);

@@ -17,22 +17,12 @@ interface ILinkButton {
 class LinkButton extends Block implements ILinkButton {
 	props: TProps;
 	constructor(props: TProps) {
-		super('a', props);
+		super(props);
 		this.props = props;
 	}
 
 	render() {
-		const {
-			text,
-			className,
-			link,
-		} = this.props;
-
-		return this.compile(template, {
-			text,
-			className,
-			link,
-		});
+		return this.compile(template, { ...this.props });
 	}
 }
 

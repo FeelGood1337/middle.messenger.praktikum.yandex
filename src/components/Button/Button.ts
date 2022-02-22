@@ -18,22 +18,18 @@ class Button extends Block implements IButton {
 	props: TProps;
 
 	constructor(props: TProps) {
-		super('button', props);
+		super(props);
 		this.props = props;
 	}
 
 	render() {
-		const {
-			text,
-			className,
-			isDisabled,
-		} = this.props;
+		// const {
+		// 	text,
+		// 	className,
+		// 	isDisabled,
+		// } = this.props;
 
-		return this.compile(template, {
-			text,
-			className,
-			disabled: isDisabled ? 'disable' : '', // бага при фелсе
-		});
+		return this.compile(template, { ...this.props });
 	}
 
 }

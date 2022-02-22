@@ -18,8 +18,6 @@ interface IEvents {
 	FLOW_RENDER: string;
 }
 interface IBlock {
-	props: TProps;
-	children: TProps;
 	eventBus(): IEventBus;
 	init(): void;
 	componentDidMount(): void;
@@ -41,22 +39,21 @@ class Block implements IBlock {
 	};
 
 	private _element: HTMLElement;
-	private readonly _meta: { tagName: string, props: TProps };
+	// private readonly _meta: { props: TProps };
 	private _id: string = '';
 
-	props: TProps;
-	children: TProps;
+	protected props: TProps;
+	protected children: Record<string, Block>;
 	eventBus: () => IEventBus;
 
-	constructor(tagName = 'div', propsAndChildren: TProps = {}) {
+	constructor(propsAndChildren: TProps = {}) {
 		const eventBus = new EventBus();
 
 		const { children, props } = this._getChildren(propsAndChildren);
 
-		this._meta = {
-			tagName,
-			props,
-		};
+		// this._meta = {
+		// 	props,
+		// };
 
 		// Генерируем уникальный UUID V4
 		this._id = makeUUID();
@@ -77,13 +74,13 @@ class Block implements IBlock {
 		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
 
-	private _createResources(): void {
-		const { tagName } = this._meta;
-		this._element = this._createDocumentElement(tagName);
-	}
+	// private _createResources(): void {
+	// 	const { tagName } = this._meta;
+	// 	this._element = this._createDocumentElement(tagName);
+	// }
 
 	init(): void {
-		this._createResources();
+		// this._createResources();
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
@@ -203,7 +200,7 @@ class Block implements IBlock {
 
 				for (const val of stub.childNodes) {
 					if (!(val.dataset.id === 'undefined')) {
-						val.replaceWith(child[cnt].getContent().firstElementChild);
+						val.replaceWith(child[cnt].getContent());
 					}
 					child.length - 1 > cnt ? cnt += 1 : cnt;
 				}
@@ -212,7 +209,7 @@ class Block implements IBlock {
 
 			} else {
 				const stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
-				stub.replaceWith(child.getContent().firstElementChild);
+				stub.replaceWith(child.getContent());
 			}
 		});
 
@@ -230,11 +227,19 @@ class Block implements IBlock {
 
 	private _render(): void {
 		const fragment = this.render();
+		const newElement = fragment.firstElementChild as HTMLElement;
 
-		this._removeEvents();
+		if (this._element) {
+			this._removeEvents();
+			this._element.replaceWith(newElement);
+		}
 
-		this._element.innerHTML = '';
-		this._element.append(fragment);
+		this._element = newElement;
+
+		// this._removeEvents();
+
+		// this._element.innerHTML = '';
+		// this._element.append(fragment);
 
 		this._addEvents();
 	}
@@ -249,12 +254,8 @@ class Block implements IBlock {
 		const checkPrivateProp = (prop: string) => prop.startsWith('_');
 		return new Proxy(props, {
 			get: (target: TProps, prop: string) => {
-				if (checkPrivateProp(prop)) {
-					throw new Error("Нет прав");
-				} else {
-					const value = target[prop];
-					return (typeof value === 'function') ? value.bind(target) : value;
-				}
+				const value = target[prop];
+				return (typeof value === 'function') ? value.bind(target) : value;
 			},
 			set: (target: any, prop: string, val: string): boolean => {
 				if (checkPrivateProp(prop)) {

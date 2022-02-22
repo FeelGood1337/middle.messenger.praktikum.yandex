@@ -16,18 +16,12 @@ class Element extends Block implements IElement {
   props: TProps;
 
   constructor(props: TProps) {
-    super(props.tag, props);
+    super(props);
     this.props = props;
   }
 
   render() {
-    const { tag, className, content } = this.props;
-
-    return this.compile(template, {
-      tag,
-      className,
-      content,
-    });
+    return this.compile(template, { ...this.props });
   }
 }
 

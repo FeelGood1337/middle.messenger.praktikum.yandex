@@ -13,7 +13,7 @@ import avatar from '../../../../../static/images/Avatar.svg';
 class ChangeUserInfo extends Block {
 
 	constructor() {
-		super('div', {
+		super({
 			profileSvgClass: 'profile-svg',
 			title: new Title({
 				tag: 'h2',
@@ -58,21 +58,7 @@ class ChangeUserInfo extends Block {
 	}
 
 	render() {
-		const {
-			profileSvgClass,
-			title,
-			avatar,
-			inputs,
-			button,
-		} = this.props;
-
-		return this.compile(template, {
-			profileSvgClass,
-			title,
-			avatar,
-			inputs,
-			button,
-		});
+		return this.compile(template, { ...this.props });
 	}
 }
 

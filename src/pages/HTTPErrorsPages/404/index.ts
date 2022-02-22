@@ -4,4 +4,4 @@ import { render } from '../../../utils/renderDOM';
 import '../../../index.css';
 
 const notFoundError = new NotFoundPage();
-render("#body", notFoundError);
+render("#Chat-app", notFoundError);

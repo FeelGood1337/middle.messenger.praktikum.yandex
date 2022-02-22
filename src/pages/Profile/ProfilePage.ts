@@ -65,7 +65,7 @@ function getBtnItems() {
 class ProfilePage extends Block {
 
 	constructor() {
-		super('div', {
+		super({
 			profileSvgClass: 'profile-svg',
 			title: new Title({
 				tag: 'h2',
@@ -82,21 +82,7 @@ class ProfilePage extends Block {
 	}
 
 	render() {
-		const {
-			profileSvgClass,
-			title,
-			avatar,
-			items,
-			btnItems
-		} = this.props;
-
-		return this.compile(template, {
-			profileSvgClass,
-			title,
-			avatar,
-			items,
-			btnItems,
-		});
+		return this.compile(template, { ...this.props });
 	}
 }
 

@@ -15,18 +15,14 @@ interface ITitle {
 class Title extends Block implements ITitle {
 	props: TProps;
 	constructor(props: TProps) {
-		super(props.tag, props);
+		super(props);
 		this.props = props;
 	}
 
 	render() {
-		const { tag, className, text } = this.props;
+		// const { tag, className, text } = this.props;
 		
-		return this.compile(template, {
-			tag,
-			className,
-			text,
-		});
+		return this.compile(template, { ...this.props });
 	}
 
 }

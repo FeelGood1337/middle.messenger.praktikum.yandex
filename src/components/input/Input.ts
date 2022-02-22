@@ -22,26 +22,12 @@ class Input extends Block implements IInput {
 	props: TProps;
 
 	constructor(props: TProps) {
-		super('input', props);
+		super(props);
 		this.props = props;
 	}
 
 	render() {
-		const {
-			className,
-			attributes,
-			name,
-			value,
-		} = this.props;
-
-
-
-		return input.compile({
-			className,
-			attributes,
-			name,
-			value,
-		}).getNode();
+		return input.compile({ ...this.props }).getNode();
 	}
 }
 
