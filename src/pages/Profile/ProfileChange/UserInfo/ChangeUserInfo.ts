@@ -46,7 +46,7 @@ class ChangeUserInfo extends Block {
 			button: new Button({
 				text: 'Сохранить',
 				className: 'signup__btn',
-				isDisabled: 'false',
+				disabled: ' ',
 				events: {
 					click: (event: Event) => {
 						event.preventDefault();

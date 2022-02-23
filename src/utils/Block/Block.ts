@@ -67,7 +67,6 @@ class Block {
 
 	private _componentDidMount(): void {
 		this.componentDidMount();
-
 		Object.values(this.children).forEach(child => {
 			if (Array.isArray(child)) {
 				child.map(el => {

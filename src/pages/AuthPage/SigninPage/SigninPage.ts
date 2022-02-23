@@ -22,7 +22,7 @@ class SigninPage extends Block {
 			button: new Button({
 				text: 'Войти',
 				className: 'btn auth__btn',
-				isDisabled: 'true',
+				disabled: ' ',
 			}),
 			validateError: new Element({
 				tag: 'span',
@@ -57,8 +57,17 @@ class SigninPage extends Block {
 		});
 	}
 
+	handleSigninClick(event: Event) {
+		event.preventDefault();
+		console.log(event.type);
+	}
+
 	componentDidMount(): void {
-		this.children.validateError.hide();
+		const { element } = this;
+		// const inputs = element.querySelectorAll('.input');
+		const formButton: any = element.querySelector('.auth__btn');
+		formButton.onclick = this.handleSigninClick.bind(this);
+		console.log(formButton);
 	}
 
 	render() {

@@ -21,7 +21,7 @@ class SignupPage extends Block {
 			button: new Button({
 				text: 'Зарегистрировать',
 				className: 'signup__btn',
-				isDisabled: 'true',
+				disabled: ' ',
 			}),
 			linkButton: new LinkButton({
 				text: 'Войти',

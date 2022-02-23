@@ -9,6 +9,8 @@ export const inputsProps = [
 			type="text"
 			id="login"
 			placeholder="login"
+			minlength="2"
+        	maxlength="20"
 			autocomplete="on"
 			required
 		`,
@@ -23,7 +25,9 @@ export const inputsProps = [
 		attributes: `
 			type="password"
 			id="password"
-			placeholder="pasword"
+			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
+			minlength="8"
+			placeholder="password"
 			autocomplete="new-password"
 			required
 		`,

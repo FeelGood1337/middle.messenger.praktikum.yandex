@@ -6,7 +6,7 @@ import './button.css';
 type TProps = {
 	text: string;
 	className: string;
-	isDisabled: string;
+	disabled: string;
 	events?: any;
 }
 
