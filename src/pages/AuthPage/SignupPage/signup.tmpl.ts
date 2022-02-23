@@ -6,6 +6,7 @@ export const template: string = `
 				<form class="auth__form">
 					<div class="form__wrapper">{% inputs %}</div>
 					{% button %}
+					{% validateError %}
 					{% linkButton %}
 				</form>
 			</div>

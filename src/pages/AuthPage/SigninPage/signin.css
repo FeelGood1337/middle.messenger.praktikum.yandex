@@ -48,11 +48,20 @@
 	color: var(--auth-btn-color);
 }
 
-.auth__btn > .link-btn__svg {
+.validate__error {
+	font-family: "Helvetica", Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 16px;
+	color: #E57373;
+	margin: 8px auto 0 72px;
+}
+
+.auth__btn>.link-btn__svg {
 	display: none;
 }
 
-.auth__btn > .link-btn__text {
+.auth__btn>.link-btn__text {
 	margin: 0;
 }
 

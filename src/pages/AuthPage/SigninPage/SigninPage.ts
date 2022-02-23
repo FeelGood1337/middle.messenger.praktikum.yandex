@@ -2,9 +2,11 @@ import { Block } from '../../../utils/Block/Block';
 import { template } from './signin.tmpl';
 import { inputsProps } from './inputProps';
 
+import { Button } from '../../../components/Button/Button';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabel';
 import { Title } from '../../../components/Title/Title';
+import { Element } from '../../../components/Element/Element';
 
 import './signin.css';
 
@@ -17,10 +19,15 @@ class SigninPage extends Block {
 				className: 'auth__title',
 				text: 'Вход',
 			}),
-			button: new LinkButton({
+			button: new Button({
 				text: 'Войти',
 				className: 'btn auth__btn',
-				link: 'profile.html',
+				isDisabled: 'true',
+			}),
+			validateError: new Element({
+				tag: 'span',
+				className: 'validate__error',
+				content: 'Incorrect login',
 			}),
 			linkButton: new LinkButton({
 				text: 'Регистрация',
@@ -48,6 +55,10 @@ class SigninPage extends Block {
 			),
 
 		});
+	}
+
+	componentDidMount(): void {
+		this.children.validateError.hide();
 	}
 
 	render() {

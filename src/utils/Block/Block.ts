@@ -13,27 +13,16 @@ type TEvents<T extends object> = {
 
 interface IEvents {
 	INIT: string;
-	FLOW_CMD: string;
+	FLOW_CDM: string;
 	FLOW_CDU: string;
 	FLOW_RENDER: string;
 }
-interface IBlock {
-	eventBus(): IEventBus;
-	init(): void;
-	componentDidMount(): void;
-	dispatchComponentDidMount(): void;
-	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean;
-	render(): string;
-	getContent(): HTMLElement;
-	show(): void;
-	hide(): void;
-}
 
-class Block implements IBlock {
+class Block {
 
 	static EVENTS: TEvents<IEvents> = {
 		INIT: 'init',
-		FLOW_CMD: 'flow:component-did-mount',
+		FLOW_CDM: 'flow:component-did-mount',
 		FLOW_CDU: "flow:component-did-update",
 		FLOW_RENDER: 'flow:render',
 	};
@@ -43,18 +32,19 @@ class Block implements IBlock {
 
 	protected props: TProps;
 	protected children: Record<string, Block>;
-	eventBus: () => IEventBus;
+	protected eventBus: () => IEventBus;
 
 	constructor(propsAndChildren: TProps = {}) {
 		const eventBus = new EventBus();
 
 		const { children, props } = this._getChildren(propsAndChildren);
+		this.children = children;
 
 		// Генерируем уникальный UUID V4
 		this._id = makeUUID();
 
 		this.props = this._makePropsProxy({ ...props, _id: this._id });
-		this.children = children;
+		this.initChildren();
 
 		this.eventBus = (): IEventBus => eventBus;
 
@@ -64,7 +54,7 @@ class Block implements IBlock {
 
 	private _registerEvents(eventBus: IEventBus): void {
 		eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
-		eventBus.on(Block.EVENTS.FLOW_CMD, this._componentDidMount.bind(this));
+		eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
 		eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
 		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
@@ -72,6 +62,8 @@ class Block implements IBlock {
 	init(): void {
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
+
+	protected initChildren() { }
 
 	private _componentDidMount(): void {
 		this.componentDidMount();
@@ -84,15 +76,13 @@ class Block implements IBlock {
 			} else {
 				child.dispatchComponentDidMount();
 			}
-
 		});
-		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
 	componentDidMount(): void { }
 
 	dispatchComponentDidMount(): void {
-		this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
 	private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
@@ -242,13 +232,10 @@ class Block implements IBlock {
 				return (typeof value === 'function') ? value.bind(target) : value;
 			},
 			set: (target: any, prop: string, val: string): boolean => {
-				if (checkPrivateProp(prop)) {
-					throw new Error("Нет прав");
-				} else {
-					target[prop] = val;
-					this.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
-					return true;
-				}
+				const oldProps = { ...target };
+				target[prop] = val;
+				this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
+				return true;
 			},
 			deleteProperty(target: TProps, prop: string): boolean {
 				if (checkPrivateProp(prop)) {
@@ -277,4 +264,4 @@ class Block implements IBlock {
 	}
 }
 
-export { Block, IBlock };
+export { Block };
