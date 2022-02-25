@@ -9,6 +9,7 @@ export const inputsProps = [
 			type="text"
 			id="login"
 			placeholder="login"
+			pattern: '[\\w.]*'
 			minlength="2"
         	maxlength="20"
 			autocomplete="on"

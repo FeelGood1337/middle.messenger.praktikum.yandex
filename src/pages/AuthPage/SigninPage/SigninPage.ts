@@ -11,7 +11,6 @@ import { Element } from '../../../components/Element/Element';
 import './signin.css';
 
 class SigninPage extends Block {
-
 	constructor() {
 		super({
 			title: new Title({
@@ -23,6 +22,9 @@ class SigninPage extends Block {
 				text: 'Войти',
 				className: 'btn auth__btn',
 				disabled: ' ',
+				events: {
+					onClick: (event: Event) => this.validate(event),
+				},
 			}),
 			validateError: new Element({
 				tag: 'span',
@@ -53,21 +55,25 @@ class SigninPage extends Block {
 					value,
 				})
 			),
-
 		});
+
+		this.validate = this.validate.bind(this);
 	}
 
-	handleSigninClick(event: Event) {
+	validate(event: Event) {
 		event.preventDefault();
-		console.log(event.type);
+		this.children.validateError.show()
 	}
 
 	componentDidMount(): void {
-		const { element } = this;
-		// const inputs = element.querySelectorAll('.input');
-		const formButton: any = element.querySelector('.auth__btn');
-		formButton.onclick = this.handleSigninClick.bind(this);
-		console.log(formButton);
+		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
+			this.children.validateError.hide()
+			const { element } = this;
+			// const inputs = element.querySelectorAll('.input');
+			const formButton: any = element.querySelector('.auth__btn');
+			formButton.onclick = this.validate.bind(this);
+			console.log(this.children);
+		})
 	}
 
 	render() {

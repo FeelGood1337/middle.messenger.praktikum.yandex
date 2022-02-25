@@ -60,29 +60,31 @@ class Block {
 	}
 
 	init(): void {
-		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+		// this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
 	protected initChildren() { }
 
 	private _componentDidMount(): void {
 		this.componentDidMount();
-		Object.values(this.children).forEach(child => {
-			if (Array.isArray(child)) {
-				child.map(el => {
-					el.dispatchComponentDidMount();
-				})
-			} else {
-				child.dispatchComponentDidMount();
-			}
-		});
+		// Object.values(this.children).forEach(child => {
+		// 	if (Array.isArray(child)) {
+		// 		child.map(el => {
+		// 			el.dispatchComponentDidMount();
+		// 		})
+		// 	} else {
+		// 		child.dispatchComponentDidMount();
+		// 	}
+		// });
+		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
 	componentDidMount(): void { }
 
-	dispatchComponentDidMount(): void {
-		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-	}
+	// dispatchComponentDidMount(): void {
+	// 	this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+	// }
 
 	private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
@@ -90,6 +92,7 @@ class Block {
 			return;
 		}
 		this._render();
+		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
