@@ -13,7 +13,7 @@ class InputValidate implements IInputValidate {
 		this._customValidate = customValidate;
 	}
 
-	private toggleError = (isActive: boolean, message = '', event?: Event): void => {
+	private toggleError = (isActive: boolean, message = ''): void => {
 		const err = (<HTMLInputElement>event?.target).nextElementSibling;
 		if (isActive) {
 			err!.classList.add('auth__error_active');
@@ -26,7 +26,7 @@ class InputValidate implements IInputValidate {
 
 	handleBlur = (event: Event): void => {
 		if((<HTMLInputElement>event?.target).validity.valueMissing) {
-			this.toggleError(true, this._FIELD_REQUIRED, event);
+			this.toggleError(true, this._FIELD_REQUIRED);
 			return;
 		}
 		this._customValidate(<HTMLInputElement>event.target, this.toggleError);

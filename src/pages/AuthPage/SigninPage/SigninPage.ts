@@ -3,6 +3,7 @@ import { Templator } from '../../../utils/Template-engine/templater';
 import { template } from './signin.tmpl';
 import { inputsProps } from './inputProps';
 
+import { Form, IForm } from '../../../utils/form';
 import { Button } from '../../../components/Button/Button';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabel';
@@ -15,6 +16,8 @@ const signInTmpl = new Templator(template);
 class SigninPage extends Block {
 	inputsValue: { [key: string]: string };
 	validate: IInputValidate[];
+	form: IForm;
+
 	constructor() {
 		super({
 			title: new Title({
@@ -35,6 +38,7 @@ class SigninPage extends Block {
 		});
 
 		this.inputsValue;
+		this.form;
 		this.validate = [];
 	}
 
@@ -66,23 +70,48 @@ class SigninPage extends Block {
 		}).join('');
 	}
 
+	private getInputsValue(): void {
+		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
+	}
+
+	private handleClick(): void {
+		event?.preventDefault();
+
+		console.log(this);
+	}
+
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element } = this;
+			const { element, validate, getInputsValue, handleClick } = this;
+
+			const formContainer: HTMLFormElement = element.querySelector('.auth__form');
+			const formButton: HTMLButtonElement = element.querySelector('.auth__btn');
 			const inputs = element.querySelectorAll('.input');
-			const formButton: any = element.querySelector('.auth__btn');
+			// const linkBtn: HTMLButtonElement = element.querySelector('.auth__btn-link');
+
+			this.form = new Form(formContainer, formButton);
+
+			inputs.forEach((input, index) => {
+				(input as HTMLInputElement).onfocus = validate[index].handleFocus;
+				(input as HTMLInputElement).onblur = validate[index].handleBlur;
+			});
+
+			formContainer.onchange = getInputsValue.bind(this);
+			formContainer.oninput = this.form.formIsValid;
+			formButton.onclick = handleClick.bind(this);
+			// linkBtn.onclick = 
 		})
 	}
 
 	render() {
 		// return this.compile(template, { ...this.props });
 		const { title, button, linkButton } = this.props;
-		return signInTmpl.compile({ 
+		return signInTmpl.compile({
 			title,
 			button,
 			linkButton,
 			inputs: this.getInputs(),
-		 }).getNode();
+		}).getNode();
 	}
 }
 
