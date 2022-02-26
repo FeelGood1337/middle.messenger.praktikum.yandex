@@ -12,12 +12,11 @@ export const inputsProps = [
 			id="login"
 			placeholder="login"
 			pattern: '[\\w.]*'
-			minlength="2"
+			minlength="3"
         	maxlength="20"
 			autocomplete="on"
 			required
 		`,
-		value: '""',
 		handleBlur: simpleTextValidator,
 	},
 	{
@@ -35,7 +34,6 @@ export const inputsProps = [
 			autocomplete="new-password"
 			required
 		`,
-		value: '""',
 		handleBlur: passwordValidator,
 	}
 ];

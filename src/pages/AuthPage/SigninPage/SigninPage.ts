@@ -77,7 +77,7 @@ class SigninPage extends Block {
 	private handleClick(): void {
 		event?.preventDefault();
 
-		console.log(this);
+		console.log(this.inputsValue);
 	}
 
 	componentDidMount(): void {

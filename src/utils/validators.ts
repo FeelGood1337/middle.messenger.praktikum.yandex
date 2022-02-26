@@ -2,7 +2,7 @@ const TO_SHORT_PASSWORD = 'Min password length 8 characters';
 const PASSWORD_REGISTER = 'Need two letters in different registers';
 const PASSWORD_UNDEFINE = 'Password must contain latin letters and numbers';
 const PASSWORD_NUMBER = 'Password must contain at least one number';
-const INCORRECT_TEXT = 'Must be from 2 to 20 characters';
+const INCORRECT_TEXT = 'Must be from 3 to 20 characters';
 const INCORRECT_EMAIL = 'Incorrect email';
 const INCORRECT_PHONE = 'Phone must start with 8 or 7 and have 11 numbs';
 

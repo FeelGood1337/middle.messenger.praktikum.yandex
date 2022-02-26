@@ -10,7 +10,7 @@ export const template: string = `
 			class="input {% className %}" 
 			{% attributes %} 
 			name="{% name %}" 
-			value={% value %} 
+			{% value %}
 		/>
 		<span class="auth__error"></span>
 	</div>
