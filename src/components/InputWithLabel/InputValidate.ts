@@ -1,12 +1,11 @@
-interface IInputWithLabel {
+interface IInputValidate {
 	_FIELD_REQUIRED: string;
 	_customValidate: Function;
-	_toggleError(isActive: boolean, message?: string): void;
-	handleBlur(): void;
+	handleBlur(event: Event): void;
 	handleFocus(): void;
 }
 
-class InputValidate implements InputValidate {
+class InputValidate implements IInputValidate {
 	readonly _FIELD_REQUIRED = 'This is feild required';
 	readonly _customValidate: Function;
 
@@ -36,4 +35,4 @@ class InputValidate implements InputValidate {
 	handleFocus = () => this.toggleError(false);
 }
 
-export { InputValidate, IInputWithLabel };
+export { InputValidate, IInputValidate };
