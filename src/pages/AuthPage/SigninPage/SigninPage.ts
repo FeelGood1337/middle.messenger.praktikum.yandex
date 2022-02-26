@@ -7,7 +7,6 @@ import { Button } from '../../../components/Button/Button';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 // import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabel';
 import { Title } from '../../../components/Title/Title';
-import { Element } from '../../../components/Element/Element';
 
 import './signin.css';
 
@@ -24,14 +23,6 @@ class SigninPage extends Block {
 				text: 'Войти',
 				className: 'btn auth__btn',
 				disabled: ' ',
-				events: {
-					onClick: (event: Event) => this.validate(event),
-				},
-			}).render(),
-			validateError: new Element({
-				tag: 'span',
-				className: 'validate__error',
-				content: 'Incorrect login',
 			}).render(),
 			linkButton: new LinkButton({
 				text: 'Регистрация',
@@ -59,22 +50,14 @@ class SigninPage extends Block {
 			// ),
 		});
 
-		this.validate = this.validate.bind(this);
-	}
-
-	validate(event: Event) {
-		event.preventDefault();
-		// this.children.validateError.show()
+		this.validate = [];
 	}
 
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			// this.children.validateError.hide()
 			const { element } = this;
 			const inputs = element.querySelectorAll('.input');
 			const formButton: any = element.querySelector('.auth__btn');
-			formButton.onclick = this.validate.bind(this);
-			console.log(inputs);
 		})
 	}
 

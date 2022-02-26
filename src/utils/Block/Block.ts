@@ -96,7 +96,6 @@ class Block {
 	}
 
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
-		console.log(oldProps, newProps);
 		return !isEqual(oldProps, newProps);
 	}
 

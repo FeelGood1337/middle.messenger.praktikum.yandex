@@ -12,5 +12,6 @@ export const template: string = `
 			name="{% name %}" 
 			value={% value %} 
 		/>
+		<span class="auth__error"></span>
 	</div>
 `;
