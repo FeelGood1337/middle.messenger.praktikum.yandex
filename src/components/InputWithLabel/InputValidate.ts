@@ -15,10 +15,14 @@ class InputValidate implements IInputValidate {
 
 	private toggleError = (isActive: boolean, message = ''): void => {
 		const err = (<HTMLInputElement>event?.target).nextElementSibling;
+		const element = <HTMLInputElement>event?.target;
+
 		if (isActive) {
+			element.classList.add('input-error');
 			err!.classList.add('auth__error_active');
 			err!.textContent = message;
 		} else {
+			element.classList.remove('input-error');
 			err!.classList.remove('auth__error_active');
 			err!.textContent = message;
 		}

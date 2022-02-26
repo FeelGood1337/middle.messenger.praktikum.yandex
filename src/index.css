@@ -45,10 +45,15 @@ body {
 
 .auth__error {
 	flex-basis: 100%;
-	margin: 0 auto 8px 72px;
+	margin: 1px 0 8px 72px;
 	font-family: "Helvetica", Arial, sans-serif;
 	font-weight: normal;
 	font-size: 14px;
 	line-height: 16px;
 	color: #E57373;
+}
+
+.input-error {
+	border: 1px solid #E57373;
+	border-radius: 4px;
 }
