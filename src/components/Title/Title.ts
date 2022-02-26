@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block/Block';
+import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './title.tmpl';
 
 type TProps = {
@@ -12,6 +13,8 @@ interface ITitle {
 	render(): ChildNode | HTMLElement;
 }
 
+const titleTmpl = new Templator(template);
+
 class Title extends Block implements ITitle {
 	props: TProps;
 	constructor(props: TProps) {
@@ -20,9 +23,8 @@ class Title extends Block implements ITitle {
 	}
 
 	render() {
-		// const { tag, className, text } = this.props;
-		
-		return this.compile(template, { ...this.props });
+		// return this.compile(template, { ...this.props });
+		return titleTmpl.compile({ ...this.props }).getNode();
 	}
 
 }

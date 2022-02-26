@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block/Block';
+import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './inputWithLabel.tmpl';
 
 import './inputWithLabel.css';
@@ -18,6 +19,8 @@ interface IInputWithLabel {
 	props: TProps;
 	render(): ChildNode | HTMLElement;
 }
+
+const inputTmplt = new Templator(template);
 class InputWithLabel extends Block implements IInputWithLabel {
 	props: TProps;
 
@@ -27,7 +30,8 @@ class InputWithLabel extends Block implements IInputWithLabel {
 	}
 
 	render() {
-		return this.compile(template, { ...this.props });
+		// return this.compile(template, { ...this.props });
+		return inputTmplt.compile({ ...this.props }).getNode();
 	}
 }
 

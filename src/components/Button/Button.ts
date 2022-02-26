@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block/Block';
+import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './button.tmpl';
 
 import './button.css';
@@ -14,6 +15,8 @@ interface IButton {
 	props: TProps;
 	render(): ChildNode | HTMLElement;
 }
+
+const btnTmpl = new Templator(template);
 class Button extends Block implements IButton {
 	props: TProps;
 
@@ -23,7 +26,8 @@ class Button extends Block implements IButton {
 	}
 
 	render() {
-		return this.compile(template, { ...this.props });
+		// return this.compile(template, { ...this.props });
+		return btnTmpl.compile({ ...this.props }).getNode();
 	}
 
 }

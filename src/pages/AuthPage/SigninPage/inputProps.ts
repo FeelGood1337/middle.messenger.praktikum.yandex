@@ -1,3 +1,5 @@
+import { passwordValidator, simpleTextValidator } from '../../../utils/validators';
+
 export const inputsProps = [
 	{
 		name: 'login',
@@ -15,7 +17,8 @@ export const inputsProps = [
 			autocomplete="on"
 			required
 		`,
-		value: '""'
+		value: '""',
+		handleBlur: simpleTextValidator,
 	},
 	{
 		name: 'password',
@@ -32,6 +35,7 @@ export const inputsProps = [
 			autocomplete="new-password"
 			required
 		`,
-		value: '""'
+		value: '""',
+		handleBlur: passwordValidator,
 	}
 ];

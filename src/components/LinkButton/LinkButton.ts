@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block/Block';
+import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './linkButton.tmpl';
 
 import './linkButton.css';
@@ -14,6 +15,8 @@ interface ILinkButton {
 	render(): ChildNode | HTMLElement;
 }
 
+const linkBtnTmpl = new Templator(template);
+
 class LinkButton extends Block implements ILinkButton {
 	props: TProps;
 	constructor(props: TProps) {
@@ -22,7 +25,8 @@ class LinkButton extends Block implements ILinkButton {
 	}
 
 	render() {
-		return this.compile(template, { ...this.props });
+		// return this.compile(template, { ...this.props });
+		return linkBtnTmpl.compile({ ...this.props }).getNode();
 	}
 }
 

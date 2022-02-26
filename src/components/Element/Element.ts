@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block/Block';
+import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './element.tmpl';
 
 type TProps = {
@@ -12,6 +13,7 @@ interface IElement {
   render(): ChildNode | HTMLElement;
 }
 
+const elTmpl = new Templator(template);
 class Element extends Block implements IElement {
   props: TProps;
 
@@ -21,7 +23,8 @@ class Element extends Block implements IElement {
   }
 
   render() {
-    return this.compile(template, { ...this.props });
+    // return this.compile(template, { ...this.props });
+    return elTmpl.compile({ ...this.props }).getNode();
   }
 }
 

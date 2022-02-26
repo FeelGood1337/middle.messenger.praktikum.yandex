@@ -34,11 +34,11 @@ class Block {
 	protected children: Record<string, Block>;
 	protected eventBus: () => IEventBus;
 
-	constructor(propsAndChildren: TProps = {}) {
+	constructor(props: TProps = {}) {
 		const eventBus = new EventBus();
 
-		const { children, props } = this._getChildren(propsAndChildren);
-		this.children = children;
+		// const { children, props } = this._getChildren(propsAndChildren);
+		// this.children = children;
 
 		// Генерируем уникальный UUID V4
 		this._id = makeUUID();
@@ -96,6 +96,7 @@ class Block {
 	}
 
 	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
+		console.log(oldProps, newProps);
 		return !isEqual(oldProps, newProps);
 	}
 
@@ -127,95 +128,95 @@ class Block {
 		});
 	}
 
-	private _getChildren(propsAndChildren: TProps): TProps {
-		const children: TProps = {};
-		const props: TProps = {};
+	// private _getChildren(propsAndChildren: TProps): TProps {
+	// 	const children: TProps = {};
+	// 	const props: TProps = {};
 
-		Object.entries(propsAndChildren).forEach(([key, value]) => {
-			if (Array.isArray(value)) {
-				const _zId = makeUUID();
-				children[key] = [...value, { _zId }];
-			}
+	// 	Object.entries(propsAndChildren).forEach(([key, value]) => {
+	// 		if (Array.isArray(value)) {
+	// 			const _zId = makeUUID();
+	// 			children[key] = [...value, { _zId }];
+	// 		}
 
-			if (value instanceof Block) {
-				children[key] = value;
-			} else {
-				props[key] = value;
-			}
-		});
+	// 		if (value instanceof Block) {
+	// 			children[key] = value;
+	// 		} else {
+	// 			props[key] = value;
+	// 		}
+	// 	});
 
-		return { children, props };
+	// 	return { children, props };
 
-	}
+	// }
 
-	compile(template: string, props: TProps): any {
-		const propsAndStubs = { ...props };
+	// compile(template: string, props: TProps): any {
+	// 	const propsAndStubs = { ...props };
 
-		Object.entries(this.children).forEach(([key, child]) => {
-			if (Array.isArray(child)) {
-				let propsStrTmpl: string = '';
-				let ID = '';
-				child.map(el => {
-					if (el._zId !== undefined) {
-						ID = el._zId;
-					}
-					propsStrTmpl += `<div data-id="${el._id}"></div>`;
-				});
-				propsAndStubs[key] = `<div data-id="${ID}">${propsStrTmpl}</div>`;
-			} else {
-				propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
-			}
-		});
+	// 	Object.entries(this.children).forEach(([key, child]) => {
+	// 		if (Array.isArray(child)) {
+	// 			let propsStrTmpl: string = '';
+	// 			let ID = '';
+	// 			child.map(el => {
+	// 				if (el._zId !== undefined) {
+	// 					ID = el._zId;
+	// 				}
+	// 				propsStrTmpl += `<div data-id="${el._id}"></div>`;
+	// 			});
+	// 			propsAndStubs[key] = `<div data-id="${ID}">${propsStrTmpl}</div>`;
+	// 		} else {
+	// 			propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
+	// 		}
+	// 	});
 
-		const fragment = this._createDocumentElement('template');
+	// 	const fragment = this._createDocumentElement('template');
 
-		fragment.innerHTML = new Templator(template).compile(propsAndStubs).getNode().outerHTML;
+	// 	fragment.innerHTML = new Templator(template).compile(propsAndStubs).getNode().outerHTML;
 
-		Object.values(this.children).forEach(child => {
-			if (Array.isArray(child)) {
-				let cnt: number = 0;
-				const [zID] = Object.values(child[child.length - 1]);
-				child.splice(child.length - 1, 1);
-				const stub = (fragment as any).content.querySelector(`[data-id="${zID}"]`);
-				stub.removeChild(stub.lastElementChild);
+	// 	Object.values(this.children).forEach(child => {
+	// 		if (Array.isArray(child)) {
+	// 			let cnt: number = 0;
+	// 			const [zID] = Object.values(child[child.length - 1]);
+	// 			child.splice(child.length - 1, 1);
+	// 			const stub = (fragment as any).content.querySelector(`[data-id="${zID}"]`);
+	// 			stub.removeChild(stub.lastElementChild);
 
-				for (const val of stub.childNodes) {
-					if (!(val.dataset.id === 'undefined')) {
-						val.replaceWith(child[cnt].getContent());
-					}
-					child.length - 1 > cnt ? cnt += 1 : cnt;
-				}
+	// 			for (const val of stub.childNodes) {
+	// 				if (!(val.dataset.id === 'undefined')) {
+	// 					val.replaceWith(child[cnt].getContent());
+	// 				}
+	// 				child.length - 1 > cnt ? cnt += 1 : cnt;
+	// 			}
 
-				this._moveChildToNewParent(stub);
+	// 			this._moveChildToNewParent(stub);
 
-			} else {
-				const stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
-				stub.replaceWith(child.getContent());
-			}
-		});
+	// 		} else {
+	// 			const stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
+	// 			stub.replaceWith(child.getContent());
+	// 		}
+	// 	});
 
-		return (fragment as any).content;
+	// 	return (fragment as any).content;
 
-	}
+	// }
 
-	private _moveChildToNewParent(stub: any): void {
-		const fragment = document.createDocumentFragment();
-		while (stub.firstChild) {
-			fragment.appendChild(stub.firstChild);
-		}
-		stub.parentNode.replaceChild(fragment, stub);
-	}
+	// private _moveChildToNewParent(stub: any): void {
+	// 	const fragment = document.createDocumentFragment();
+	// 	while (stub.firstChild) {
+	// 		fragment.appendChild(stub.firstChild);
+	// 	}
+	// 	stub.parentNode.replaceChild(fragment, stub);
+	// }
 
 	private _render(): void {
 		const fragment = this.render();
-		const newElement = fragment.firstElementChild as HTMLElement;
+		// const newElement = fragment.firstElementChild as HTMLElement;
 
 		if (this._element) {
 			this._removeEvents();
-			this._element.replaceWith(newElement);
+			this._element.replaceWith(fragment);
 		}
 
-		this._element = newElement;
+		this._element = fragment;
 
 		this._addEvents();
 	}
