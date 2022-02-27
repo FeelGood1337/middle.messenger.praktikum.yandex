@@ -9,7 +9,7 @@
 		"noImplicitThis": true,
 		"noImplicitAny": true,
 		"noUnusedLocals": true,
-		"no-unused-variable": false,
+		"noUnusedParameters": true,
 		"strictNullChecks": true,
 		"outDir": "./dist/",
 		"module": "commonjs",

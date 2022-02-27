@@ -10,7 +10,7 @@ class Form implements IForm {
 	private button: Element;
 	// private _customeValidator?: () => boolean;
 
-	constructor(form: HTMLFormElement, button: Element, customeValidator?: () => boolean) {
+	constructor(form: HTMLFormElement, button: Element) {
 		this.form = form;
 		this.button = button;
 		// this._customeValidator = customeValidator;
