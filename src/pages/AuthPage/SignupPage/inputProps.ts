@@ -102,24 +102,10 @@ export const inputsProps = [
 			placeholder="pasword"
 			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
 			minlength="8"
+			maxlength="20"
 			autocomplete="new-password"
 			required
 		`,
 		handleBlur: passwordValidator,
 	},
-	// {
-	// 	name: 'newPassword',
-	// 	className: 'auth__input signup-input signup__input-newPassword',
-	// 	labelClassName: 'signup-label',
-	// 	labelText: 'Пароль (ещё раз)',
-	// 	labelId: 'newPassword',
-	// 	attributes: `
-	// 		type="newPassword"
-	// 		id="newPassword"
-	// 		placeholder="pasword"
-	// 		autocomplete="new-password"
-	// 		required
-	// 	`,
-	// 	handleBlur: ,
-	// }
 ];

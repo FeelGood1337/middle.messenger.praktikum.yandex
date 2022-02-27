@@ -30,6 +30,7 @@ export const inputsProps = [
 			id="password"
 			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
 			minlength="8"
+			maxlength="20"
 			placeholder="password"
 			autocomplete="new-password"
 			required

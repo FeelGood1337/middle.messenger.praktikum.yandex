@@ -1,4 +1,4 @@
-const TO_SHORT_PASSWORD = 'Min password length 8 characters';
+const TO_SHORT_PASSWORD = 'Must be from 8 to 40 characters';
 const PASSWORD_REGISTER = 'Need two letters in different registers';
 const PASSWORD_UNDEFINE = 'Password must contain latin letters and numbers';
 const PASSWORD_NUMBER = 'Password must contain at least one number';

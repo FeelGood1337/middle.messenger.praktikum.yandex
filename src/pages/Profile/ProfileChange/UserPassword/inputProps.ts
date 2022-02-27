@@ -13,6 +13,7 @@ export const inputsProps = [
 			placeholder="pasword"
 			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
 			minlength="8"
+			maxlength="20"
 			autocomplete="new-password"
 			required
 		`,
@@ -30,6 +31,7 @@ export const inputsProps = [
 			placeholder="pasword"
 			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
 			minlength="8"
+			maxlength="20"
 			autocomplete="new-password"
 			required
 		`,
@@ -47,6 +49,7 @@ export const inputsProps = [
 			placeholder="Confirm new pasword"
 			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
 			minlength="8"
+			maxlength="20"
 			autocomplete="new-password"
 			required
 		`,
