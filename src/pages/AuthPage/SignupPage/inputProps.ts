@@ -1,3 +1,10 @@
+import { 
+	passwordValidator, 
+	simpleTextValidator, 
+	emailValidator, 
+	phoneValidator 
+} from '../../../utils/validators';
+
 export const inputsProps = [
 	{
 		name: 'email',
@@ -9,10 +16,11 @@ export const inputsProps = [
 			type="text"
 			id="email"
 			placeholder="example@example.ru"
+			pattern="^.{1,}@([-0-9A-Za-z]{1,}\\.){1,3}[-A-Za-z]{2,}$"
 			autocomplete="on"
 			required
 		`,
-		value: '""'
+		handleBlur: emailValidator,
 	},
 	{
 		name: 'login',
@@ -25,9 +33,11 @@ export const inputsProps = [
 			id="login"
 			placeholder="login"
 			autocomplete="on"
+			minlength="3"
+        	maxlength="20"
 			required
 		`,
-		value: '""'
+		handleBlur: simpleTextValidator,
 	},
 	{
 		name: 'first_name',
@@ -39,10 +49,12 @@ export const inputsProps = [
 			type="text"
 			id="first_name"
 			placeholder="Сергей"
+			minlength="3"
+        	maxlength="20"
 			autocomplete="on"
 			required
 		`,
-		value: '""'
+		handleBlur: simpleTextValidator,
 	},
 	{
 		name: 'second_name',
@@ -54,10 +66,12 @@ export const inputsProps = [
 			type="text"
 			id="second_name"
 			placeholder="Власов"
+			minlength="3"
+        	maxlength="20"
 			autocomplete="on"
 			required
 		`,
-		value: '""'
+		handleBlur: simpleTextValidator,
 	},
 	{
 		name: 'phone',
@@ -69,10 +83,12 @@ export const inputsProps = [
 			type="text"
 			id="phone"
 			placeholder="+7"
+			pattern="^(7|8)\\d{10}$"
+        	maxlength="11"
 			autocomplete="on"
 			required
 		`,
-		value: '""'
+		handleBlur: phoneValidator,
 	},
 	{
 		name: 'password',
@@ -84,24 +100,26 @@ export const inputsProps = [
 			type="password"
 			id="password"
 			placeholder="pasword"
+			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
+			minlength="8"
 			autocomplete="new-password"
 			required
 		`,
-		value: '""'
+		handleBlur: passwordValidator,
 	},
-	{
-		name: 'newPassword',
-		className: 'auth__input signup-input signup__input-newPassword',
-		labelClassName: 'signup-label',
-		labelText: 'Пароль (ещё раз)',
-		labelId: 'newPassword',
-		attributes: `
-			type="newPassword"
-			id="newPassword"
-			placeholder="pasword"
-			autocomplete="new-password"
-			required
-		`,
-		value: '""'
-	}
+	// {
+	// 	name: 'newPassword',
+	// 	className: 'auth__input signup-input signup__input-newPassword',
+	// 	labelClassName: 'signup-label',
+	// 	labelText: 'Пароль (ещё раз)',
+	// 	labelId: 'newPassword',
+	// 	attributes: `
+	// 		type="newPassword"
+	// 		id="newPassword"
+	// 		placeholder="pasword"
+	// 		autocomplete="new-password"
+	// 		required
+	// 	`,
+	// 	handleBlur: ,
+	// }
 ];

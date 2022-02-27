@@ -26,7 +26,6 @@ class Button extends Block implements IButton {
 	}
 
 	render() {
-		// return this.compile(template, { ...this.props });
 		const { text, className, isDisabled } = this.props;
 		return btnTmpl.compile({ 
 			text,
