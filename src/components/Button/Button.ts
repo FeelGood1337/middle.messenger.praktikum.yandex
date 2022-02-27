@@ -7,7 +7,7 @@ import './button.css';
 type TProps = {
 	text: string;
 	className: string;
-	disabled: string;
+	isDisabled: boolean;
 	events?: any;
 }
 
@@ -27,7 +27,12 @@ class Button extends Block implements IButton {
 
 	render() {
 		// return this.compile(template, { ...this.props });
-		return btnTmpl.compile({ ...this.props }).getNode();
+		const { text, className, isDisabled } = this.props;
+		return btnTmpl.compile({ 
+			text,
+			className,
+			disabled: isDisabled ? 'disabled' : '',
+		 }).getNode();
 	}
 
 }

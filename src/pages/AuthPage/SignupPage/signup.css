@@ -35,7 +35,11 @@
 	transform: rotate(180deg);
 }
 
-.inner:not(:last-child) > .input {
+/* .inner:not(:last-child) > .input {
+	margin-bottom: 8px;
+} */
+
+.inner > .input {
 	margin-bottom: 8px;
 }
 

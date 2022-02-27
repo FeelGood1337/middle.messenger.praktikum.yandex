@@ -28,7 +28,7 @@ class SigninPage extends Block {
 			button: new Button({
 				text: 'Войти',
 				className: 'btn auth__btn',
-				disabled: ' ',
+				isDisabled: true,
 			}).render(),
 			linkButton: new LinkButton({
 				text: 'Регистрация',
@@ -74,7 +74,7 @@ class SigninPage extends Block {
 		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
 	}
 
-	private handleClick(): void {
+	private handleClick(event: Event): void {
 		event?.preventDefault();
 
 		console.log(this.inputsValue);
@@ -84,9 +84,9 @@ class SigninPage extends Block {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, validate, getInputsValue, handleClick } = this;
 
-			const formContainer: HTMLFormElement = element.querySelector('.auth__form');
-			const formButton: HTMLButtonElement = element.querySelector('.auth__btn');
-			const inputs = element.querySelectorAll('.input');
+			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
+			const formButton: HTMLButtonElement = element.querySelector('.auth__btn')!;
+			const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input');
 			// const linkBtn: HTMLButtonElement = element.querySelector('.auth__btn-link');
 
 			this.form = new Form(formContainer, formButton);
