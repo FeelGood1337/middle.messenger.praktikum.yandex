@@ -1,3 +1,5 @@
+import { passwordValidator } from "../../../../utils/validators";
+
 export const inputsProps = [
 	{
 		name: 'password',
@@ -9,10 +11,12 @@ export const inputsProps = [
 			type="password"
 			id="password"
 			placeholder="pasword"
+			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
+			minlength="8"
 			autocomplete="new-password"
 			required
 		`,
-		value: '""'
+		handleBlur: passwordValidator,
 	},
 	{
 		name: 'newPassword',
@@ -24,24 +28,28 @@ export const inputsProps = [
 			type="password"
 			id="newPassword"
 			placeholder="pasword"
+			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
+			minlength="8"
 			autocomplete="new-password"
 			required
 		`,
-		value: '""'
+		handleBlur: passwordValidator,
 	},
 	{
-		name: 'newPassword',
+		name: 'newPasswordConfirm',
 		className: 'auth__input signup-input signup__input-newPassword',
 		labelClassName: 'signup-label',
 		labelText: 'Ещё раз',
-		labelId: 'newPassword',
+		labelId: 'newPasswordConfirm',
 		attributes: `
-			type="newPassword"
-			id="newPassword"
+			type="password"
+			id="newPasswordConfirm"
 			placeholder="Confirm new pasword"
+			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
+			minlength="8"
 			autocomplete="new-password"
 			required
 		`,
-		value: '""'
+		handleBlur: passwordValidator,
 	}
 ];
