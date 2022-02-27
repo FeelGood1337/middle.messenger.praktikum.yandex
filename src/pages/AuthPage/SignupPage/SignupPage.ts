@@ -67,7 +67,7 @@ class SignupPage extends Block {
 				attributes,
 				name,
 				value,
-			}).render().outerHTML
+			}).render().outerHTML;
 		}).join('');
 	}
 

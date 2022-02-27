@@ -1,3 +1,9 @@
+import {
+	simpleTextValidator,
+	emailValidator,
+	phoneValidator,
+ } from '../../../../utils/validators';
+
 export const inputsProps = [
 	{
 		name: 'email',
@@ -9,10 +15,12 @@ export const inputsProps = [
 			type="text"
 			id="email"
 			placeholder="example@example.ru"
+			pattern="^.{1,}@([-0-9A-Za-z]{1,}\\.){1,3}[-A-Za-z]{2,}$"
 			autocomplete="on"
 			required
 		`,
-		value: 'example@example.ru'
+		value: 'example@example.ru',
+		handleBlur: emailValidator,
 	},
 	{
 		name: 'login',
@@ -25,9 +33,12 @@ export const inputsProps = [
 			id="login"
 			placeholder="login"
 			autocomplete="on"
+			minlength="3"
+			maxlength="20"
 			required
 		`,
-		value: 'svlasov'
+		value: 'svlasov',
+		handleBlur: simpleTextValidator,
 	},
 	{
 		name: 'first_name',
@@ -39,10 +50,13 @@ export const inputsProps = [
 			type="text"
 			id="first_name"
 			placeholder="Сергей"
+			minlength="3"
+			maxlength="20"
 			autocomplete="on"
 			required
 		`,
-		value: 'Сергей'
+		value: 'Сергей',
+		handleBlur: simpleTextValidator,
 	},
 	{
 		name: 'second_name',
@@ -54,10 +68,13 @@ export const inputsProps = [
 			type="text"
 			id="second_name"
 			placeholder="Власов"
+			minlength="3"
+			maxlength="20"
 			autocomplete="on"
 			required
 		`,
-		value: 'Власов'
+		value: 'Власов',
+		handleBlur: simpleTextValidator,
 	},
 	{
 		name: 'display_name',
@@ -68,9 +85,12 @@ export const inputsProps = [
 		attributes: `
 			type="text"
 			id="display_name"
+			minlength="3"
+			maxlength="20"
 			placeholder="Ваше имя в чате"
 		`,
-		value: 'svlasov1337'
+		value: 'svlasov1337',
+		handleBlur: simpleTextValidator,
 	},
 	{
 		name: 'phone',
@@ -82,8 +102,12 @@ export const inputsProps = [
 			type="text"
 			id="phone"
 			placeholder="+7"
+			pattern="^(7|8)\\d{10}$"
+			maxlength="11"
 			autocomplete="on"
+			required
 		`,
-		value: '+7 (999) 999 99 99'
+		value: '+7 (999) 999 99 99',
+		handleBlur: phoneValidator,
 	}
 ];
