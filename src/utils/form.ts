@@ -8,12 +8,12 @@ interface IForm {
 class Form implements IForm {
 	private form: HTMLFormElement;
 	private button: Element;
-	private _customeValidator?: () => boolean;
+	// private _customeValidator?: () => boolean;
 
 	constructor(form: HTMLFormElement, button: Element, customeValidator?: () => boolean) {
 		this.form = form;
 		this.button = button;
-		this._customeValidator = customeValidator;
+		// this._customeValidator = customeValidator;
 	}
 
 	saveValue(input: HTMLInputElement, obj: TObject): void {

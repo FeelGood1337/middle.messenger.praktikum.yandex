@@ -1,7 +1,7 @@
 import { v4 as makeUUID } from 'uuid';
 import { EventBus, IEventBus } from '../EventBus/EventBus';
 import { isEqual } from '../isEqual/isEqual';
-import { Templator } from '../Template-engine/templater';
+// import { Templator } from '../Template-engine/templater';
 
 type TProps = {
 	[key: string]: any;
@@ -250,12 +250,12 @@ class Block {
 		});
 	}
 
-	private _createDocumentElement(tagName: string): HTMLElement {
-		const element = document.createElement(tagName);
-		element.setAttribute('data-id', this._id);
-		element.setAttribute('id', 'Chat-app');
-		return element;
-	}
+	// private _createDocumentElement(tagName: string): HTMLElement {
+	// 	const element = document.createElement(tagName);
+	// 	element.setAttribute('data-id', this._id);
+	// 	element.setAttribute('id', 'Chat-app');
+	// 	return element;
+	// }
 
 	show(): void {
 		this.getContent().style.display = "block";
