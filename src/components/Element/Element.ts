@@ -23,7 +23,6 @@ class Element extends Block implements IElement {
   }
 
   render() {
-    // return this.compile(template, { ...this.props });
     return elTmpl.compile({ ...this.props }).getNode();
   }
 }

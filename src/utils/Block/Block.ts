@@ -209,14 +209,14 @@ class Block {
 	private _render(): void {
 		const fragment = this.render();
 		// const newElement = fragment.firstElementChild as HTMLElement;
-
+		
 		if (this._element) {
 			this._removeEvents();
 			this._element.replaceWith(fragment);
 		}
 
 		this._element = fragment;
-
+		this._removeEvents();
 		this._addEvents();
 	}
 
