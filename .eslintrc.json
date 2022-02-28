@@ -21,7 +21,7 @@
     "rules": {
         "indent": ["error", 4],
         "linebreak-style": ["error", "unix"],
-        "quotes": ["error", "double"],
+        "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "@typescript-eslint/strict-boolean-expressions": [
             2,
