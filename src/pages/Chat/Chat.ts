@@ -2,10 +2,7 @@ import { Block } from '../../utils/Block/Block';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './chat.tmpl';
 
-import { LinkButton } from '../../components/LinkButton/LinkButton';
-import { AvatarMini } from '../../components/AvatarMini/AvatarMini';
-// import { Items } from '../../components/Items/Items';
-// import { Element } from '../../components/Element/Element';
+import { AvatarMini, LinkButton } from '../../components/index';
 
 import avataIcon from '../../../static/images/avatarMini.svg';
 import kebabIcon from '../../../static/images/kebab-menu.svg';

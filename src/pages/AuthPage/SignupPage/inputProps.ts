@@ -49,6 +49,7 @@ export const inputsProps = [
 			type="text"
 			id="first_name"
 			placeholder="Сергей"
+			pattern: '[-A-Za-zА-Яа-я.\\s]*',
 			minlength="3"
         	maxlength="20"
 			autocomplete="on"
@@ -66,6 +67,7 @@ export const inputsProps = [
 			type="text"
 			id="second_name"
 			placeholder="Власов"
+			pattern: '[-A-Za-zА-Яа-я.\\s]*',
 			minlength="3"
         	maxlength="20"
 			autocomplete="on"
