@@ -19,6 +19,7 @@
 @import '../src/components/InputWithLabel/inputWithLabel.css';
 @import '../src/components/Title/title.css';
 @import '../src/components/Avatar/avatar.css';
+@import '../src/components/AvatarMini/avatarMini.css';
 
 body {
 	margin: 0;

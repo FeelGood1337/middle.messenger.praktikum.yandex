@@ -4,7 +4,7 @@ export const template: string = `
 			<div class="chat__content">
 				<section class="section-chat-list">
 					{% linkButton %}
-					{% serch %}
+					<input type="text" class="input search" placeholder="Поиск">
 					<ul class="chat-items">{% items %}</ul>
 				</section>
 				<section class="message">
@@ -31,7 +31,11 @@ export const template: string = `
 									alt="clip btn"
 								/>
 							</button>
-							{% input %}
+							<input
+								type="text"
+								class="input control-panel__input"
+								placeholder="Сообщение"
+							/>
 							<button class="message-form__send">
 								<img 
 									class="send-img"
