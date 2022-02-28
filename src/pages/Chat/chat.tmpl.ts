@@ -13,14 +13,32 @@ export const template: string = `
 							{% avatarMini %}
 							<span class="message-header__name">{% name %}</span>
 						</div>
-						<button class="message-header__menu">{% menu %}</button>
+						<button class="message-header__menu">
+							<img 
+								class="kebab-img"
+								src="{% kebab %}"
+								alt="kebab menu"
+							/>
+						</button>
 					</div>
 					<div class="message-body"></div>
 					<div class="message-footer">
 						<form class="message-form">
-							<button class="message-form__more">{% more %}</button>
+							<button class="message-form__clip">
+								<img 
+									class="clip-img"
+									src="{% clip %}"
+									alt="clip btn"
+								/>
+							</button>
 							{% input %}
-							<button class="message-form__send">{% send %}</button>
+							<button class="message-form__send">
+								<img 
+									class="send-img"
+									src="{% send %}"
+									alt="send message"
+								/>
+							</button>
 						</form>
 					</div>
 				</section>
