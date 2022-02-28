@@ -5,6 +5,7 @@
 @import './pages/AuthPage/SigninPage/signin.css';
 @import './pages/AuthPage/SignupPage/signup.css';
 @import './pages/Profile/profile.css';
+@import './pages/Chat/chat.css';
 
 /* HTTP Errors */
 @import './pages/HTTPErrorsPages/style.css';
