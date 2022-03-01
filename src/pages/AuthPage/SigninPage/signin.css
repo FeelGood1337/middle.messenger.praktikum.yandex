@@ -34,6 +34,7 @@
 
 .inner {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: baseline;
 }
 
@@ -48,11 +49,11 @@
 	color: var(--auth-btn-color);
 }
 
-.auth__btn > .link-btn__svg {
+.auth__btn>.link-btn__svg {
 	display: none;
 }
 
-.auth__btn > .link-btn__text {
+.auth__btn>.link-btn__text {
 	margin: 0;
 }
 

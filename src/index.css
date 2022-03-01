@@ -5,8 +5,9 @@
 @import './pages/AuthPage/SigninPage/signin.css';
 @import './pages/AuthPage/SignupPage/signup.css';
 @import './pages/Profile/profile.css';
+@import './pages/Chat/chat.css';
 
- /* HTTP Errors */
+/* HTTP Errors */
 @import './pages/HTTPErrorsPages/style.css';
 @import './pages/HTTPErrorsPages/404/notFound.css';
 @import './pages/HTTPErrorsPages/500/serverError.css';
@@ -18,6 +19,7 @@
 @import '../src/components/InputWithLabel/inputWithLabel.css';
 @import '../src/components/Title/title.css';
 @import '../src/components/Avatar/avatar.css';
+@import '../src/components/AvatarMini/avatarMini.css';
 
 body {
 	margin: 0;
@@ -37,4 +39,23 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.auth__error_active {
+	display: block;
+}
+
+.auth__error {
+	flex-basis: 100%;
+	margin: 1px 0 8px 72px;
+	font-family: "Helvetica", Arial, sans-serif;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 16px;
+	color: #E57373;
+}
+
+.input-error {
+	border: 1px solid #E57373;
+	border-radius: 4px;
 }

@@ -35,10 +35,18 @@
 	transform: rotate(180deg);
 }
 
-.inner:not(:last-child) > .input {
+/* .inner:not(:last-child) > .input {
+	margin-bottom: 8px;
+} */
+
+.inner > .input {
 	margin-bottom: 8px;
 }
 
 .inner .input.signup__input-phone {
 	margin-bottom: 16px;
+}
+
+.signup-wrapper > .auth > .auth__form > .form__wrapper > .inner > .auth__error {
+	margin: 1px 0 8px 95px;
 }
