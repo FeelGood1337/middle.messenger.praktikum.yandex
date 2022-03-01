@@ -25,7 +25,7 @@ https://www.figma.com/file/aHBixUZNjTk1gddyYbZV4H/Practicum-chat?node-id=17%3A34
 - Profile,
 - UserInfo,
 - UserPassword,
-- Chat (пока просто заглушка).
+- Chat.
 
 ### **Технологии**
 
@@ -34,6 +34,4 @@ https://www.figma.com/file/aHBixUZNjTk1gddyYbZV4H/Practicum-chat?node-id=17%3A34
 - HTML,
 - JS,
 - NodeJs.
-- 
-### Sprint 1 - PR
-https://github.com/FeelGood1337/middle.messenger.praktikum.yandex/pull/1
+- TypeScript
