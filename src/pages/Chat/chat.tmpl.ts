@@ -52,6 +52,7 @@ export const template: string = `
 							</button>
 							<input
 								type="text"
+								name="message"
 								class="input control-panel__input"
 								placeholder="Сообщение"
 							/>

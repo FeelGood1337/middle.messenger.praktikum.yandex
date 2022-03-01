@@ -110,6 +110,15 @@
 	cursor: pointer;
 }
 
+.message-form {
+	display: flex;
+	justify-content: space-between;
+}
+
+.control-panel__input {
+	border-radius: 30px !important;
+	flex: 1;
+}
 
 .search {
 	background-color: #fff !important;
