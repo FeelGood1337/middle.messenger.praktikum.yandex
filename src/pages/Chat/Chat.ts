@@ -1,9 +1,8 @@
 import { Block } from '../../utils/Block/Block';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './chat.tmpl';
-import { elements } from './itemsProps';
 
-import { AvatarMini, LinkButton, Items } from '../../components/index';
+import { AvatarMini, LinkButton } from '../../components/index';
 
 import avataIcon from '../../../static/images/avatarMini.svg';
 import kebabIcon from '../../../static/images/kebab-menu.svg';
@@ -11,15 +10,6 @@ import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
 
 const chatTmpl = new Templator(template);
-
-function getItems() {
-	return elements.map(arr => arr.map(el => {
-		return new Items({
-			className: '',
-			items: el,
-		}).render()
-	}));
-}
 class Chat extends Block {
 
 	constructor() {
@@ -34,7 +24,7 @@ class Chat extends Block {
 				width: '32',
 				height: '32'
 			}).render(),
-			items: getItems(),
+			avaChatPath: avataIcon,
 			name: 'Segey Vlasov',
 			kebab: kebabIcon,
 			clip: clipIcon,
@@ -43,7 +33,6 @@ class Chat extends Block {
 	}
 
 	render() {
-		console.log(getItems());
 		return chatTmpl.compile({ ...this.props }).getNode();
 	}
 }

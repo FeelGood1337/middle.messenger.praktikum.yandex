@@ -5,7 +5,26 @@ export const template: string = `
 				<section class="section-chat-list">
 					{% linkButton %}
 					<input type="text" class="input search" placeholder="Поиск">
-					<ul class="chat-items">{% items %}</ul>
+					<ul class="chat-items">
+						<li class="item">
+							<img 
+								class="avatar-svg__item" 
+								src="{% avaChatPath %}"
+								alt="avatar chat list"
+								width="48px"
+								height="48px"
+							/>
+							<div class="item__content-wrapper">
+								<div class="item__name">Sergey Vlasov</div>
+								<p class="item__para">
+									Cегодня проходил курс по JS и столкнулся с проблемой, но...
+								</p>
+							</div>
+							<div class="item__date-wrapper">
+								<div class="date">1 мая 2021</div>
+							</div>
+						</li>
+					</ul>
 				</section>
 				<section class="message">
 					<div class="message-header">
