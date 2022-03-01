@@ -1,7 +1,6 @@
 import { v4 as makeUUID } from 'uuid';
 import { EventBus, IEventBus } from '../EventBus/EventBus';
 import { isEqual } from '../isEqual/isEqual';
-// import { Templator } from '../Template-engine/templater';
 
 type TProps = {
 	[key: string]: any;
@@ -37,9 +36,6 @@ class Block {
 	constructor(props: TProps = {}) {
 		const eventBus = new EventBus();
 
-		// const { children, props } = this._getChildren(propsAndChildren);
-		// this.children = children;
-
 		// Генерируем уникальный UUID V4
 		this._id = makeUUID();
 
@@ -60,7 +56,6 @@ class Block {
 	}
 
 	init(): void {
-		// this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
@@ -68,23 +63,11 @@ class Block {
 
 	private _componentDidMount(): void {
 		this.componentDidMount();
-		// Object.values(this.children).forEach(child => {
-		// 	if (Array.isArray(child)) {
-		// 		child.map(el => {
-		// 			el.dispatchComponentDidMount();
-		// 		})
-		// 	} else {
-		// 		child.dispatchComponentDidMount();
-		// 	}
-		// });
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
 	componentDidMount(): void { }
 
-	// dispatchComponentDidMount(): void {
-	// 	this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-	// }
 
 	private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
@@ -127,88 +110,8 @@ class Block {
 		});
 	}
 
-	// private _getChildren(propsAndChildren: TProps): TProps {
-	// 	const children: TProps = {};
-	// 	const props: TProps = {};
-
-	// 	Object.entries(propsAndChildren).forEach(([key, value]) => {
-	// 		if (Array.isArray(value)) {
-	// 			const _zId = makeUUID();
-	// 			children[key] = [...value, { _zId }];
-	// 		}
-
-	// 		if (value instanceof Block) {
-	// 			children[key] = value;
-	// 		} else {
-	// 			props[key] = value;
-	// 		}
-	// 	});
-
-	// 	return { children, props };
-
-	// }
-
-	// compile(template: string, props: TProps): any {
-	// 	const propsAndStubs = { ...props };
-
-	// 	Object.entries(this.children).forEach(([key, child]) => {
-	// 		if (Array.isArray(child)) {
-	// 			let propsStrTmpl: string = '';
-	// 			let ID = '';
-	// 			child.map(el => {
-	// 				if (el._zId !== undefined) {
-	// 					ID = el._zId;
-	// 				}
-	// 				propsStrTmpl += `<div data-id="${el._id}"></div>`;
-	// 			});
-	// 			propsAndStubs[key] = `<div data-id="${ID}">${propsStrTmpl}</div>`;
-	// 		} else {
-	// 			propsAndStubs[key] = `<div data-id="${child._id}"></div>`;
-	// 		}
-	// 	});
-
-	// 	const fragment = this._createDocumentElement('template');
-
-	// 	fragment.innerHTML = new Templator(template).compile(propsAndStubs).getNode().outerHTML;
-
-	// 	Object.values(this.children).forEach(child => {
-	// 		if (Array.isArray(child)) {
-	// 			let cnt: number = 0;
-	// 			const [zID] = Object.values(child[child.length - 1]);
-	// 			child.splice(child.length - 1, 1);
-	// 			const stub = (fragment as any).content.querySelector(`[data-id="${zID}"]`);
-	// 			stub.removeChild(stub.lastElementChild);
-
-	// 			for (const val of stub.childNodes) {
-	// 				if (!(val.dataset.id === 'undefined')) {
-	// 					val.replaceWith(child[cnt].getContent());
-	// 				}
-	// 				child.length - 1 > cnt ? cnt += 1 : cnt;
-	// 			}
-
-	// 			this._moveChildToNewParent(stub);
-
-	// 		} else {
-	// 			const stub = (fragment as any).content.querySelector(`[data-id="${child._id}"]`);
-	// 			stub.replaceWith(child.getContent());
-	// 		}
-	// 	});
-
-	// 	return (fragment as any).content;
-
-	// }
-
-	// private _moveChildToNewParent(stub: any): void {
-	// 	const fragment = document.createDocumentFragment();
-	// 	while (stub.firstChild) {
-	// 		fragment.appendChild(stub.firstChild);
-	// 	}
-	// 	stub.parentNode.replaceChild(fragment, stub);
-	// }
-
 	private _render(): void {
 		const fragment = this.render();
-		// const newElement = fragment.firstElementChild as HTMLElement;
 		
 		if (this._element) {
 			this._removeEvents();
@@ -249,13 +152,6 @@ class Block {
 			}
 		});
 	}
-
-	// private _createDocumentElement(tagName: string): HTMLElement {
-	// 	const element = document.createElement(tagName);
-	// 	element.setAttribute('data-id', this._id);
-	// 	element.setAttribute('id', 'Chat-app');
-	// 	return element;
-	// }
 
 	show(): void {
 		this.getContent().style.display = "block";
