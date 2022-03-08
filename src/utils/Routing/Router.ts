@@ -46,21 +46,29 @@ class Router implements IRouter {
 
 	private _onRoute(pathname: string): void {
 		const route = this.getRoute(pathname);
-
 		if (!route) {
 			return;
 		}
 
-		if (this._currentRoute) {
+		if (this._currentRoute && this._currentRoute !== route) {
 			this._currentRoute.leave();
 		}
 
+		this._currentRoute = route;
 		route.render(route, pathname);
 	}
 
 	protected go(pathname: string): void {
 		this.history.pushState({}, "", pathname);
 		this._onRoute(pathname);
+	}
+
+	protected back(): void {
+		this.history.back();
+	}
+
+	protected forward(): void {
+		this.history.forward();
 	}
 
 	protected getRoute(pathname: string): any {
