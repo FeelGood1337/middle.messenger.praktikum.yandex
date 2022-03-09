@@ -20,6 +20,10 @@
 	justify-content: center;
 }
 
+.profile-section-link {
+	height: 32px;
+}
+
 .profile-paper {
 	width: 100%;
 	border-radius: 24px 0px 0px 24px;

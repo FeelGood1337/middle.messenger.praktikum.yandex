@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block/Block';
+import router from '../../router';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './profile.tmpl';
 import { itemsProps, btnsProps } from './itemsProps';
@@ -69,6 +70,20 @@ class ProfilePage extends Block {
 			items: getTextItems(),
 			btnItems: getBtnItems(),
 		});
+	}
+
+	private goToChat(event: Event): void {
+		event?.preventDefault();
+		router.go('/messenger');
+	}
+
+	componentDidMount(): void {
+		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
+			const { element, goToChat } = this;
+
+			const linkBtn: HTMLButtonElement = element.querySelector('.profile-section-link') as HTMLButtonElement;
+			linkBtn.onclick = goToChat;
+		})
 	}
 
 	render() {
