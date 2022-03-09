@@ -29,14 +29,14 @@ class Router implements IRouter {
 		Router.__instance = this;
 	}
 
-	protected use(pathname: string, block: TBlockConstructor): this {
+	use(pathname: string, block: TBlockConstructor): this {
 		const route = new Route(pathname, block, { rootQuery: this._rootQuery });
 
 		this.routes.push(route);
 		return this;
 	}
 
-	protected start() {
+	start() {
 		window.onpopstate = (event: any): void => {
 			this._onRoute(event.currentTarget.location.pathname);
 		};
@@ -47,6 +47,7 @@ class Router implements IRouter {
 	private _onRoute(pathname: string): void {
 		const route = this.getRoute(pathname);
 		if (!route) {
+			this.go('/notfound');
 			return;
 		}
 
@@ -58,16 +59,16 @@ class Router implements IRouter {
 		route.render(route, pathname);
 	}
 
-	protected go(pathname: string): void {
+	go(pathname: string): void {
 		this.history.pushState({}, "", pathname);
 		this._onRoute(pathname);
 	}
 
-	protected back(): void {
+	back(): void {
 		this.history.back();
 	}
 
-	protected forward(): void {
+	forward(): void {
 		this.history.forward();
 	}
 

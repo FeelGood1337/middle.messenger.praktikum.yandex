@@ -1,7 +1,13 @@
-import { SigninPage } from './pages/AuthPage/SigninPage/SigninPage';
-import { render } from './utils/renderDOM';
+import router from './router';
+import {
+	SigninPage,
+	SignupPage
+} from './pages';
 
 import './index.css';
 
-const signin = new SigninPage();
-render("#Chat-app", signin);
+router
+	.use('/', SigninPage)
+	.use('/sign-up', SignupPage)
+	.start();
+

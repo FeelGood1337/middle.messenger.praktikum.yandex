@@ -25,7 +25,6 @@ class ServerErrorPage extends Block {
 			linkButton: new LinkButton({
 				text: "Назад к чатам",
 				className: "http-error__btn btn",
-				link: 'index.html',
 			}).render(),
 		});
 	}

@@ -7,7 +7,6 @@ import './linkButton.css';
 type TProps = {
 	text: string;
 	className: string;
-	link: string;
 }
 
 interface ILinkButton {
@@ -25,7 +24,6 @@ class LinkButton extends Block implements ILinkButton {
 	}
 
 	render() {
-		// return this.compile(template, { ...this.props });
 		return linkBtnTmpl.compile({ ...this.props }).getNode();
 	}
 }

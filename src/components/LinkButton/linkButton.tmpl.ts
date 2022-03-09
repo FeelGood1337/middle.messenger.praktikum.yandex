@@ -1,5 +1,5 @@
 export const template: string = `
-	<a class="link-btn {% className %}" href="{% link %}">
+	<a class="link-btn {% className %}" href="">
 		<span class="link-btn__text">{% text %}</span>
 		<svg class="link-btn__svg" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M4 10.707L18 10.707L18 12.707L4 12.707L4 10.707Z" fill="#26A69A"/>

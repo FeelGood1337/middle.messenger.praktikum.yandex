@@ -34,7 +34,6 @@ class SignupPage extends Block {
 			linkButton: new LinkButton({
 				text: 'Войти',
 				className: 'signup__btn-link',
-				link: 'index.html',
 			}).render(),
 		});
 

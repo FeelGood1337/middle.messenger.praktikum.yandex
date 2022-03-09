@@ -15,11 +15,10 @@ import './profile.css';
 
 const profileTmpl = new Templator(template);
 
-function getLinkButton(text: string, className: string, link: string) {
+function getLinkButton(text: string, className: string) {
 	return new LinkButton({
 		text,
 		className,
-		link,
 	}).render();
 }
 
@@ -27,11 +26,10 @@ function getBtnItems() {
 	return btnsProps.map(({
 		text,
 		className,
-		link,
 	}) =>
 		new Items({
 			className: 'fields-items__item item-btn',
-			items: getLinkButton(text, className, link),
+			items: getLinkButton(text, className),
 		}).render()
 	);
 }

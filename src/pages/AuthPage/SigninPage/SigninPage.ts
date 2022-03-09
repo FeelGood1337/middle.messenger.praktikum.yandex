@@ -1,5 +1,6 @@
 import { Block } from '../../../utils/Block/Block';
 import { Templator } from '../../../utils/Template-engine/templater';
+import router from '../../../router';
 import { template } from './signin.tmpl';
 import { inputsProps } from './inputProps';
 
@@ -33,7 +34,6 @@ class SigninPage extends Block {
 			linkButton: new LinkButton({
 				text: 'Регистрация',
 				className: 'auth__btn-link',
-				link: 'signup.html',
 			}).render(),
 		});
 
@@ -76,8 +76,12 @@ class SigninPage extends Block {
 
 	private handleClick(event: Event): void {
 		event?.preventDefault();
-
 		console.log(this.inputsValue);
+	}
+
+	private goToSignup(event: Event): void {
+		event?.preventDefault();
+		router.go('/sign-up');
 	}
 
 	componentDidMount(): void {
@@ -87,7 +91,7 @@ class SigninPage extends Block {
 			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
 			const formButton: HTMLButtonElement = element.querySelector('.auth__btn')!;
 			const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input');
-			// const linkBtn: HTMLButtonElement = element.querySelector('.auth__btn-link');
+			const linkBtn: HTMLButtonElement = element.querySelector('.auth__btn-link') as HTMLButtonElement;
 
 			this.form = new Form(formContainer, formButton);
 
@@ -99,12 +103,11 @@ class SigninPage extends Block {
 			formContainer.onchange = getInputsValue.bind(this);
 			formContainer.oninput = this.form.formIsValid;
 			formButton.onclick = handleClick.bind(this);
-			// linkBtn.onclick = 
+			linkBtn.onclick = this.goToSignup;
 		})
 	}
 
 	render() {
-		// return this.compile(template, { ...this.props });
 		const { title, button, linkButton } = this.props;
 		return signInTmpl.compile({
 			title,
