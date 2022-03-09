@@ -154,7 +154,7 @@ class Block {
 	}
 
 	show(): void {
-		this.getContent().style.display = "block";
+		this.getContent().style.display = "flex";
 	}
 
 	hide(): void {

@@ -1,4 +1,5 @@
 import { Block } from '../../../utils/Block/Block';
+import router from '../../../router';
 import { Templator } from '../../../utils/Template-engine/templater';
 import { template } from './signup.tmpl';
 import { inputsProps } from './inputProps';
@@ -79,6 +80,11 @@ class SignupPage extends Block {
 		console.log(this.inputsValue);
 	}
 
+	private goToSignin(event: Event): void {
+		event?.preventDefault();
+		router.go('/');
+	}
+
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, validate, getInputsValue, handleClick } = this;
@@ -86,6 +92,7 @@ class SignupPage extends Block {
 			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
 			const formButton: HTMLButtonElement = element.querySelector('.signup__btn')!;
 			const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input');
+			const linkBtn: HTMLButtonElement = element.querySelector('.signup__btn-link') as HTMLButtonElement;
 
 			this.form = new Form(formContainer, formButton);
 
@@ -97,6 +104,7 @@ class SignupPage extends Block {
 			formContainer.onchange = getInputsValue.bind(this);
 			formContainer.oninput = this.form.formIsValid;
 			formButton.onclick = handleClick.bind(this);
+			linkBtn.onclick = this.goToSignin;
 		});
 	}
 
