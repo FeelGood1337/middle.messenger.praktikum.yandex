@@ -86,7 +86,7 @@ class SigninPage extends Block {
 
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, validate, getInputsValue, handleClick } = this;
+			const { element, validate, getInputsValue, handleClick, goToSignup } = this;
 
 			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
 			const formButton: HTMLButtonElement = element.querySelector('.auth__btn')!;
@@ -103,7 +103,7 @@ class SigninPage extends Block {
 			formContainer.onchange = getInputsValue.bind(this);
 			formContainer.oninput = this.form.formIsValid;
 			formButton.onclick = handleClick.bind(this);
-			linkBtn.onclick = this.goToSignup;
+			linkBtn.onclick = goToSignup;
 		})
 	}
 

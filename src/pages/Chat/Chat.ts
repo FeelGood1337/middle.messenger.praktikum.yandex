@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block/Block';
+import router from '../../router';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './chat.tmpl';
 
@@ -29,6 +30,20 @@ class Chat extends Block {
 			clip: clipIcon,
 			send: sendIcon,
 		});
+	}
+
+	private goToProfile(event: Event): void {
+		event?.preventDefault();
+		router.go('/settings');
+	}
+
+	componentDidMount(): void {
+		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
+			const { element, goToProfile } = this;
+
+			const linkBtn: HTMLButtonElement = element.querySelector('.section-caht-list__link-btn') as HTMLButtonElement;
+			linkBtn.onclick = goToProfile;
+		})
 	}
 
 	render() {

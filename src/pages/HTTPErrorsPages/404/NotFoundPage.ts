@@ -1,4 +1,5 @@
 import { Block } from '../../../utils/Block/Block';
+import router from '../../../router';
 import { Templator } from '../../../utils/Template-engine/templater';
 import { template } from './notFound.tmpl';
 
@@ -29,6 +30,19 @@ class NotFoundPage extends Block {
 		});
 	}
 
+	private goToChat(event: Event): void {
+		event?.preventDefault();
+		router.go('/messenger');
+	}
+
+	componentDidMount(): void {
+		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
+			const { element, goToChat } = this;
+
+			const linkBtn: HTMLButtonElement = element.querySelector('.http-error__btn') as HTMLButtonElement;
+			linkBtn.onclick = goToChat;
+		})
+	}
 
 	render() {
 		return notFoundTmpl.compile({ ...this.props }).getNode();
