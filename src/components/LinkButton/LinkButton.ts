@@ -7,6 +7,7 @@ import './linkButton.css';
 type TProps = {
 	text: string;
 	className: string;
+	href: string;
 }
 
 interface ILinkButton {

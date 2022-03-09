@@ -26,6 +26,7 @@ class NotFoundPage extends Block {
 			linkButton: new LinkButton({
 				text: "Назад к чатам",
 				className: "http-error__btn btn",
+				href: '/messenger',
 			}).render(),
 		});
 	}

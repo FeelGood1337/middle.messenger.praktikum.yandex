@@ -34,6 +34,7 @@ class SigninPage extends Block {
 			linkButton: new LinkButton({
 				text: 'Регистрация',
 				className: 'auth__btn-link',
+				href: '/sign-up',
 			}).render(),
 		});
 

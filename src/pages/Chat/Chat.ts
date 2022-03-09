@@ -18,6 +18,7 @@ class Chat extends Block {
 			linkButton: new LinkButton({
 				text: 'Профиль',
 				className: 'section-caht-list__link-btn',
+				href: '/settings',
 			}).render(),
 			avatarMini: new AvatarMini({
 				imgPath: avataIcon,

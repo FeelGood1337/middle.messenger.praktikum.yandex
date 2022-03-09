@@ -77,17 +77,17 @@ const btnsProps = [
 	{
 		className: 'btn-item btn-item_accent',
 		text: 'Изменить данные',
-		link: 'use-info_change.html'
+		href: 'use-info_change.html'
 	},
 	{
 		className: 'btn-item btn-item_accent',
 		text: 'Изменить пароль',
-		link: 'user-password_change.html'
+		href: 'user-password_change.html'
 	},
 	{
 		className: 'btn-item btn-item_red',
 		text: 'Выйти',
-		link: 'index.html'
+		href: '/'
 	},
 ];
 
