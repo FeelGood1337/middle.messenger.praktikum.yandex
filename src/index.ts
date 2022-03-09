@@ -3,6 +3,7 @@ import {
 	SigninPage,
 	SignupPage,
 	NotFoundPage,
+	ServerErrorPage,
 	Chat,
 	ProfilePage,
 } from './pages';
@@ -14,6 +15,7 @@ router
 	.use('/sign-up', SignupPage)
 	.use('/messenger', Chat)
 	.use('/settings', ProfilePage)
+	.use('/error', ServerErrorPage)
 	.use('/notfound', NotFoundPage)
 	.start();
 
