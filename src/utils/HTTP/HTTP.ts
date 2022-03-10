@@ -10,7 +10,7 @@ type deepObject = { [key: string]: string | deepObject };
 type headersStringKey = { [key: string]: string };
 
 type Options = {
-	method: METHOD;
+	method?: METHOD;
 	data?: any;
 	body?: any;
 	timeout?: number;
