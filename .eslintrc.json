@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 {
     "root": true,
     "env": {
@@ -7,7 +8,7 @@
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/eslint-recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -19,10 +20,11 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "indent": ["error", 4],
+        "indent": ["error", "tab"],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
+        "no-var": "error",
         "@typescript-eslint/strict-boolean-expressions": [
             2,
             {

@@ -7,7 +7,9 @@
     "dev": "parcel static/*.html -p 3000 --no-cache",
     "build": "parcel build static/*.html",
     "check": "tsc --noEmit",
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
   },
   "repository": {
     "type": "git",
