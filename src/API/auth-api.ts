@@ -7,7 +7,7 @@ class AuthAPI extends BaseAPI {
 		this._url = `${this._baseURL}/auth/`;
 	}
 
-	signup(body: Record<string, string>) {
+	signup(body: Record<string, string>): Promise<XMLHttpRequest> {
 		const options = {
 			headers: {
 				'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ class AuthAPI extends BaseAPI {
 			.then((res: any) => this.getResponse(res));
 	}
 
-	signin(body: Record<string, string>) {
+	signin(body: Record<string, string>): Promise<XMLHttpRequest> {
 		const options = {
 			headers: {
 				'Content-Type': 'application/json',
@@ -29,6 +29,19 @@ class AuthAPI extends BaseAPI {
 			body: JSON.stringify(body),
 		};
 		const finalRoute = `${this._url}signin`;
+
+		return this._http
+			.post(finalRoute, options)
+			.then((res: any) => this.getResponse(res));
+	}
+
+	logout(): Promise<XMLHttpRequest> {
+		const options = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+		const finalRoute = `${this._url}logout`;
 
 		return this._http
 			.post(finalRoute, options)

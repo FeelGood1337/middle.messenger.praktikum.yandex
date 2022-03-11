@@ -4,6 +4,7 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './profile.tmpl';
 import { itemsProps, btnsProps } from './itemsProps';
 
+import { AuthAPI } from '../../API/auth-api';
 import { Title } from '../../components/Title/Title';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { Items } from '../../components/Items/Items';
@@ -15,6 +16,7 @@ import avatar from '../../../static/images/Avatar.svg';
 import './profile.css';
 
 const profileTmpl = new Templator(template);
+const authApi = new AuthAPI();
 
 function getLinkButton(text: string, className: string, href: string) {
 	return new LinkButton({
@@ -78,14 +80,28 @@ class ProfilePage extends Block {
 		router.go('/messenger');
 	}
 
+	private logoutClick(event: Event): void {
+		event?.preventDefault();
+
+		authApi
+			.logout()
+			.then(() => router.go('/'))
+			.catch(() => router.go('/error'));
+	}
+
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, goToChat } = this;
+			const { element, goToChat, logoutClick } = this;
 
 			const linkBtn: HTMLButtonElement = element.querySelector(
 				'.profile-section-link',
 			) as HTMLButtonElement;
+			const logOutBtn: HTMLButtonElement = element.querySelector(
+				'.btn-item_red',
+			) as HTMLButtonElement;
+
 			linkBtn.onclick = goToChat;
+			logOutBtn.onclick = logoutClick;
 		});
 	}
 

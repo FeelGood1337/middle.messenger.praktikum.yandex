@@ -3,8 +3,8 @@ enum METHOD {
 	POST = 'POST',
 	PUT = 'PUT',
 	PATCH = 'PATCH',
-	DELETE = 'DELETE'
-};
+	DELETE = 'DELETE',
+}
 
 type deepObject = { [key: string]: string | deepObject };
 type headersStringKey = { [key: string]: string };
@@ -39,7 +39,7 @@ class HTTPTransport implements IHTTPTransport {
 
 	get(url: string, options: OptionsWithoutMethod = {}): Promise<XMLHttpRequest> {
 		return this.request(url, { ...options, method: METHOD.GET });
-	};
+	}
 
 	post(url: string, options: Options): Promise<XMLHttpRequest> {
 		return this.request(url, { ...options, method: METHOD.POST });
@@ -78,36 +78,40 @@ class HTTPTransport implements IHTTPTransport {
 		}, '?');
 	}
 
-	request(url: string, options: Options = { method: METHOD.GET }): Promise<XMLHttpRequest> {
+	request(
+		url: string,
+		options: Options = { method: METHOD.GET },
+	): Promise<XMLHttpRequest> {
 		const { headers = {}, method, body, timeout = 5000 } = options;
-		return new Promise(
-			(resolve: any, reject: any) => {
-				if (!method) {
-					reject(this.ERROR_NEED_METHOD);
-					return;
-				}
-
-				const xhr = new XMLHttpRequest();
-				const isGet = method === METHOD.GET;
-
-				xhr.open(method, isGet && !!body ? `${url}${this.queryStringify(body)}` : url);
-
-				xhr.withCredentials = true;
-				Object.keys(headers).forEach((key) => {
-					xhr.setRequestHeader(key, headers[key]);
-				});
-				xhr.onload = () => resolve(xhr);
-				xhr.onabort = reject;
-				xhr.onerror = reject;
-				xhr.timeout = timeout;
-				xhr.ontimeout = reject;
-				if (isGet || !body) {
-					xhr.send();
-				} else {
-					xhr.send(body);
-				}
+		return new Promise((resolve: any, reject: any) => {
+			if (!method) {
+				reject(this.ERROR_NEED_METHOD);
+				return;
 			}
-		);
+
+			const xhr = new XMLHttpRequest();
+			const isGet = method === METHOD.GET;
+
+			xhr.open(
+				method,
+				isGet && !!body ? `${url}${this.queryStringify(body)}` : url,
+			);
+
+			xhr.withCredentials = true;
+			Object.keys(headers).forEach((key) => {
+				xhr.setRequestHeader(key, headers[key]);
+			});
+			xhr.onload = () => resolve(xhr);
+			xhr.onabort = reject;
+			xhr.onerror = reject;
+			xhr.timeout = timeout;
+			xhr.ontimeout = reject;
+			if (isGet || !body) {
+				xhr.send();
+			} else {
+				xhr.send(body);
+			}
+		});
 	}
 }
 

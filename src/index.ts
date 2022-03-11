@@ -18,4 +18,3 @@ router
 	.use('/error', ServerErrorPage)
 	.use('/notfound', NotFoundPage)
 	.start();
-
