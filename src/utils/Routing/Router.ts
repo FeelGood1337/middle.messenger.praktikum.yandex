@@ -73,7 +73,7 @@ class Router implements IRouter {
 	}
 
 	protected getRoute(pathname: string): any {
-		return this.routes.find(route => route.match(pathname));
+		return this.routes.find((route) => route.match(pathname));
 	}
 }
 
