@@ -6,7 +6,8 @@
     "start": "npm run build && node server.js",
     "dev": "parcel static/*.html -p 3000 --no-cache",
     "build": "parcel build static/*.html",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "test": "./node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,11 @@
   },
   "homepage": "https://github.com/FeelGood1337/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@babel/register": "^7.17.0",
     "@parcel/config-default": "^2.2.1",
     "@parcel/resolver-default": "^2.2.1",
     "@parcel/resolver-glob": "^2.2.1",
@@ -46,6 +52,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "express": "^4.17.2",
     "uuid": "^8.3.2"
   }
