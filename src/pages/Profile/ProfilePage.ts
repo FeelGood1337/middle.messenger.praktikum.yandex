@@ -25,26 +25,26 @@ function getLinkButton(text: string, className: string, href: string) {
 }
 
 function getBtnItems() {
-	return btnsProps.map(({
-		text,
-		className,
-		href,
-	}) =>
+	return btnsProps.map(({ text, className, href }) =>
 		new Items({
 			className: 'fields-items__item item-btn',
 			items: getLinkButton(text, className, href),
-		}).render()
+		}).render(),
 	);
 }
 
 function getTextElement() {
-	return itemsProps.map(arr => arr.map(el => {
-		return new Element({
-			tag: el.tag,
-			className: el.className,
-			content: el.content,
-		}).render().outerHTML
-	}).join(''));
+	return itemsProps.map((arr) =>
+		arr
+			.map((el) => {
+				return new Element({
+					tag: el.tag,
+					className: el.className,
+					content: el.content,
+				}).render().outerHTML;
+			})
+			.join(''),
+	);
 }
 
 function getTextItems() {
@@ -56,7 +56,6 @@ function getTextItems() {
 }
 
 class ProfilePage extends Block {
-
 	constructor() {
 		super({
 			profileSvgClass: 'profile-svg',
@@ -83,9 +82,11 @@ class ProfilePage extends Block {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, goToChat } = this;
 
-			const linkBtn: HTMLButtonElement = element.querySelector('.profile-section-link') as HTMLButtonElement;
+			const linkBtn: HTMLButtonElement = element.querySelector(
+				'.profile-section-link',
+			) as HTMLButtonElement;
 			linkBtn.onclick = goToChat;
-		})
+		});
 	}
 
 	render() {

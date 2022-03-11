@@ -1,18 +1,28 @@
-import { HTTPTransport } from "../utils/HTTP/HTTP";
+import { HTTPTransport } from '../utils/HTTP/HTTP';
 
 export abstract class BaseAPI {
 	_baseURL: string;
 	_http: HTTPTransport;
 	constructor() {
-		this._baseURL = 'api/v1/chats';
+		this._baseURL = 'https://ya-praktikum.tech/api/v2';
 		this._http = new HTTPTransport();
 	}
 
-	protected create() { throw new Error('Not implemented'); }
+	protected getResponse(res: XMLHttpRequest): Promise<XMLHttpRequest> | XMLHttpRequest {
+		if (res.status === 200) {
+			return res;
+		}
 
-	protected request() { throw new Error('Not implemented'); }
+		return Promise.reject(res);
+	}
 
-	protected update() { throw new Error('Not implemented'); }
+	protected getResponseWithParse(
+		res: XMLHttpRequest,
+	): Promise<XMLHttpRequest> | string {
+		if (res.status === 200) {
+			return JSON.parse(res.response);
+		}
 
-	protected delete() { throw new Error('Not implemented'); }
+		return Promise.reject(res);
+	}
 }

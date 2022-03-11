@@ -34,6 +34,7 @@
                 "allowNumber": false
             }
         ],
+        "@typescript-eslint/no-explicit-any": ["off"],
         "for-direction": "off",
         "prettier/prettier": "error"
     }

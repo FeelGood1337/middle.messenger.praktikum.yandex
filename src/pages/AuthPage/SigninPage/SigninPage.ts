@@ -4,16 +4,22 @@ import router from '../../../router';
 import { template } from './signin.tmpl';
 import { inputsProps } from './inputProps';
 
+import { AuthAPI } from '../../../API/auth-api';
 import { Form, IForm } from '../../../utils/form';
 import { Button } from '../../../components/Button/Button';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabel';
-import { InputValidate, IInputValidate } from '../../../components/InputWithLabel/InputValidate';
+import {
+	InputValidate,
+	IInputValidate,
+} from '../../../components/InputWithLabel/InputValidate';
 import { Title } from '../../../components/Title/Title';
 
 import './signin.css';
 
 const signInTmpl = new Templator(template);
+const authApi = new AuthAPI();
+
 class SigninPage extends Block {
 	inputsValue: { [key: string]: string };
 	validate: IInputValidate[];
@@ -47,28 +53,34 @@ class SigninPage extends Block {
 		this.inputsValue = this.inputsValue || {};
 		this.validate = this.validate || [];
 
-		return inputsProps.map(({
-			className,
-			labelText,
-			labelClassName,
-			labelId,
-			attributes,
-			name,
-			handleBlur,
-		}) => {
-			const value = this.inputsValue[name] ? `value="${this.inputsValue[name]}"` : ' ';
-			this.validate.push(new InputValidate(handleBlur));
+		return inputsProps
+			.map(
+				({
+					className,
+					labelText,
+					labelClassName,
+					labelId,
+					attributes,
+					name,
+					handleBlur,
+				}) => {
+					const value = this.inputsValue[name]
+						? `value="${this.inputsValue[name]}"`
+						: ' ';
+					this.validate.push(new InputValidate(handleBlur));
 
-			return new InputWithLabel({
-				className,
-				labelClassName,
-				labelText,
-				labelId,
-				attributes,
-				name,
-				value,
-			}).render().outerHTML;
-		}).join('');
+					return new InputWithLabel({
+						className,
+						labelClassName,
+						labelText,
+						labelId,
+						attributes,
+						name,
+						value,
+					}).render().outerHTML;
+				},
+			)
+			.join('');
 	}
 
 	private getInputsValue(): void {
@@ -77,7 +89,19 @@ class SigninPage extends Block {
 
 	private handleClick(event: Event): void {
 		event?.preventDefault();
-		console.log(this.inputsValue);
+		authApi
+			.signin(this.inputsValue)
+			.then(() => router.go('/messenger'))
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			})
+			.finally(() => {
+				this.inputsValue = {};
+			});
 	}
 
 	private goToSignup(event: Event): void {
@@ -91,8 +115,11 @@ class SigninPage extends Block {
 
 			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
 			const formButton: HTMLButtonElement = element.querySelector('.auth__btn')!;
-			const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input');
-			const linkBtn: HTMLButtonElement = element.querySelector('.auth__btn-link') as HTMLButtonElement;
+			const inputs: NodeListOf<HTMLInputElement> =
+				element.querySelectorAll('.input');
+			const linkBtn: HTMLButtonElement = element.querySelector(
+				'.auth__btn-link',
+			) as HTMLButtonElement;
 
 			this.form = new Form(formContainer, formButton);
 
@@ -105,20 +132,20 @@ class SigninPage extends Block {
 			formContainer.oninput = this.form.formIsValid;
 			formButton.onclick = handleClick.bind(this);
 			linkBtn.onclick = goToSignup;
-		})
+		});
 	}
 
 	render() {
 		const { title, button, linkButton } = this.props;
-		return signInTmpl.compile({
-			title,
-			button,
-			linkButton,
-			inputs: this.getInputs(),
-		}).getNode();
+		return signInTmpl
+			.compile({
+				title,
+				button,
+				linkButton,
+				inputs: this.getInputs(),
+			})
+			.getNode();
 	}
 }
 
-export {
-	SigninPage
-};
+export { SigninPage };

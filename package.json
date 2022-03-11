@@ -27,6 +27,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
     "@babel/register": "^7.17.0",
+    "@parcel/babel-preset-env": "^2.3.2",
     "@parcel/config-default": "^2.2.1",
     "@parcel/resolver-default": "^2.2.1",
     "@parcel/resolver-glob": "^2.2.1",

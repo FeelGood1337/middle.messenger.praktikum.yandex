@@ -4,8 +4,12 @@ import { Templator } from '../../../utils/Template-engine/templater';
 import { template } from './signup.tmpl';
 import { inputsProps } from './inputProps';
 
+import { AuthAPI } from '../../../API/auth-api';
 import { Form, IForm } from '../../../utils/form';
-import { InputValidate, IInputValidate } from '../../../components/InputWithLabel/InputValidate';
+import {
+	InputValidate,
+	IInputValidate,
+} from '../../../components/InputWithLabel/InputValidate';
 import { Title } from '../../../components/Title/Title';
 import { Button } from '../../../components/Button/Button';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
@@ -13,8 +17,9 @@ import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabe
 
 import './signup.css';
 
-
 const signUpTmpl = new Templator(template);
+const authApi = new AuthAPI();
+
 class SignupPage extends Block {
 	inputsValue: { [key: string]: string };
 	validate: IInputValidate[];
@@ -48,28 +53,34 @@ class SignupPage extends Block {
 		this.inputsValue = this.inputsValue || {};
 		this.validate = this.validate || [];
 
-		return inputsProps.map(({
-			className,
-			labelClassName,
-			labelText,
-			labelId,
-			attributes,
-			name,
-			handleBlur
-		}) => {
-			const value = this.inputsValue[name] ? `value="${this.inputsValue[name]}"` : ' ';
-			this.validate.push(new InputValidate(handleBlur));
+		return inputsProps
+			.map(
+				({
+					className,
+					labelClassName,
+					labelText,
+					labelId,
+					attributes,
+					name,
+					handleBlur,
+				}) => {
+					const value = this.inputsValue[name]
+						? `value="${this.inputsValue[name]}"`
+						: ' ';
+					this.validate.push(new InputValidate(handleBlur));
 
-			return new InputWithLabel({
-				className,
-				labelClassName,
-				labelText,
-				labelId,
-				attributes,
-				name,
-				value,
-			}).render().outerHTML;
-		}).join('');
+					return new InputWithLabel({
+						className,
+						labelClassName,
+						labelText,
+						labelId,
+						attributes,
+						name,
+						value,
+					}).render().outerHTML;
+				},
+			)
+			.join('');
 	}
 
 	private getInputsValue(): void {
@@ -78,7 +89,19 @@ class SignupPage extends Block {
 
 	private handleClick(event: Event): void {
 		event.preventDefault();
-		console.log(this.inputsValue);
+		authApi
+			.signup(this.inputsValue)
+			.then(() => router.go('/'))
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			})
+			.finally(() => {
+				this.inputsValue = {};
+			});
 	}
 
 	private goToSignin(event: Event): void {
@@ -92,8 +115,11 @@ class SignupPage extends Block {
 
 			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
 			const formButton: HTMLButtonElement = element.querySelector('.signup__btn')!;
-			const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input');
-			const linkBtn: HTMLButtonElement = element.querySelector('.signup__btn-link') as HTMLButtonElement;
+			const inputs: NodeListOf<HTMLInputElement> =
+				element.querySelectorAll('.input');
+			const linkBtn: HTMLButtonElement = element.querySelector(
+				'.signup__btn-link',
+			) as HTMLButtonElement;
 
 			this.form = new Form(formContainer, formButton);
 
@@ -112,15 +138,15 @@ class SignupPage extends Block {
 	render() {
 		const { title, button, linkButton } = this.props;
 
-		return signUpTmpl.compile({
-			title,
-			button,
-			linkButton,
-			inputs: this.getInputs(),
-		}).getNode();
+		return signUpTmpl
+			.compile({
+				title,
+				button,
+				linkButton,
+				inputs: this.getInputs(),
+			})
+			.getNode();
 	}
 }
 
-export {
-	SignupPage
-};
+export { SignupPage };

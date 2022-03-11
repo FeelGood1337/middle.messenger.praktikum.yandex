@@ -2,9 +2,7 @@ import { isEqual } from '../isEqual/isEqual';
 import { render } from '../renderDOM';
 import { Block } from '../Block/Block';
 
-type TBlockConstructor = new (
-	props?: Record<string, string | boolean>
-) => Block;
+type TBlockConstructor = new (props?: Record<string, string | boolean>) => Block;
 
 class Route {
 	_pathname: string;

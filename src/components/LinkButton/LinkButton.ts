@@ -8,7 +8,7 @@ type TProps = {
 	text: string;
 	className: string;
 	href: string;
-}
+};
 
 interface ILinkButton {
 	props: TProps;
@@ -29,6 +29,4 @@ class LinkButton extends Block implements ILinkButton {
 	}
 }
 
-export {
-	LinkButton
-};
+export { LinkButton };
