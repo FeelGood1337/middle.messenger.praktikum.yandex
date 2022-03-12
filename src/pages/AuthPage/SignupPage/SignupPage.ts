@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Block } from '../../../utils/Block/Block';
 import router from '../../../router';
 import { Templator } from '../../../utils/Template-engine/templater';
@@ -21,7 +23,7 @@ const signUpTmpl = new Templator(template);
 const authApi = new AuthAPI();
 
 class SignupPage extends Block {
-	inputsValue: { [key: string]: string };
+	inputsValue: Record<string, string>;
 	validate: IInputValidate[];
 	form: IForm;
 
@@ -91,7 +93,7 @@ class SignupPage extends Block {
 		event.preventDefault();
 		authApi
 			.signup(this.inputsValue)
-			.then(() => router.go('/'))
+			.then(() => router.go('/messenger'))
 			.catch((err) => {
 				const { status } = err;
 
