@@ -133,6 +133,11 @@
 	box-shadow: 0px 4px 30px rgba(108, 72, 0, 0.2);
 }
 
+.auth__form_avatar {
+	justify-content: center;
+	align-items: center;
+}
+
 .modal-title {
 	font-style: normal;
 	font-size: 24px;
@@ -140,6 +145,20 @@
 	line-height: 28px;
 }
 
-.modal-link {
+.auth__input_avatar {
+	opacity: 0;
+	width: 0.1px;
+	height: 0.1px;
+	position: absolute;
+}
+
+.input-avatar__label {
+	color: #26A69A;
+	cursor: pointer;
 	padding-bottom: 24px;
+	display: inline-block;
+}
+
+.file-name {
+	color: #A0A0A0;
 }

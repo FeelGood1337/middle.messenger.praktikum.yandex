@@ -2,10 +2,11 @@ import { Block } from '../../utils/Block/Block';
 import router from '../../router';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './profile.tmpl';
-import { itemsProps, btnsProps } from './itemsProps';
+import { itemsProps, btnsProps, avatarProps } from './itemsProps';
 
 import { AuthAPI } from '../../API/auth-api';
 import { Title } from '../../components/Title/Title';
+import { Input } from '../../components';
 import { Avatar } from '../../components/Avatar/Avatar';
 import { Items } from '../../components/Items/Items';
 import { Element } from '../../components/Element/Element';
@@ -76,14 +77,15 @@ class ProfilePage extends Block {
 				className: 'modal-title',
 				text: 'Загрузите файл',
 			}).render(),
-			modalLink: new LinkButton({
-				text: 'Выбрать файл на компьютере',
-				className: 'btn-item modal-link btn-item_accent',
-				href: '#',
+			modalInputAvatar: new Input({
+				className: avatarProps[0].className,
+				attributes: avatarProps[0].attributes,
+				name: avatarProps[0].name,
+				value: ' ',
 			}).render(),
 			modalBtn: new Button({
 				text: 'Загрузить',
-				className: '',
+				className: 'btn-modal',
 				isDisabled: false,
 			}).render(),
 			items: getTextItems(),
@@ -114,13 +116,31 @@ class ProfilePage extends Block {
 		};
 	}
 
+	private handleChangeAvatarInput(event: Event): void {
+		const [file]: any = (<HTMLInputElement>event.target).files;
+		const { name: fileName, size } = file;
+		const fileSize = (size / 1000).toFixed(2);
+		const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+		(document.querySelector('.file-name') as HTMLParagraphElement).textContent =
+			fileNameAndSize;
+	}
+
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, goToChat, logoutClick, handleClickModal } = this;
+			const {
+				element,
+				goToChat,
+				logoutClick,
+				handleClickModal,
+				handleChangeAvatarInput,
+			} = this;
 
 			const avatarImg: HTMLImageElement = element.querySelector(
 				'.avatar__img',
 			) as HTMLImageElement;
+			const avatarInput: HTMLInputElement = element.querySelector(
+				'#avatarInput',
+			) as HTMLInputElement;
 			const modal: HTMLElement = element.querySelector(
 				'#avatarModal',
 			) as HTMLElement;
@@ -135,6 +155,7 @@ class ProfilePage extends Block {
 			linkBtn.onclick = goToChat;
 			logOutBtn.onclick = logoutClick;
 			avatarImg.onclick = () => handleClickModal(modal);
+			avatarInput.onchange = handleChangeAvatarInput;
 		});
 	}
 

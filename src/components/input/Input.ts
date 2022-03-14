@@ -9,7 +9,7 @@ type TProps = {
 	className: string;
 	name: string;
 	value: string;
-}
+};
 
 interface IInput {
 	props: TProps;
@@ -31,6 +31,4 @@ class Input extends Block implements IInput {
 	}
 }
 
-export {
-	Input
-};
+export { Input };

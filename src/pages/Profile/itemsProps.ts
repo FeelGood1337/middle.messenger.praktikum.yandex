@@ -73,6 +73,18 @@ const itemsProps = [
 	],
 ];
 
+const avatarProps = [
+	{
+		attributes: `
+      type="file"
+	  id="avatarInput"
+      required
+    `,
+		name: 'avatar',
+		className: 'auth__input_avatar',
+	},
+];
+
 const btnsProps = [
 	{
 		className: 'btn-item btn-item_accent',
@@ -91,4 +103,4 @@ const btnsProps = [
 	},
 ];
 
-export { itemsProps, btnsProps };
+export { itemsProps, btnsProps, avatarProps };

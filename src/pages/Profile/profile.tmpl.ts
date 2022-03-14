@@ -17,9 +17,20 @@ export const template = `
 							{% avatar %}
 							<div class="modal" id="avatarModal">
 								<div class="modal-wrapper">
-									{% modalTitle %}
-									{% modalLink %}
-									{% modalBtn %}
+									<form class="auth__form auth__form_avatar" novalidate="true">
+										{% modalTitle %}
+										<div class="file-input">
+											{% modalInputAvatar %}
+											<label 
+												class="input-avatar__label" 
+												for="avatarInput"
+											>
+												Выбрать файл на компьютере
+												<p class="file-name"></p>
+											</label>
+										</div>
+										{% modalBtn %}
+									</form>
 								</div>
 							</div>
 							{% title %}
