@@ -5,7 +5,7 @@ import { template } from './avatar.tmpl';
 import './avatar.css';
 
 type TProps = {
-	link: string;
+	link?: string;
 	imgPath: string;
 };
 

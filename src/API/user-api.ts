@@ -7,7 +7,7 @@ class UserAPI extends BaseAPI {
 		this._url = `${this._baseURL}/user/`;
 	}
 
-	avatar(body: FormData): Promise<XMLHttpRequest> {
+	avatar(body: FormData): Promise<any> {
 		const options = {
 			body,
 		};

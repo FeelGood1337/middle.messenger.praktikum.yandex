@@ -5,6 +5,7 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './profile.tmpl';
 import { itemsProps, btnsProps, avatarProps } from './itemsProps';
 
+import { AVATAR_URL } from '../../constants';
 import { AuthAPI } from '../../API/auth-api';
 import { UserAPI } from '../../API/user-api';
 import { Title } from '../../components/Title/Title';
@@ -72,7 +73,6 @@ class ProfilePage extends Block {
 				text: 'Сергей',
 			}).render(),
 			avatar: new Avatar({
-				link: 'profile.html',
 				imgPath: avatar,
 			}).render(),
 			modalTitle: new Title({
@@ -135,13 +135,41 @@ class ProfilePage extends Block {
 		) as HTMLInputElement;
 		const formData = new FormData();
 		formData.append('avatar', avatarInput.files![0]);
+
+		userApi
+			.avatar(formData)
+			.then(({ avatar }) => {
+				this.setProps({
+					avatar: new Avatar({
+						imgPath: `${AVATAR_URL}${avatar}`,
+					}).render(),
+				});
+			})
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			});
 	}
 
 	componentDidMount(): void {
 		authApi
 			.getUser()
-			.then(({ id }) => {
-				console.log(id);
+			.then(({ avatar }) => ({
+				avatar,
+			}))
+			.then(({ avatar }) => {
+				if (avatar !== null) {
+					this.setProps({
+						avatar: new Avatar({
+							imgPath: `${AVATAR_URL}${avatar}`,
+						}).render(),
+					});
+				} else {
+					this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+				}
 			})
 			.catch((err) => {
 				const { status } = err;
