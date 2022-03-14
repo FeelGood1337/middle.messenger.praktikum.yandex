@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Block } from '../../utils/Block/Block';
 import router from '../../router';
 import { Templator } from '../../utils/Template-engine/templater';
@@ -5,6 +6,7 @@ import { template } from './profile.tmpl';
 import { itemsProps, btnsProps, avatarProps } from './itemsProps';
 
 import { AuthAPI } from '../../API/auth-api';
+import { UserAPI } from '../../API/user-api';
 import { Title } from '../../components/Title/Title';
 import { Input } from '../../components';
 import { Avatar } from '../../components/Avatar/Avatar';
@@ -19,6 +21,7 @@ import './profile.css';
 
 const profileTmpl = new Templator(template);
 const authApi = new AuthAPI();
+const userApi = new UserAPI();
 
 function getLinkButton(text: string, className: string, href: string) {
 	return new LinkButton({
@@ -119,13 +122,35 @@ class ProfilePage extends Block {
 	private handleChangeAvatarInput(event: Event): void {
 		const [file]: any = (<HTMLInputElement>event.target).files;
 		const { name: fileName, size } = file;
-		const fileSize = (size / 1000).toFixed(2);
-		const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+		const fileSize = (size / Math.pow(1024, 2)).toFixed(2);
+		const fileNameAndSize = `${fileName} - ${fileSize} MB`;
 		(document.querySelector('.file-name') as HTMLParagraphElement).textContent =
 			fileNameAndSize;
 	}
 
+	private handleUploadAvatar(event: Event): void {
+		event?.preventDefault();
+		const avatarInput: HTMLInputElement = document.querySelector(
+			'#avatarInput',
+		) as HTMLInputElement;
+		const formData = new FormData();
+		formData.append('avatar', avatarInput.files![0]);
+	}
+
 	componentDidMount(): void {
+		authApi
+			.getUser()
+			.then(({ id }) => {
+				console.log(id);
+			})
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 401) {
+					router.go('/');
+				}
+			});
+
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const {
 				element,
@@ -133,6 +158,7 @@ class ProfilePage extends Block {
 				logoutClick,
 				handleClickModal,
 				handleChangeAvatarInput,
+				handleUploadAvatar,
 			} = this;
 
 			const avatarImg: HTMLImageElement = element.querySelector(
@@ -144,6 +170,9 @@ class ProfilePage extends Block {
 			const modal: HTMLElement = element.querySelector(
 				'#avatarModal',
 			) as HTMLElement;
+			const btnUploadAvatar: HTMLButtonElement = element.querySelector(
+				'.btn-modal',
+			) as HTMLButtonElement;
 
 			const linkBtn: HTMLButtonElement = element.querySelector(
 				'.profile-section-link',
@@ -156,6 +185,7 @@ class ProfilePage extends Block {
 			logOutBtn.onclick = logoutClick;
 			avatarImg.onclick = () => handleClickModal(modal);
 			avatarInput.onchange = handleChangeAvatarInput;
+			btnUploadAvatar.onclick = handleUploadAvatar;
 		});
 	}
 

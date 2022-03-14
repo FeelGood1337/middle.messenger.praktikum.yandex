@@ -1,10 +1,11 @@
 import { HTTPTransport } from '../utils/HTTP/HTTP';
+import { API_URL } from '../constants';
 
 export abstract class BaseAPI {
 	_baseURL: string;
 	_http: HTTPTransport;
 	constructor() {
-		this._baseURL = 'https://ya-praktikum.tech/api/v2';
+		this._baseURL = API_URL;
 		this._http = new HTTPTransport();
 	}
 

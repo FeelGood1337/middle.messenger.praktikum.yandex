@@ -47,6 +47,14 @@ class AuthAPI extends BaseAPI {
 			.post(finalRoute, options)
 			.then((res: any) => this.getResponse(res));
 	}
+
+	getUser(): Promise<any> {
+		const finalRoute = `${this._url}user`;
+
+		return this._http
+			.get(finalRoute)
+			.then((res: any) => this.getResponseWithParse(res));
+	}
 }
 
 export { AuthAPI };
