@@ -9,7 +9,7 @@ type TProps = {
 	className: string;
 	isDisabled: boolean;
 	events?: any;
-}
+};
 
 interface IButton {
 	props: TProps;
@@ -27,15 +27,14 @@ class Button extends Block implements IButton {
 
 	render() {
 		const { text, className, isDisabled } = this.props;
-		return btnTmpl.compile({ 
-			text,
-			className,
-			disabled: isDisabled ? 'disabled' : '',
-		 }).getNode();
+		return btnTmpl
+			.compile({
+				text,
+				className,
+				disabled: isDisabled ? 'disabled' : '',
+			})
+			.getNode();
 	}
-
 }
 
-export {
-	Button
-};
+export { Button };

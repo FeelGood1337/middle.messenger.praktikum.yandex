@@ -15,6 +15,13 @@ export const template = `
 					<div class="profile-paper__content">
 						<div class="profile-paper__avatar-wrapper">
 							{% avatar %}
+							<div class="modal" id="avatarModal">
+								<div class="modal-wrapper">
+									{% modalTitle %}
+									{% modalLink %}
+									{% modalBtn %}
+								</div>
+							</div>
 							{% title %}
 						</div>
 						<div class="profile-paper__fields-wrapper">

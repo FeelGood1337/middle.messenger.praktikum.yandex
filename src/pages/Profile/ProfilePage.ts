@@ -10,6 +10,7 @@ import { Avatar } from '../../components/Avatar/Avatar';
 import { Items } from '../../components/Items/Items';
 import { Element } from '../../components/Element/Element';
 import { LinkButton } from '../../components/LinkButton/LinkButton';
+import { Button } from '../../components';
 
 import avatar from '../../../static/images/Avatar.svg';
 
@@ -70,6 +71,21 @@ class ProfilePage extends Block {
 				link: 'profile.html',
 				imgPath: avatar,
 			}).render(),
+			modalTitle: new Title({
+				tag: 'h2',
+				className: 'modal-title',
+				text: 'Загрузите файл',
+			}).render(),
+			modalLink: new LinkButton({
+				text: 'Выбрать файл на компьютере',
+				className: 'btn-item modal-link btn-item_accent',
+				href: '#',
+			}).render(),
+			modalBtn: new Button({
+				text: 'Загрузить',
+				className: '',
+				isDisabled: false,
+			}).render(),
 			items: getTextItems(),
 			btnItems: getBtnItems(),
 		});
@@ -89,9 +105,25 @@ class ProfilePage extends Block {
 			.catch(() => router.go('/error'));
 	}
 
+	private handleClickModal(modal: HTMLElement): void {
+		modal.style.display = 'flex';
+		window.onclick = (event: Event) => {
+			if (event.target === modal) {
+				modal.style.display = 'none';
+			}
+		};
+	}
+
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, goToChat, logoutClick } = this;
+			const { element, goToChat, logoutClick, handleClickModal } = this;
+
+			const avatarImg: HTMLImageElement = element.querySelector(
+				'.avatar__img',
+			) as HTMLImageElement;
+			const modal: HTMLElement = element.querySelector(
+				'#avatarModal',
+			) as HTMLElement;
 
 			const linkBtn: HTMLButtonElement = element.querySelector(
 				'.profile-section-link',
@@ -102,6 +134,7 @@ class ProfilePage extends Block {
 
 			linkBtn.onclick = goToChat;
 			logOutBtn.onclick = logoutClick;
+			avatarImg.onclick = () => handleClickModal(modal);
 		});
 	}
 
