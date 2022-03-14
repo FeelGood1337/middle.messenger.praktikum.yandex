@@ -18,7 +18,7 @@ export abstract class BaseAPI {
 
 	protected getResponseWithParse(
 		res: XMLHttpRequest,
-	): Promise<XMLHttpRequest> | string {
+	): Promise<XMLHttpRequest> | XMLHttpRequest {
 		if (res.status === 200) {
 			return JSON.parse(res.response);
 		}

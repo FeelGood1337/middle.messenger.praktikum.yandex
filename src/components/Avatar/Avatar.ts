@@ -7,7 +7,7 @@ import './avatar.css';
 type TProps = {
 	link: string;
 	imgPath: string;
-}
+};
 
 interface IAvatar {
 	props: TProps;
@@ -26,7 +26,6 @@ class Avatar extends Block implements IAvatar {
 	render() {
 		return avatarTmpl.compile({ ...this.props }).getNode();
 	}
-
 }
 
 export { Avatar };
