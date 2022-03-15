@@ -134,6 +134,7 @@ class ProfilePage extends Block {
 		const avatarInput: HTMLInputElement = document.querySelector(
 			'#avatarInput',
 		) as HTMLInputElement;
+		const modal: HTMLElement = document.querySelector('#avatarModal') as HTMLElement;
 		const formData = new FormData();
 		formData.append('avatar', avatarInput.files![0]);
 
@@ -153,6 +154,9 @@ class ProfilePage extends Block {
 					router.go('/error');
 				}
 			});
+
+		this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+		modal.style.display = 'none';
 	}
 
 	private handleUserInfoChange(event: Event): void {
@@ -232,7 +236,7 @@ class ProfilePage extends Block {
 			logOutBtn.onclick = logoutClick;
 			avatarImg.onclick = () => handleClickModal(modal);
 			avatarInput.onchange = handleChangeAvatarInput;
-			btnUploadAvatar.onclick = handleUploadAvatar;
+			btnUploadAvatar.onclick = handleUploadAvatar.bind(this);
 			userInfoBtn.onclick = handleUserInfoChange;
 			userPasswordBtn.onclick = handleUserPasswordChange;
 		});
