@@ -17,6 +17,34 @@ class UserAPI extends BaseAPI {
 			.put(finalRoute, options)
 			.then((res: any) => this.getResponseWithParse(res));
 	}
+
+	profile(body: Record<string, string>): Promise<any> {
+		const options = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(body),
+		};
+		const finalRoute = `${this._url}profile`;
+
+		return this._http
+			.put(finalRoute, options)
+			.then((res: any) => this.getResponseWithParse(res));
+	}
+
+	changePassword(body: Record<string, string>): Promise<any> {
+		const options = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(body),
+		};
+		const finalRoute = `${this._url}password`;
+
+		return this._http
+			.put(finalRoute, options)
+			.then((res: any) => this.getResponseWithParse(res));
+	}
 }
 
 export { UserAPI };

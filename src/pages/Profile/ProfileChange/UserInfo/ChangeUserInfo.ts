@@ -4,7 +4,10 @@ import { template } from './userInfo.tmpl';
 import { inputsProps } from './inputProps';
 
 import { Form, IForm } from '../../../../utils/form';
-import { InputValidate, IInputValidate } from '../../../../components/InputWithLabel/InputValidate';
+import {
+	InputValidate,
+	IInputValidate,
+} from '../../../../components/InputWithLabel/InputValidate';
 import { Avatar } from '../../../../components/Avatar/Avatar';
 import { Title } from '../../../../components/Title/Title';
 import { InputWithLabel } from '../../../../components/InputWithLabel/InputWithLabel';
@@ -46,28 +49,34 @@ class ChangeUserInfo extends Block {
 		this.inputsValue = this.inputsValue || {};
 		this.validate = this.validate || [];
 
-		return inputsProps.map(({
-			className,
-			labelClassName,
-			labelText,
-			labelId,
-			attributes,
-			name,
-			handleBlur
-		}) => {
-			const value = this.inputsValue[name] ? `value="${this.inputsValue[name]}"` : ' ';
-			this.validate.push(new InputValidate(handleBlur));
+		return inputsProps
+			.map(
+				({
+					className,
+					labelClassName,
+					labelText,
+					labelId,
+					attributes,
+					name,
+					handleBlur,
+				}) => {
+					const value = this.inputsValue[name]
+						? `value="${this.inputsValue[name]}"`
+						: ' ';
+					this.validate.push(new InputValidate(handleBlur));
 
-			return new InputWithLabel({
-				className,
-				labelClassName,
-				labelText,
-				labelId,
-				attributes,
-				name,
-				value,
-			}).render().outerHTML;
-		}).join('');
+					return new InputWithLabel({
+						className,
+						labelClassName,
+						labelText,
+						labelId,
+						attributes,
+						name,
+						value,
+					}).render().outerHTML;
+				},
+			)
+			.join('');
 	}
 
 	private getInputsValue(): void {
@@ -85,7 +94,8 @@ class ChangeUserInfo extends Block {
 
 			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
 			const formButton: HTMLButtonElement = element.querySelector('.signup__btn')!;
-			const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input');
+			const inputs: NodeListOf<HTMLInputElement> =
+				element.querySelectorAll('.input');
 
 			this.form = new Form(formContainer, formButton);
 
@@ -102,14 +112,16 @@ class ChangeUserInfo extends Block {
 
 	render() {
 		const { profileSvgClass, title, avatar, button } = this.props;
-		return userInfoTmpl.compile({
-			profileSvgClass,
-			title,
-			avatar,
-			button,
-			inputs: this.getInputs(),
-		}).getNode();
+		return userInfoTmpl
+			.compile({
+				profileSvgClass,
+				title,
+				avatar,
+				button,
+				inputs: this.getInputs(),
+			})
+			.getNode();
 	}
 }
 
-export { ChangeUserInfo }
+export { ChangeUserInfo };
