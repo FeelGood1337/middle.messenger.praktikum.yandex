@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import store, { StoreEvents } from '../../utils/Store/Store';
 import { Block } from '../../utils/Block/Block';
 import router from '../../router';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './profile.tmpl';
 import { itemsProps, btnsProps, avatarProps } from './itemsProps';
 
+import userController from '../../controllers/UserController';
 import { AVATAR_URL } from '../../constants';
 import { AuthAPI } from '../../API/auth-api';
 import { UserAPI } from '../../API/user-api';
@@ -94,6 +96,12 @@ class ProfilePage extends Block {
 			}).render(),
 			items: getTextItems(),
 			btnItems: getBtnItems(),
+		});
+
+		userController.getUser();
+
+		store.on(StoreEvents.UPDATE, () => {
+			this.setProps(store.getState());
 		});
 	}
 

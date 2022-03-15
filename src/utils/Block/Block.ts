@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { v4 as makeUUID } from 'uuid';
 import { EventBus, IEventBus } from '../EventBus/EventBus';
 import { isEqual } from '../isEqual/isEqual';
@@ -39,7 +41,6 @@ abstract class Block {
 		this._id = makeUUID();
 
 		this.props = this._makePropsProxy({ ...props, _id: this._id });
-		this.initChildren();
 
 		this.eventBus = (): IEventBus => eventBus;
 
@@ -57,8 +58,6 @@ abstract class Block {
 	init(): void {
 		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
-
-	protected initChildren() {}
 
 	private _componentDidMount(): void {
 		this.componentDidMount();

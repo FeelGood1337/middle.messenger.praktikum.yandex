@@ -8,6 +8,7 @@
 
 .avatar__img {
 	clip-path: circle();
+	object-fit: cover;
 }
 
 .avatar {
