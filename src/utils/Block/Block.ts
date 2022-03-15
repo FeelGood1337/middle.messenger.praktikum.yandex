@@ -17,17 +17,16 @@ interface IEvents {
 	FLOW_RENDER: string;
 }
 
-class Block {
-
+abstract class Block {
 	static EVENTS: TEvents<IEvents> = {
 		INIT: 'init',
 		FLOW_CDM: 'flow:component-did-mount',
-		FLOW_CDU: "flow:component-did-update",
+		FLOW_CDU: 'flow:component-did-update',
 		FLOW_RENDER: 'flow:render',
 	};
 
 	private _element: HTMLElement;
-	private _id: string = '';
+	private _id = '';
 
 	protected props: TProps;
 	protected children: Record<string, Block>;
@@ -59,15 +58,14 @@ class Block {
 		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
-	protected initChildren() { }
+	protected initChildren() {}
 
 	private _componentDidMount(): void {
 		this.componentDidMount();
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
-	componentDidMount(): void { }
-
+	componentDidMount(): void {}
 
 	private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
@@ -97,7 +95,7 @@ class Block {
 	private _addEvents(): void {
 		const { events = {} } = this.props;
 
-		Object.keys(events).forEach(eventName => {
+		Object.keys(events).forEach((eventName) => {
 			(this._element as HTMLElement).addEventListener(eventName, events[eventName]);
 		});
 	}
@@ -105,14 +103,17 @@ class Block {
 	private _removeEvents(): void {
 		const { events = {} } = this.props;
 
-		Object.keys(events).forEach(eventName => {
-			(this._element as HTMLElement).removeEventListener(eventName, events[eventName]);
+		Object.keys(events).forEach((eventName) => {
+			(this._element as HTMLElement).removeEventListener(
+				eventName,
+				events[eventName],
+			);
 		});
 	}
 
 	private _render(): void {
 		const fragment = this.render();
-		
+
 		if (this._element) {
 			this._removeEvents();
 			this._element.replaceWith(fragment);
@@ -123,7 +124,7 @@ class Block {
 		this._addEvents();
 	}
 
-	render(): any { }
+	render(): any {}
 
 	getContent(): HTMLElement {
 		return this.element;
@@ -134,7 +135,7 @@ class Block {
 		return new Proxy(props, {
 			get: (target: TProps, prop: string) => {
 				const value = target[prop];
-				return (typeof value === 'function') ? value.bind(target) : value;
+				return typeof value === 'function' ? value.bind(target) : value;
 			},
 			set: (target: any, prop: string, val: string): boolean => {
 				const oldProps = { ...target };
@@ -144,21 +145,21 @@ class Block {
 			},
 			deleteProperty(target: TProps, prop: string): boolean {
 				if (checkPrivateProp(prop)) {
-					throw new Error("Нет прав");
+					throw new Error('Нет прав');
 				} else {
 					delete target[prop];
 					return true;
 				}
-			}
+			},
 		});
 	}
 
 	show(): void {
-		this.getContent().style.display = "flex";
+		this.getContent().style.display = 'flex';
 	}
 
 	hide(): void {
-		this.getContent().style.display = "none";
+		this.getContent().style.display = 'none';
 	}
 }
 

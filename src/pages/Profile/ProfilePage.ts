@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Block } from '../../utils/Block/Block';
 import router from '../../router';
@@ -171,7 +172,7 @@ class ProfilePage extends Block {
 				avatar,
 			}))
 			.then(({ avatar }) => {
-				if (avatar !== null) {
+				if (avatar) {
 					this.setProps({
 						avatar: new Avatar({
 							imgPath: `${AVATAR_URL}${avatar}`,
