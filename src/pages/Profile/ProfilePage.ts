@@ -154,6 +154,16 @@ class ProfilePage extends Block {
 			});
 	}
 
+	private handleUserInfoChange(event: Event): void {
+		event?.preventDefault();
+		router.go('/change-user-info');
+	}
+
+	private handleUserPasswordChange(event: Event): void {
+		event?.preventDefault();
+		router.go('/change-user-password');
+	}
+
 	componentDidMount(): void {
 		authApi
 			.getUser()
@@ -187,6 +197,8 @@ class ProfilePage extends Block {
 				handleClickModal,
 				handleChangeAvatarInput,
 				handleUploadAvatar,
+				handleUserInfoChange,
+				handleUserPasswordChange,
 			} = this;
 
 			const avatarImg: HTMLImageElement = element.querySelector(
@@ -205,8 +217,14 @@ class ProfilePage extends Block {
 			const linkBtn: HTMLButtonElement = element.querySelector(
 				'.profile-section-link',
 			) as HTMLButtonElement;
+			const userInfoBtn: HTMLButtonElement = element.querySelector(
+				'.btn-user-info',
+			) as HTMLButtonElement;
+			const userPasswordBtn: HTMLButtonElement = element.querySelector(
+				'.btn-user-password',
+			) as HTMLButtonElement;
 			const logOutBtn: HTMLButtonElement = element.querySelector(
-				'.btn-item_red',
+				'.btn-logout',
 			) as HTMLButtonElement;
 
 			linkBtn.onclick = goToChat;
@@ -214,6 +232,8 @@ class ProfilePage extends Block {
 			avatarImg.onclick = () => handleClickModal(modal);
 			avatarInput.onchange = handleChangeAvatarInput;
 			btnUploadAvatar.onclick = handleUploadAvatar;
+			userInfoBtn.onclick = handleUserInfoChange;
+			userPasswordBtn.onclick = handleUserPasswordChange;
 		});
 	}
 

@@ -1,8 +1,10 @@
 import { Block } from '../../../../utils/Block/Block';
+// import router from '../../../../router';
 import { Templator } from '../../../../utils/Template-engine/templater';
 import { template } from './userInfo.tmpl';
 import { inputsProps } from './inputProps';
 
+// import { UserAPI } from '../../../../API/user-api';
 import { Form, IForm } from '../../../../utils/form';
 import {
 	InputValidate,
@@ -14,8 +16,11 @@ import { InputWithLabel } from '../../../../components/InputWithLabel/InputWithL
 import { Button } from '../../../../components/Button/Button';
 
 import avatar from '../../../../../static/images/Avatar.svg';
+import router from '../../../../router';
 
 const userInfoTmpl = new Templator(template);
+// const userApi = new UserAPI();
+
 class ChangeUserInfo extends Block {
 	inputsValue: { [key: string]: string };
 	validate: IInputValidate[];
@@ -88,14 +93,23 @@ class ChangeUserInfo extends Block {
 		console.log(this.inputsValue);
 	}
 
+	private goToSettings(event: Event): void {
+		event?.preventDefault();
+		router.go('/settings');
+	}
+
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, validate, getInputsValue, handleClick } = this;
+			const { element, validate, getInputsValue, handleClick, goToSettings } = this;
 
 			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
 			const formButton: HTMLButtonElement = element.querySelector('.signup__btn')!;
 			const inputs: NodeListOf<HTMLInputElement> =
 				element.querySelectorAll('.input');
+
+			const linkBtn: HTMLButtonElement = element.querySelector(
+				'.profile-section-link',
+			) as HTMLButtonElement;
 
 			this.form = new Form(formContainer, formButton);
 
@@ -107,6 +121,7 @@ class ChangeUserInfo extends Block {
 			formContainer.onchange = getInputsValue.bind(this);
 			formContainer.oninput = this.form.formIsValid;
 			formButton.onclick = handleClick.bind(this);
+			linkBtn.onclick = goToSettings;
 		});
 	}
 

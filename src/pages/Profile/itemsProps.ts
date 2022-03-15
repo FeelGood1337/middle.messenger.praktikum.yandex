@@ -87,17 +87,17 @@ const avatarProps = [
 
 const btnsProps = [
 	{
-		className: 'btn-item btn-item_accent',
+		className: 'btn-item btn-user-info btn-item_accent',
 		text: 'Изменить данные',
-		href: 'use-info_change.html',
+		href: '/change-user-info',
 	},
 	{
-		className: 'btn-item btn-item_accent',
+		className: 'btn-item btn-user-password btn-item_accent',
 		text: 'Изменить пароль',
-		href: 'user-password_change.html',
+		href: '/change-user-password',
 	},
 	{
-		className: 'btn-item btn-item_red',
+		className: 'btn-item btn-logout btn-item_red',
 		text: 'Выйти',
 		href: '/',
 	},

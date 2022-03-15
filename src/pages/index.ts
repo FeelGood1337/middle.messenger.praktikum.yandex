@@ -7,4 +7,13 @@ import { ChangeUserInfo } from './Profile/ProfileChange/UserInfo/ChangeUserInfo'
 import { ChangeUserPassword } from './Profile/ProfileChange/UserPassword/ChangeUserPassword';
 import { ProfilePage } from './Profile/ProfilePage';
 
-export { SigninPage, SignupPage, Chat, NotFoundPage, ServerErrorPage, ChangeUserInfo, ChangeUserPassword, ProfilePage };
+export {
+	SigninPage,
+	SignupPage,
+	Chat,
+	NotFoundPage,
+	ServerErrorPage,
+	ChangeUserInfo,
+	ChangeUserPassword,
+	ProfilePage,
+};

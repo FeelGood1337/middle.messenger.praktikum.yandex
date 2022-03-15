@@ -12,7 +12,6 @@ import sendIcon from '../../../static/images/send-btn.svg';
 
 const chatTmpl = new Templator(template);
 class Chat extends Block {
-
 	constructor() {
 		super({
 			linkButton: new LinkButton({
@@ -23,7 +22,7 @@ class Chat extends Block {
 			avatarMini: new AvatarMini({
 				imgPath: avataIcon,
 				width: '32',
-				height: '32'
+				height: '32',
 			}).render(),
 			avaChatPath: avataIcon,
 			name: 'Segey Vlasov',
@@ -42,9 +41,11 @@ class Chat extends Block {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, goToProfile } = this;
 
-			const linkBtn: HTMLButtonElement = element.querySelector('.section-caht-list__link-btn') as HTMLButtonElement;
+			const linkBtn: HTMLButtonElement = element.querySelector(
+				'.section-caht-list__link-btn',
+			) as HTMLButtonElement;
 			linkBtn.onclick = goToProfile;
-		})
+		});
 	}
 
 	render() {

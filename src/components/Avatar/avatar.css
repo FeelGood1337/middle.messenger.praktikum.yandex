@@ -19,6 +19,7 @@
 	overflow: hidden;
 	position: relative;
 	user-select: none;
+	cursor: pointer;
 }
 
 .avatar-edit {

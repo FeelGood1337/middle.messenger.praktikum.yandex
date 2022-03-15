@@ -6,6 +6,8 @@ import {
 	ServerErrorPage,
 	Chat,
 	ProfilePage,
+	ChangeUserInfo,
+	ChangeUserPassword,
 } from './pages';
 
 import './index.css';
@@ -17,4 +19,6 @@ router
 	.use('/settings', ProfilePage)
 	.use('/error', ServerErrorPage)
 	.use('/notfound', NotFoundPage)
+	.use('/change-user-info', ChangeUserInfo)
+	.use('/change-user-password', ChangeUserPassword)
 	.start();
