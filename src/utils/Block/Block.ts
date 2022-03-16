@@ -4,10 +4,6 @@ import { v4 as makeUUID } from 'uuid';
 import { EventBus, IEventBus } from '../EventBus/EventBus';
 import { isEqual } from '../isEqual/isEqual';
 
-type TProps = {
-	[key: string]: any;
-};
-
 type TEvents<T extends object> = {
 	[P in keyof T]: T[P];
 };
@@ -30,11 +26,11 @@ abstract class Block {
 	private _element: HTMLElement;
 	private _id = '';
 
-	protected props: TProps;
+	protected props: Record<string, any>;
 	protected children: Record<string, Block>;
 	protected eventBus: () => IEventBus;
 
-	constructor(props: TProps = {}) {
+	constructor(props: Record<string, any> = {}) {
 		const eventBus = new EventBus();
 
 		// Генерируем уникальный UUID V4
@@ -66,7 +62,10 @@ abstract class Block {
 
 	componentDidMount(): void {}
 
-	private _componentDidUpdate(oldProps: TProps, newProps: TProps): void {
+	private _componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
 		if (!response) {
 			return;
@@ -75,11 +74,14 @@ abstract class Block {
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
-	componentDidUpdate(oldProps: TProps, newProps: TProps): boolean {
+	componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): boolean {
 		return !isEqual(oldProps, newProps);
 	}
 
-	setProps = (nextProps: TProps): void => {
+	setProps = (nextProps: Record<string, any>): void => {
 		if (!nextProps) {
 			return;
 		}
@@ -129,10 +131,10 @@ abstract class Block {
 		return this.element;
 	}
 
-	private _makePropsProxy(props: TProps): TProps {
+	private _makePropsProxy(props: Record<string, any>): Record<string, any> {
 		const checkPrivateProp = (prop: string) => prop.startsWith('_');
 		return new Proxy(props, {
-			get: (target: TProps, prop: string) => {
+			get: (target: Record<string, any>, prop: string) => {
 				const value = target[prop];
 				return typeof value === 'function' ? value.bind(target) : value;
 			},
@@ -142,7 +144,7 @@ abstract class Block {
 				this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target);
 				return true;
 			},
-			deleteProperty(target: TProps, prop: string): boolean {
+			deleteProperty(target: Record<string, any>, prop: string): boolean {
 				if (checkPrivateProp(prop)) {
 					throw new Error('Нет прав');
 				} else {

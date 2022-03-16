@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import isEqual from '../../utils/isEqualProps';
 import store, { StoreEvents } from '../../utils/Store/Store';
 import { Block } from '../../utils/Block/Block';
 import router from '../../router';
@@ -23,6 +24,23 @@ import avatar from '../../../static/images/Avatar.svg';
 
 import './profile.css';
 
+interface IUser {
+	id: number;
+	avatar: string;
+	display_name: string;
+	email: string;
+	first_name: string;
+	second_name: string;
+	login: string;
+	phone: string;
+}
+
+type TSpec = {
+	tag: string;
+	className: string;
+	content: string;
+};
+
 const profileTmpl = new Templator(template);
 const authApi = new AuthAPI();
 const userApi = new UserAPI();
@@ -44,7 +62,91 @@ function getBtnItems() {
 	);
 }
 
-function getTextElement() {
+function getSpec({
+	email,
+	login,
+	first_name,
+	second_name,
+	display_name,
+	phone,
+}: IUser): TSpec[][] {
+	return [
+		[
+			{
+				tag: 'p',
+				className: 'profile-text profile-label__email',
+				content: 'Почта',
+			},
+			{
+				tag: 'p',
+				className: 'profile-text profile-text_grey  profile-content__email',
+				content: email,
+			},
+		],
+		[
+			{
+				tag: 'p',
+				className: 'profile-text profile-label__login',
+				content: 'Логин',
+			},
+			{
+				tag: 'p',
+				className: 'profile-text profile-text_grey  profile-contents__login',
+				content: login,
+			},
+		],
+		[
+			{
+				tag: 'p',
+				className: 'profile-text profile-label__name',
+				content: 'Имя',
+			},
+			{
+				tag: 'p',
+				className: 'profile-text profile-text_grey  profile-content__name',
+				content: first_name,
+			},
+		],
+		[
+			{
+				tag: 'p',
+				className: 'profile-text profile-label__second-name',
+				content: 'Фамилия',
+			},
+			{
+				tag: 'p',
+				className: 'profile-text profile-text_grey  profile-content__second-name',
+				content: second_name,
+			},
+		],
+		[
+			{
+				tag: 'p',
+				className: 'profile-text profile-label__chat-name',
+				content: 'Имя в чате',
+			},
+			{
+				tag: 'p',
+				className: 'profile-text profile-text_grey  profile-content__chat-name',
+				content: display_name === null ? 'Нет данных' : display_name,
+			},
+		],
+		[
+			{
+				tag: 'p',
+				className: 'profile-text profile-label__phone',
+				content: 'Телефон',
+			},
+			{
+				tag: 'p',
+				className: 'profile-text profile-text_grey  profile-content__phone',
+				content: phone,
+			},
+		],
+	];
+}
+
+function getTextElement(itemsProps: TSpec[][]) {
 	return itemsProps.map((arr) =>
 		arr
 			.map((el) => {
@@ -58,8 +160,8 @@ function getTextElement() {
 	);
 }
 
-function getTextItems() {
-	const items = getTextElement();
+function getTextItems(itemsProps: TSpec[][]) {
+	const items = getTextElement(itemsProps);
 	return new Items({
 		className: 'fields-items__item',
 		items,
@@ -94,7 +196,7 @@ class ProfilePage extends Block {
 				className: 'btn-modal',
 				isDisabled: false,
 			}).render(),
-			items: getTextItems(),
+			items: getTextItems(itemsProps),
 			btnItems: getBtnItems(),
 		});
 
@@ -180,15 +282,14 @@ class ProfilePage extends Block {
 	componentDidMount(): void {
 		authApi
 			.getUser()
-			.then(({ avatar }) => ({
-				avatar,
-			}))
-			.then(({ avatar }) => {
+			.then((data: IUser) => {
+				const { avatar } = data;
 				if (avatar) {
 					this.setProps({
 						avatar: new Avatar({
 							imgPath: `${AVATAR_URL}${avatar}`,
 						}).render(),
+						items: getTextItems(getSpec(data)),
 					});
 				} else {
 					this.eventBus().emit(Block.EVENTS.FLOW_CDU);
