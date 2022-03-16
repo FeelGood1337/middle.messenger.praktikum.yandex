@@ -20,6 +20,7 @@ const userApi = new UserAPI();
 
 class UserController {
 	getUser(): Promise<IUser | any> {
+		showSpinner();
 		return authApi
 			.getUser()
 			.then((user: IUser): IUser => {
@@ -32,6 +33,9 @@ class UserController {
 				if (status === 401) {
 					router.go('/');
 				}
+			})
+			.finally(() => {
+				hideSpinner();
 			});
 	}
 
@@ -49,16 +53,10 @@ class UserController {
 	}
 
 	updateProfile(data: Record<string, string>) {
-		showSpinner();
-		return userApi
-			.profile(data)
-			.then((user: IUser): IUser => {
-				store.set('user', user);
-				return user;
-			})
-			.finally(() => {
-				hideSpinner();
-			});
+		return userApi.profile(data).then((user: IUser): IUser => {
+			store.set('updateUser', user);
+			return user;
+		});
 	}
 }
 
