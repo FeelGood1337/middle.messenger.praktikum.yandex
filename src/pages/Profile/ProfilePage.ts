@@ -8,10 +8,8 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './profile.tmpl';
 import { itemsProps, btnsProps, avatarProps } from './itemsProps';
 
-import userController from '../../controllers/UserController';
+import { userController, authController } from '../../controllers';
 import { AVATAR_URL } from '../../constants';
-import { AuthAPI } from '../../API/auth-api';
-import { UserAPI } from '../../API/user-api';
 import { Title } from '../../components/Title/Title';
 import { Input } from '../../components';
 import { Avatar } from '../../components/Avatar/Avatar';
@@ -42,8 +40,6 @@ type TSpec = {
 };
 
 const profileTmpl = new Templator(template);
-const authApi = new AuthAPI();
-const userApi = new UserAPI();
 
 function getLinkButton(text: string, className: string, href: string) {
 	return new LinkButton({
@@ -214,11 +210,7 @@ class ProfilePage extends Block {
 
 	private logoutClick(event: Event): void {
 		event?.preventDefault();
-
-		authApi
-			.logout()
-			.then(() => router.go('/'))
-			.catch(() => router.go('/error'));
+		authController.logout();
 	}
 
 	private handleClickModal(modal: HTMLElement): void {
@@ -248,8 +240,8 @@ class ProfilePage extends Block {
 		const formData = new FormData();
 		formData.append('avatar', avatarInput.files![0]);
 
-		userApi
-			.avatar(formData)
+		userController
+			.updateAvatar(formData)
 			.then(({ avatar }) => {
 				this.setProps({
 					avatar: new Avatar({
@@ -280,28 +272,19 @@ class ProfilePage extends Block {
 	}
 
 	componentDidMount(): void {
-		authApi
-			.getUser()
-			.then((data: IUser) => {
-				const { avatar } = data;
-				if (avatar) {
-					this.setProps({
-						avatar: new Avatar({
-							imgPath: `${AVATAR_URL}${avatar}`,
-						}).render(),
-						items: getTextItems(getSpec(data)),
-					});
-				} else {
-					this.eventBus().emit(Block.EVENTS.FLOW_CDU);
-				}
-			})
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 401) {
-					router.go('/');
-				}
-			});
+		userController.getUser().then((data: IUser) => {
+			const { avatar } = data;
+			if (avatar) {
+				this.setProps({
+					avatar: new Avatar({
+						imgPath: `${AVATAR_URL}${avatar}`,
+					}).render(),
+					items: getTextItems(getSpec(data)),
+				});
+			} else {
+				this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+			}
+		});
 
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const {

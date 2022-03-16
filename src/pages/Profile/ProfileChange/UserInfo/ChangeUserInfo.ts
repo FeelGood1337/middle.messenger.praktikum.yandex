@@ -4,8 +4,10 @@ import { Templator } from '../../../../utils/Template-engine/templater';
 import { template } from './userInfo.tmpl';
 import { inputsProps } from './inputProps';
 
+import store, { StoreEvents } from '../../../../utils/Store/Store';
 import { AuthAPI } from '../../../../API/auth-api';
 import { UserAPI } from '../../../../API/user-api';
+import { userController } from '../../../../controllers';
 import { AVATAR_URL } from '../../../../constants';
 import { Form, IForm } from '../../../../utils/form';
 import {
@@ -19,6 +21,17 @@ import { Button } from '../../../../components/Button/Button';
 
 import avatar from '../../../../../static/images/Avatar.svg';
 import router from '../../../../router';
+
+interface IUser {
+	id: number;
+	avatar: string;
+	display_name: string;
+	email: string;
+	first_name: string;
+	second_name: string;
+	login: string;
+	phone: string;
+}
 
 const userInfoTmpl = new Templator(template);
 const authApi = new AuthAPI();
@@ -112,26 +125,18 @@ class ChangeUserInfo extends Block {
 	}
 
 	componentDidMount(): void {
-		authApi
-			.getUser()
-			.then(({ avatar }) => {
-				if (avatar) {
-					this.setProps({
-						avatar: new Avatar({
-							imgPath: `${AVATAR_URL}${avatar}`,
-						}).render(),
-					});
-				} else {
-					this.eventBus().emit(Block.EVENTS.FLOW_CDU);
-				}
-			})
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 401) {
-					router.go('/');
-				}
-			});
+		authApi.getUser().then((data: IUser) => {
+			const { avatar } = data;
+			if (avatar) {
+				this.setProps({
+					avatar: new Avatar({
+						imgPath: `${AVATAR_URL}${avatar}`,
+					}).render(),
+				});
+			} else {
+				this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+			}
+		});
 
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, validate, getInputsValue, handleClick, goToSettings } = this;
@@ -160,15 +165,8 @@ class ChangeUserInfo extends Block {
 	}
 
 	render() {
-		const { profileSvgClass, title, avatar, button } = this.props;
 		return userInfoTmpl
-			.compile({
-				profileSvgClass,
-				title,
-				avatar,
-				button,
-				inputs: this.getInputs(),
-			})
+			.compile({ ...this.props, inputs: this.getInputs() })
 			.getNode();
 	}
 }

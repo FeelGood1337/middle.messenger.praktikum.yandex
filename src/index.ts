@@ -8,6 +8,7 @@ import {
 	ProfilePage,
 	ChangeUserInfo,
 	ChangeUserPassword,
+	Spinner,
 } from './pages';
 
 import './index.css';
@@ -21,4 +22,5 @@ router
 	.use('/notfound', NotFoundPage)
 	.use('/change-user-info', ChangeUserInfo)
 	.use('/change-user-password', ChangeUserPassword)
+	.use('/spinner', Spinner)
 	.start();
