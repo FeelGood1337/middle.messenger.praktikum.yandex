@@ -7,10 +7,10 @@ interface IForm {
 
 class Form implements IForm {
 	private form: HTMLFormElement;
-	private button: Element;
+	private button: HTMLButtonElement;
 	// private _customeValidator?: () => boolean;
 
-	constructor(form: HTMLFormElement, button: Element) {
+	constructor(form: HTMLFormElement, button: HTMLButtonElement) {
 		this.form = form;
 		this.button = button;
 		// this._customeValidator = customeValidator;
@@ -34,7 +34,7 @@ class Form implements IForm {
 			return;
 		}
 		this.toggleButton(false);
-	}
+	};
 }
 
 export { Form, IForm };

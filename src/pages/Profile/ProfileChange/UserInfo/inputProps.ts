@@ -2,7 +2,7 @@ import {
 	simpleTextValidator,
 	emailValidator,
 	phoneValidator,
- } from '../../../../utils/validators';
+} from '../../../../utils/validators';
 
 export const inputsProps = [
 	{
@@ -17,7 +17,6 @@ export const inputsProps = [
 			placeholder="example@example.ru"
 			pattern="^.{1,}@([-0-9A-Za-z]{1,}\\.){1,3}[-A-Za-z]{2,}$"
 			autocomplete="on"
-			required
 		`,
 		value: 'example@example.ru',
 		handleBlur: emailValidator,
@@ -35,7 +34,6 @@ export const inputsProps = [
 			autocomplete="on"
 			minlength="3"
 			maxlength="20"
-			required
 		`,
 		value: 'svlasov',
 		handleBlur: simpleTextValidator,
@@ -53,7 +51,6 @@ export const inputsProps = [
 			minlength="3"
 			maxlength="20"
 			autocomplete="on"
-			required
 		`,
 		value: 'Сергей',
 		handleBlur: simpleTextValidator,
@@ -71,7 +68,6 @@ export const inputsProps = [
 			minlength="3"
 			maxlength="20"
 			autocomplete="on"
-			required
 		`,
 		value: 'Власов',
 		handleBlur: simpleTextValidator,
@@ -109,5 +105,5 @@ export const inputsProps = [
 		`,
 		value: '+7 (999) 999 99 99',
 		handleBlur: phoneValidator,
-	}
+	},
 ];

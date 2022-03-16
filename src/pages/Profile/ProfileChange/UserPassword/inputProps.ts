@@ -1,15 +1,15 @@
-import { passwordValidator } from "../../../../utils/validators";
+import { passwordValidator } from '../../../../utils/validators';
 
 export const inputsProps = [
 	{
-		name: 'password',
+		name: 'oldPassword',
 		className: 'auth__input signup-input signup__input-password',
 		labelClassName: 'signup-label',
 		labelText: 'Старый',
-		labelId: 'password',
+		labelId: 'oldPassword',
 		attributes: `
 			type="password"
-			id="password"
+			id="oldPassword"
 			placeholder="pasword"
 			pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*"
 			minlength="8"
@@ -54,5 +54,5 @@ export const inputsProps = [
 			required
 		`,
 		handleBlur: passwordValidator,
-	}
+	},
 ];

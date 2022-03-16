@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Block } from '../../../../utils/Block/Block';
 import { Templator } from '../../../../utils/Template-engine/templater';
 import { template } from './userPassword.tmpl';
 import { inputsProps } from './inputProps';
 
+import { AuthAPI } from '../../../../API/auth-api';
+import { UserAPI } from '../../../../API/user-api';
+import { AVATAR_URL } from '../../../../constants';
 import { Form, IForm } from '../../../../utils/form';
 import {
 	InputValidate,
@@ -17,6 +21,8 @@ import avatar from '../../../../../static/images/Avatar.svg';
 import router from '../../../../router';
 
 const userPasswordTmpl = new Templator(template);
+const authApi = new AuthAPI();
+const userApi = new UserAPI();
 class ChangeUserPassword extends Block {
 	inputsValue: { [key: string]: string };
 	validate: IInputValidate[];
@@ -82,7 +88,18 @@ class ChangeUserPassword extends Block {
 
 	private handleClick(event: Event): void {
 		event.preventDefault();
-		console.log(this.inputsValue);
+		userApi
+			.changePassword(this.inputsValue)
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			})
+			.finally(() => {
+				this.inputsValue = {};
+			});
 	}
 
 	private goToSettings(event: Event): void {
@@ -91,6 +108,26 @@ class ChangeUserPassword extends Block {
 	}
 
 	componentDidMount(): void {
+		authApi
+			.getUser()
+			.then(({ avatar }) => {
+				if (avatar) {
+					this.setProps({
+						avatar: new Avatar({
+							imgPath: `${AVATAR_URL}${avatar}`,
+						}).render(),
+					});
+				} else {
+					this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+				}
+			})
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 401) {
+					router.go('/');
+				}
+			});
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, validate, getInputsValue, handleClick, goToSettings } = this;
 

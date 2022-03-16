@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import isEqual from '../../utils/isEqualProps';
+// import isEqual from '../../utils/isEqualProps';
 import store, { StoreEvents } from '../../utils/Store/Store';
 import { Block } from '../../utils/Block/Block';
 import router from '../../router';

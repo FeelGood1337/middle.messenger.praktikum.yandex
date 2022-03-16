@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Block } from '../../../../utils/Block/Block';
-// import router from '../../../../router';
 import { Templator } from '../../../../utils/Template-engine/templater';
 import { template } from './userInfo.tmpl';
 import { inputsProps } from './inputProps';
 
-// import { UserAPI } from '../../../../API/user-api';
+import { AuthAPI } from '../../../../API/auth-api';
+import { UserAPI } from '../../../../API/user-api';
+import { AVATAR_URL } from '../../../../constants';
 import { Form, IForm } from '../../../../utils/form';
 import {
 	InputValidate,
@@ -19,7 +21,8 @@ import avatar from '../../../../../static/images/Avatar.svg';
 import router from '../../../../router';
 
 const userInfoTmpl = new Templator(template);
-// const userApi = new UserAPI();
+const authApi = new AuthAPI();
+const userApi = new UserAPI();
 
 class ChangeUserInfo extends Block {
 	inputsValue: { [key: string]: string };
@@ -35,7 +38,6 @@ class ChangeUserInfo extends Block {
 				text: 'Изменить данные',
 			}).render(),
 			avatar: new Avatar({
-				link: 'profile.html',
 				imgPath: avatar,
 			}).render(),
 			button: new Button({
@@ -90,7 +92,18 @@ class ChangeUserInfo extends Block {
 
 	private handleClick(event: Event): void {
 		event.preventDefault();
-		console.log(this.inputsValue);
+		userApi
+			.profile(this.inputsValue)
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			})
+			.finally(() => {
+				this.inputsValue = {};
+			});
 	}
 
 	private goToSettings(event: Event): void {
@@ -99,6 +112,27 @@ class ChangeUserInfo extends Block {
 	}
 
 	componentDidMount(): void {
+		authApi
+			.getUser()
+			.then(({ avatar }) => {
+				if (avatar) {
+					this.setProps({
+						avatar: new Avatar({
+							imgPath: `${AVATAR_URL}${avatar}`,
+						}).render(),
+					});
+				} else {
+					this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+				}
+			})
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 401) {
+					router.go('/');
+				}
+			});
+
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, validate, getInputsValue, handleClick, goToSettings } = this;
 
