@@ -1,5 +1,5 @@
 import router from '../router';
-import { AuthAPI, ISingin, ISignup } from '../API/auth-api';
+import { AuthAPI } from '../API/auth-api';
 import { userController } from '.';
 
 class AuthController {

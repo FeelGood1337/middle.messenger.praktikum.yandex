@@ -34,7 +34,9 @@
 }
 
 .avatar-svg__item {
-	padding-right: 4px;
+	margin-right: 4px;
+	clip-path: circle();
+	object-fit: cover;
 }
 
 .item__content-wrapper {

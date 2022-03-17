@@ -8,7 +8,7 @@ type TProps = {
 	imgPath: string;
 	width: string;
 	height: string;
-}
+};
 
 interface IAvatarMini {
 	props: TProps;

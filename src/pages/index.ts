@@ -1,6 +1,6 @@
 import { SigninPage } from './AuthPage/SigninPage/SigninPage';
 import { SignupPage } from './AuthPage/SignupPage/SignupPage';
-import { Chat } from './Chat/Chat';
+import Chat from './Chat';
 import { NotFoundPage } from './HTTPErrorsPages/404/NotFoundPage';
 import { ServerErrorPage } from './HTTPErrorsPages/500/ServerErrorPage';
 import ChangeUserInfo from './Profile/ProfileChange/UserInfo/';

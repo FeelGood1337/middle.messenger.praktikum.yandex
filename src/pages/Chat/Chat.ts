@@ -5,33 +5,14 @@ import { template } from './chat.tmpl';
 
 import { AvatarMini, LinkButton } from '../../components/index';
 
-import avataIcon from '../../../static/images/avatarMini.svg';
 import kebabIcon from '../../../static/images/kebab-menu.svg';
 import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
+import { IUser } from '../../utils/Store/Store';
+import { AVATAR_URL } from '../../constants';
 
 const chatTmpl = new Templator(template);
 class Chat extends Block {
-	constructor() {
-		super({
-			linkButton: new LinkButton({
-				text: 'Профиль',
-				className: 'section-caht-list__link-btn',
-				href: '/settings',
-			}).render(),
-			avatarMini: new AvatarMini({
-				imgPath: avataIcon,
-				width: '32',
-				height: '32',
-			}).render(),
-			avaChatPath: avataIcon,
-			name: 'Segey Vlasov',
-			kebab: kebabIcon,
-			clip: clipIcon,
-			send: sendIcon,
-		});
-	}
-
 	private goToProfile(event: Event): void {
 		event?.preventDefault();
 		router.go('/settings');
@@ -49,7 +30,28 @@ class Chat extends Block {
 	}
 
 	render() {
-		return chatTmpl.compile({ ...this.props }).getNode();
+		const { state }: Record<string, IUser> = this.props;
+		const { avatar } = state;
+
+		return chatTmpl
+			.compile({
+				linkButton: new LinkButton({
+					text: 'Профиль',
+					className: 'section-caht-list__link-btn',
+					href: '/settings',
+				}).render(),
+				avatarMini: new AvatarMini({
+					imgPath: `${AVATAR_URL}${avatar}`,
+					width: '32',
+					height: '32',
+				}).render(),
+				avaChatPath: `${AVATAR_URL}${avatar}`,
+				name: 'Segey Vlasov',
+				kebab: kebabIcon,
+				clip: clipIcon,
+				send: sendIcon,
+			})
+			.getNode();
 	}
 }
 
