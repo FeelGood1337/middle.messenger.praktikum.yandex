@@ -92,20 +92,9 @@ class ChangeUserInfo extends Block {
 		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
 	}
 
-	private handleClick(event: Event): void {
-		event.preventDefault();
-		userApi
-			.profile(this.inputsValue)
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 500) {
-					router.go('/error');
-				}
-			})
-			.finally(() => {
-				this.inputsValue = {};
-			});
+	private async handleClick(event: Event): Promise<void> {
+		event?.preventDefault();
+		await userController.updateProfile(this.inputsValue);
 	}
 
 	private goToSettings(event: Event): void {
@@ -113,19 +102,23 @@ class ChangeUserInfo extends Block {
 		router.go('/settings');
 	}
 
+	private async renderUpdateOnMount(): Promise<void> {
+		await userController.getUser();
+		const { user }: Record<string, IUser> = await store.getState();
+		const { avatar } = user;
+		if (avatar) {
+			this.setProps({
+				avatar: new Avatar({
+					imgPath: `${AVATAR_URL}${avatar}`,
+				}).render(),
+			});
+		} else {
+			this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+		}
+	}
+
 	componentDidMount(): void {
-		authApi.getUser().then((data: IUser) => {
-			const { avatar } = data;
-			if (avatar) {
-				this.setProps({
-					avatar: new Avatar({
-						imgPath: `${AVATAR_URL}${avatar}`,
-					}).render(),
-				});
-			} else {
-				this.eventBus().emit(Block.EVENTS.FLOW_CDU);
-			}
-		});
+		this.renderUpdateOnMount();
 
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, validate, getInputsValue, handleClick, goToSettings } = this;

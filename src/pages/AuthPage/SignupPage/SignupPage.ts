@@ -88,9 +88,9 @@ class SignupPage extends Block {
 		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
 	}
 
-	private handleClick(event: Event): void {
+	private async handleClick(event: Event): Promise<void> {
 		event.preventDefault();
-		authController.signUp(this.inputsValue).finally(() => {
+		await authController.signUp(this.inputsValue).finally(() => {
 			this.inputsValue = {};
 		});
 	}

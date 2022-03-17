@@ -1,5 +1,6 @@
 import router from '../router';
 import { AuthAPI, ISingin, ISignup } from '../API/auth-api';
+import { userController } from '.';
 
 class AuthController {
 	private authApi: AuthAPI;
@@ -10,6 +11,7 @@ class AuthController {
 	async signIn(data: Record<string, string>): Promise<void> {
 		await this.authApi
 			.signin(data)
+			.then(() => userController.getUser())
 			.then(() => router.go('/messenger'))
 			.catch((err) => {
 				const { status } = err;
@@ -23,6 +25,7 @@ class AuthController {
 	async signUp(data: Record<string, string>): Promise<void> {
 		await this.authApi
 			.signup(data)
+			.then(() => userController.getUser())
 			.then(() => router.go('/messenger'))
 			.catch((err) => {
 				const { status } = err;

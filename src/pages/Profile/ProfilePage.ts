@@ -185,8 +185,6 @@ class ProfilePage extends Block {
 			btnItems: getBtnItems(),
 		});
 
-		userController.getUser();
-
 		store.on(StoreEvents.UPDATE, () => {
 			this.setProps(store.getState());
 		});
@@ -263,8 +261,9 @@ class ProfilePage extends Block {
 	}
 
 	private async renderUpdateOnMount(): Promise<void> {
-		await userController.getUser().then(() => {
-			const { user }: Record<string, IUser> = this.props;
+		await userController.getUser();
+		const { user }: Record<string, IUser> = await store.getState();
+		if (user) {
 			const { avatar } = user;
 			if (avatar) {
 				this.setProps({
@@ -273,10 +272,13 @@ class ProfilePage extends Block {
 					}).render(),
 					items: getTextItems(getSpec(user)),
 				});
-			} else {
-				this.eventBus().emit(Block.EVENTS.FLOW_CDU);
 			}
-		});
+			this.setProps({
+				items: getTextItems(getSpec(user)),
+			});
+		} else {
+			this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+		}
 	}
 
 	componentDidMount(): void {

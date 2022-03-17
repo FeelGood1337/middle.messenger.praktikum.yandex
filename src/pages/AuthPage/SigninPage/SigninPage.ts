@@ -6,7 +6,7 @@ import router from '../../../router';
 import { template } from './signin.tmpl';
 import { inputsProps } from './inputProps';
 
-import { authController } from '../../../controllers';
+import { authController, userController } from '../../../controllers';
 import { ISingin } from '../../../API/auth-api';
 import { Form, IForm } from '../../../utils/form';
 import { Button } from '../../../components/Button/Button';

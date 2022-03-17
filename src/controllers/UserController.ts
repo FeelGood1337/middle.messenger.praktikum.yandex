@@ -39,11 +39,23 @@ class UserController {
 			});
 	}
 
-	updateProfile(data: Record<string, string>) {
-		return userApi.profile(data).then((user: IUser): IUser => {
-			store.set('user', user);
-			return user;
-		});
+	async updateProfile(data: Record<string, string>): Promise<void> {
+		showSpinner();
+		await userApi
+			.profile(data)
+			.then((user: IUser): void => {
+				store.set('user', user);
+			})
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			})
+			.finally(() => {
+				hideSpinner();
+			});
 	}
 }
 

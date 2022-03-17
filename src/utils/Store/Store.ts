@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { EventBus } from '../EventBus/EventBus';
 import set from '../set';
 
@@ -39,4 +40,6 @@ class Store extends EventBus {
 	}
 }
 
-export default new Store();
+const store = new Store();
+
+export default store;
