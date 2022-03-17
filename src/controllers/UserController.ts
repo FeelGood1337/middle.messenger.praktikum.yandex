@@ -23,9 +23,9 @@ class UserController {
 		showSpinner();
 		return authApi
 			.getUser()
-			.then((user: IUser): IUser => {
+			.then((user: IUser): void => {
 				store.set('user', user);
-				return user;
+				// return user;
 			})
 			.catch((err) => {
 				const { status } = err;

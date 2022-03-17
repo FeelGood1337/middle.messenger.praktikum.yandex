@@ -272,14 +272,15 @@ class ProfilePage extends Block {
 	}
 
 	componentDidMount(): void {
-		userController.getUser().then((data: IUser) => {
-			const { avatar } = data;
+		userController.getUser().then(() => {
+			const { user }: Record<string, IUser> = this.props;
+			const { avatar } = user;
 			if (avatar) {
 				this.setProps({
 					avatar: new Avatar({
 						imgPath: `${AVATAR_URL}${avatar}`,
 					}).render(),
-					items: getTextItems(getSpec(data)),
+					items: getTextItems(getSpec(user)),
 				});
 			} else {
 				this.eventBus().emit(Block.EVENTS.FLOW_CDU);
