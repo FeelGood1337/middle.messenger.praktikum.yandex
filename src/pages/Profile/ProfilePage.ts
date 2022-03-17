@@ -154,42 +154,6 @@ function getTextItems(itemsProps: TSpec[][]) {
 }
 
 class ProfilePage extends Block {
-	constructor() {
-		super({
-			profileSvgClass: 'profile-svg',
-			title: new Title({
-				tag: 'h2',
-				className: 'profile-title',
-				text: 'Сергей',
-			}).render(),
-			avatar: new Avatar({
-				imgPath: avatar,
-			}).render(),
-			modalTitle: new Title({
-				tag: 'h2',
-				className: 'modal-title',
-				text: 'Загрузите файл',
-			}).render(),
-			modalInputAvatar: new Input({
-				className: avatarProps[0].className,
-				attributes: avatarProps[0].attributes,
-				name: avatarProps[0].name,
-				value: ' ',
-			}).render(),
-			modalBtn: new Button({
-				text: 'Загрузить',
-				className: 'btn-modal',
-				isDisabled: false,
-			}).render(),
-			items: getTextItems(itemsProps),
-			btnItems: getBtnItems(),
-		});
-
-		store.on(StoreEvents.UPDATE, () => {
-			this.setProps(store.getState());
-		});
-	}
-
 	private goToChat(event: Event): void {
 		event?.preventDefault();
 		router.go('/messenger');
@@ -246,7 +210,6 @@ class ProfilePage extends Block {
 				}
 			});
 
-		this.eventBus().emit(Block.EVENTS.FLOW_CDU);
 		modal.style.display = 'none';
 	}
 
@@ -260,29 +223,7 @@ class ProfilePage extends Block {
 		router.go('/change-user-password');
 	}
 
-	private async renderUpdateOnMount(): Promise<void> {
-		await userController.getUser();
-		const { user }: Record<string, IUser> = await store.getState();
-		if (user) {
-			const { avatar } = user;
-			if (avatar) {
-				this.setProps({
-					avatar: new Avatar({
-						imgPath: `${AVATAR_URL}${avatar}`,
-					}).render(),
-					items: getTextItems(getSpec(user)),
-				});
-			}
-			this.setProps({
-				items: getTextItems(getSpec(user)),
-			});
-		} else {
-			this.eventBus().emit(Block.EVENTS.FLOW_CDU);
-		}
-	}
-
 	componentDidMount(): void {
-		this.renderUpdateOnMount();
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const {
 				element,
@@ -332,7 +273,39 @@ class ProfilePage extends Block {
 	}
 
 	render() {
-		return profileTmpl.compile({ ...this.props }).getNode();
+		const { state }: Record<string, IUser> = this.props;
+		const { avatar, first_name, second_name } = state;
+		return profileTmpl
+			.compile({
+				profileSvgClass: 'profile-svg',
+				title: new Title({
+					tag: 'h2',
+					className: 'profile-title',
+					text: `${first_name} ${second_name}`,
+				}).render(),
+				avatar: new Avatar({
+					imgPath: `${AVATAR_URL}${avatar}`,
+				}).render(),
+				modalTitle: new Title({
+					tag: 'h2',
+					className: 'modal-title',
+					text: 'Загрузите файл',
+				}).render(),
+				modalInputAvatar: new Input({
+					className: avatarProps[0].className,
+					attributes: avatarProps[0].attributes,
+					name: avatarProps[0].name,
+					value: ' ',
+				}).render(),
+				modalBtn: new Button({
+					text: 'Загрузить',
+					className: 'btn-modal',
+					isDisabled: false,
+				}).render(),
+				items: getTextItems(getSpec(state)),
+				btnItems: getBtnItems(),
+			})
+			.getNode();
 	}
 }
 

@@ -5,7 +5,8 @@ import { NotFoundPage } from './HTTPErrorsPages/404/NotFoundPage';
 import { ServerErrorPage } from './HTTPErrorsPages/500/ServerErrorPage';
 import { ChangeUserInfo } from './Profile/ProfileChange/UserInfo/ChangeUserInfo';
 import { ChangeUserPassword } from './Profile/ProfileChange/UserPassword/ChangeUserPassword';
-import { ProfilePage } from './Profile/ProfilePage';
+// import { ProfilePage } from './Profile/ProfilePage';
+import ProfilePage from './Profile';
 import Spinner from '../components/Spinner/Spinner';
 
 export {

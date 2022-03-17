@@ -40,21 +40,18 @@ class UserController {
 	}
 
 	async updateProfile(data: Record<string, string>): Promise<void> {
-		showSpinner();
 		await userApi
 			.profile(data)
 			.then((user: IUser): void => {
 				store.set('user', user);
 			})
+			.then(() => router.go('/settings'))
 			.catch((err) => {
 				const { status } = err;
 
 				if (status === 500) {
 					router.go('/error');
 				}
-			})
-			.finally(() => {
-				hideSpinner();
 			});
 	}
 
@@ -62,6 +59,7 @@ class UserController {
 		showSpinner();
 		await userApi
 			.changePassword(data)
+			.then(() => router.go('/settings'))
 			.catch((err) => {
 				const { status } = err;
 

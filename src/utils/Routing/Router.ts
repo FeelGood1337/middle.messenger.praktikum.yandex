@@ -29,7 +29,7 @@ class Router implements IRouter {
 		Router.__instance = this;
 	}
 
-	use(pathname: string, block: TBlockConstructor): this {
+	use(pathname: string, block: TBlockConstructor | any): this {
 		const route = new Route(pathname, block, { rootQuery: this._rootQuery });
 
 		this.routes.push(route);
