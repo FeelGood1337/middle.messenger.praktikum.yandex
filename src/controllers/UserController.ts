@@ -9,10 +9,10 @@ const userApi = new UserAPI();
 
 class UserController {
 	async getUser(): Promise<void> {
+		showSpinner();
 		await authApi
 			.getUser()
 			.then((user: IUser): void => {
-				showSpinner();
 				store.set('user', user);
 			})
 			.catch((err) => {
@@ -21,25 +21,23 @@ class UserController {
 				if (status === 401) {
 					router.go('/');
 				}
-			})
-			.finally(() => hideSpinner());
+			});
+		hideSpinner();
 	}
 
 	async updateAvatar(data: FormData): Promise<void> {
-		await userApi
-			.avatar(data)
-			.then((user: IUser): void => {
-				showSpinner();
-				store.set('user', user);
-			})
-			.finally(() => hideSpinner());
+		showSpinner();
+		await userApi.avatar(data).then((user: IUser): void => {
+			store.set('user', user);
+		});
+		hideSpinner();
 	}
 
 	async updateProfile(data: Record<string, string>): Promise<void> {
+		showSpinner();
 		await userApi
 			.profile(data)
 			.then((user: IUser): void => {
-				showSpinner();
 				store.set('user', user);
 			})
 			.then(() => router.go('/settings'))
@@ -49,11 +47,12 @@ class UserController {
 				if (status === 500) {
 					router.go('/error');
 				}
-			})
-			.finally(() => hideSpinner());
+			});
+		hideSpinner();
 	}
 
 	async changePassword(data: Record<string, string>): Promise<void> {
+		showSpinner();
 		await userApi
 			.changePassword(data)
 			.then(() => router.go('/settings'))
@@ -64,6 +63,7 @@ class UserController {
 					router.go('/error');
 				}
 			});
+		hideSpinner();
 	}
 }
 
