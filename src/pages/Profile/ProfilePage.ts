@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // import isEqual from '../../utils/isEqualProps';
-import store, { StoreEvents } from '../../utils/Store/Store';
+import store, { IUser, StoreEvents } from '../../utils/Store/Store';
 import { Block } from '../../utils/Block/Block';
 import router from '../../router';
 import { Templator } from '../../utils/Template-engine/templater';
@@ -21,17 +21,6 @@ import { Button } from '../../components';
 import avatar from '../../../static/images/Avatar.svg';
 
 import './profile.css';
-
-interface IUser {
-	id: number;
-	avatar: string;
-	display_name: string;
-	email: string;
-	first_name: string;
-	second_name: string;
-	login: string;
-	phone: string;
-}
 
 type TSpec = {
 	tag: string;
@@ -208,9 +197,9 @@ class ProfilePage extends Block {
 		router.go('/messenger');
 	}
 
-	private logoutClick(event: Event): void {
+	private async logoutClick(event: Event): Promise<void> {
 		event?.preventDefault();
-		authController.logout();
+		await authController.logout();
 	}
 
 	private handleClickModal(modal: HTMLElement): void {
@@ -231,7 +220,7 @@ class ProfilePage extends Block {
 			fileNameAndSize;
 	}
 
-	private handleUploadAvatar(event: Event): void {
+	private async handleUploadAvatar(event: Event): Promise<void> {
 		event?.preventDefault();
 		const avatarInput: HTMLInputElement = document.querySelector(
 			'#avatarInput',
@@ -240,9 +229,11 @@ class ProfilePage extends Block {
 		const formData = new FormData();
 		formData.append('avatar', avatarInput.files![0]);
 
-		userController
+		await userController
 			.updateAvatar(formData)
-			.then(({ avatar }) => {
+			.then(() => {
+				const { user }: Record<string, IUser> = this.props;
+				const { avatar } = user;
 				this.setProps({
 					avatar: new Avatar({
 						imgPath: `${AVATAR_URL}${avatar}`,
@@ -271,8 +262,8 @@ class ProfilePage extends Block {
 		router.go('/change-user-password');
 	}
 
-	componentDidMount(): void {
-		userController.getUser().then(() => {
+	private async renderUpdateOnMount(): Promise<void> {
+		await userController.getUser().then(() => {
 			const { user }: Record<string, IUser> = this.props;
 			const { avatar } = user;
 			if (avatar) {
@@ -286,7 +277,10 @@ class ProfilePage extends Block {
 				this.eventBus().emit(Block.EVENTS.FLOW_CDU);
 			}
 		});
+	}
 
+	componentDidMount(): void {
+		this.renderUpdateOnMount();
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const {
 				element,

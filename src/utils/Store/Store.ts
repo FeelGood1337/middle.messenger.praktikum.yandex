@@ -9,8 +9,22 @@ type Indexed<T = any> = {
 	[key in string]: T;
 };
 
+export interface IUser {
+	id: number;
+	avatar: string;
+	display_name: string;
+	email: string;
+	first_name: string;
+	second_name: string;
+	login: string;
+	phone: string;
+}
+interface IStoreData {
+	user?: IUser;
+}
+
 class Store extends EventBus {
-	private state: Indexed = {};
+	private state: IStoreData = {};
 	constructor() {
 		super();
 	}
@@ -19,7 +33,7 @@ class Store extends EventBus {
 		return this.state;
 	}
 
-	set(path: string, value: unknown) {
+	set(path: keyof IStoreData, value: unknown) {
 		set(this.state, path, value);
 		this.emit(StoreEvents.UPDATE);
 	}

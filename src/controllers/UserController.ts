@@ -1,31 +1,19 @@
-import store from '../utils/Store/Store';
+import store, { IUser } from '../utils/Store/Store';
 import router from '../router';
 import { AuthAPI } from '../API/auth-api';
 import { UserAPI } from '../API/user-api';
 import { showSpinner, hideSpinner } from '../utils/spinner';
 
-interface IUser {
-	id: number;
-	avatar: string;
-	display_name: string;
-	email: string;
-	first_name: string;
-	second_name: string;
-	login: string;
-	phone: string;
-}
-
 const authApi = new AuthAPI();
 const userApi = new UserAPI();
 
 class UserController {
-	getUser(): Promise<IUser | any> {
+	async getUser(): Promise<void> {
 		showSpinner();
-		return authApi
+		await authApi
 			.getUser()
 			.then((user: IUser): void => {
 				store.set('user', user);
-				// return user;
 			})
 			.catch((err) => {
 				const { status } = err;
@@ -39,13 +27,12 @@ class UserController {
 			});
 	}
 
-	updateAvatar(data: FormData): Promise<IUser> {
+	async updateAvatar(data: FormData): Promise<void> {
 		showSpinner();
-		return userApi
+		await userApi
 			.avatar(data)
-			.then((user: IUser): IUser => {
+			.then((user: IUser): void => {
 				store.set('user', user);
-				return user;
 			})
 			.finally(() => {
 				hideSpinner();
@@ -54,7 +41,7 @@ class UserController {
 
 	updateProfile(data: Record<string, string>) {
 		return userApi.profile(data).then((user: IUser): IUser => {
-			store.set('updateUser', user);
+			store.set('user', user);
 			return user;
 		});
 	}

@@ -33,8 +33,8 @@ class AuthController {
 			});
 	}
 
-	logout(): void {
-		this.authApi
+	async logout(): Promise<void> {
+		await this.authApi
 			.logout()
 			.then(() => router.go('/'))
 			.catch(() => router.go('/error'));

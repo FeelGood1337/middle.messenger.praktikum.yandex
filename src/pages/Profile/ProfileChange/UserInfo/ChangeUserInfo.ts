@@ -4,7 +4,7 @@ import { Templator } from '../../../../utils/Template-engine/templater';
 import { template } from './userInfo.tmpl';
 import { inputsProps } from './inputProps';
 
-import store, { StoreEvents } from '../../../../utils/Store/Store';
+import store, { IUser, StoreEvents } from '../../../../utils/Store/Store';
 import { AuthAPI } from '../../../../API/auth-api';
 import { UserAPI } from '../../../../API/user-api';
 import { userController } from '../../../../controllers';
@@ -21,17 +21,6 @@ import { Button } from '../../../../components/Button/Button';
 
 import avatar from '../../../../../static/images/Avatar.svg';
 import router from '../../../../router';
-
-interface IUser {
-	id: number;
-	avatar: string;
-	display_name: string;
-	email: string;
-	first_name: string;
-	second_name: string;
-	login: string;
-	phone: string;
-}
 
 const userInfoTmpl = new Templator(template);
 const authApi = new AuthAPI();
