@@ -7,12 +7,30 @@ class AuthController {
 		this.authApi = new AuthAPI();
 	}
 
-	async signIn(data: Record<string, string>) {
-		await this.authApi.signin(data);
+	async signIn(data: Record<string, string>): Promise<void> {
+		await this.authApi
+			.signin(data)
+			.then(() => router.go('/messenger'))
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			});
 	}
 
-	async signUp(data: Record<string, string>) {
-		await this.authApi.signup(data);
+	async signUp(data: Record<string, string>): Promise<void> {
+		await this.authApi
+			.signup(data)
+			.then(() => router.go('/messenger'))
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			});
 	}
 
 	logout(): void {

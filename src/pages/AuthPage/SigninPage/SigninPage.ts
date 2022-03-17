@@ -89,24 +89,11 @@ class SigninPage extends Block {
 		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
 	}
 
-	private handleClick(event: Event): void {
+	private async handleClick(event: Event): Promise<void> {
 		event.preventDefault();
-		authController
-			.signIn(this.inputsValue)
-			.then(() => router.go('/messenger'))
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 500) {
-					router.go('/error');
-				}
-			})
-			.finally(() => {
-				this.inputsValue = {
-					login: '',
-					password: '',
-				};
-			});
+		await authController.signIn(this.inputsValue).finally(() => {
+			this.inputsValue = {};
+		});
 	}
 
 	private goToSignup(event: Event): void {

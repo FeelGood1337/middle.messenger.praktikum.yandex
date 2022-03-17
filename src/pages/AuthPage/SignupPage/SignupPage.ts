@@ -90,19 +90,9 @@ class SignupPage extends Block {
 
 	private handleClick(event: Event): void {
 		event.preventDefault();
-		authController
-			.signUp(this.inputsValue)
-			.then(() => router.go('/messenger'))
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 500) {
-					router.go('/error');
-				}
-			})
-			.finally(() => {
-				this.inputsValue = {};
-			});
+		authController.signUp(this.inputsValue).finally(() => {
+			this.inputsValue = {};
+		});
 	}
 
 	private goToSignin(event: Event): void {
