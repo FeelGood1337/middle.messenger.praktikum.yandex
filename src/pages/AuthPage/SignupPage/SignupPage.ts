@@ -6,7 +6,7 @@ import { Templator } from '../../../utils/Template-engine/templater';
 import { template } from './signup.tmpl';
 import { inputsProps } from './inputProps';
 
-import { AuthAPI } from '../../../API/auth-api';
+import { authController } from '../../../controllers';
 import { Form, IForm } from '../../../utils/form';
 import {
 	InputValidate,
@@ -20,7 +20,6 @@ import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabe
 import './signup.css';
 
 const signUpTmpl = new Templator(template);
-const authApi = new AuthAPI();
 
 class SignupPage extends Block {
 	inputsValue: Record<string, string>;
@@ -91,8 +90,8 @@ class SignupPage extends Block {
 
 	private handleClick(event: Event): void {
 		event.preventDefault();
-		authApi
-			.signup(this.inputsValue)
+		authController
+			.signUp(this.inputsValue)
 			.then(() => router.go('/messenger'))
 			.catch((err) => {
 				const { status } = err;

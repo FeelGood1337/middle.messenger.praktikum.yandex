@@ -1,8 +1,6 @@
-type TObject = { [key: string]: string };
-
 interface IForm {
 	formIsValid: () => void;
-	saveValue(input: HTMLInputElement, obj: TObject): void;
+	saveValue(input: HTMLInputElement, obj: Record<string, string>): void;
 }
 
 class Form implements IForm {
@@ -16,7 +14,7 @@ class Form implements IForm {
 		// this._customeValidator = customeValidator;
 	}
 
-	saveValue(input: HTMLInputElement, obj: TObject): void {
+	saveValue(input: HTMLInputElement, obj: Record<string, string>): void {
 		obj[input.name] = input.value;
 	}
 

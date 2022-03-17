@@ -6,7 +6,8 @@ import router from '../../../router';
 import { template } from './signin.tmpl';
 import { inputsProps } from './inputProps';
 
-import { AuthAPI } from '../../../API/auth-api';
+import { authController } from '../../../controllers';
+import { ISingin } from '../../../API/auth-api';
 import { Form, IForm } from '../../../utils/form';
 import { Button } from '../../../components/Button/Button';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
@@ -20,7 +21,6 @@ import { Title } from '../../../components/Title/Title';
 import './signin.css';
 
 const signInTmpl = new Templator(template);
-const authApi = new AuthAPI();
 
 class SigninPage extends Block {
 	inputsValue: Record<string, string>;
@@ -91,8 +91,8 @@ class SigninPage extends Block {
 
 	private handleClick(event: Event): void {
 		event.preventDefault();
-		authApi
-			.signin(this.inputsValue)
+		authController
+			.signIn(this.inputsValue)
 			.then(() => router.go('/messenger'))
 			.catch((err) => {
 				const { status } = err;
@@ -102,7 +102,10 @@ class SigninPage extends Block {
 				}
 			})
 			.finally(() => {
-				this.inputsValue = {};
+				this.inputsValue = {
+					login: '',
+					password: '',
+				};
 			});
 	}
 

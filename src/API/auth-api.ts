@@ -1,5 +1,18 @@
 import { BaseAPI } from './base-api';
 
+interface ISingin {
+	login: string;
+	password: string;
+}
+interface ISignup {
+	first_name: string;
+	second_name: string;
+	login: string;
+	email: string;
+	password: string;
+	phone: string;
+}
+
 class AuthAPI extends BaseAPI {
 	_url: string;
 	constructor() {
@@ -57,4 +70,4 @@ class AuthAPI extends BaseAPI {
 	}
 }
 
-export { AuthAPI };
+export { AuthAPI, ISingin, ISignup };
