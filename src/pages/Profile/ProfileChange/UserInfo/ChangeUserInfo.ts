@@ -4,9 +4,7 @@ import { Templator } from '../../../../utils/Template-engine/templater';
 import { template } from './userInfo.tmpl';
 import { inputsProps } from './inputProps';
 
-import store, { IUser, StoreEvents } from '../../../../utils/Store/Store';
-import { AuthAPI } from '../../../../API/auth-api';
-import { UserAPI } from '../../../../API/user-api';
+import store, { IUser } from '../../../../utils/Store/Store';
 import { userController } from '../../../../controllers';
 import { AVATAR_URL } from '../../../../constants';
 import { Form, IForm } from '../../../../utils/form';
@@ -23,8 +21,6 @@ import avatar from '../../../../../static/images/Avatar.svg';
 import router from '../../../../router';
 
 const userInfoTmpl = new Templator(template);
-const authApi = new AuthAPI();
-const userApi = new UserAPI();
 
 class ChangeUserInfo extends Block {
 	inputsValue: { [key: string]: string };
@@ -103,7 +99,6 @@ class ChangeUserInfo extends Block {
 	}
 
 	private async renderUpdateOnMount(): Promise<void> {
-		await userController.getUser();
 		const { user }: Record<string, IUser> = await store.getState();
 		const { avatar } = user;
 		if (avatar) {

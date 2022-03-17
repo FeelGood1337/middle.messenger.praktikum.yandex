@@ -57,6 +57,22 @@ class UserController {
 				hideSpinner();
 			});
 	}
+
+	async changePassword(data: Record<string, string>): Promise<void> {
+		showSpinner();
+		await userApi
+			.changePassword(data)
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			})
+			.finally(() => {
+				hideSpinner();
+			});
+	}
 }
 
 export default new UserController();

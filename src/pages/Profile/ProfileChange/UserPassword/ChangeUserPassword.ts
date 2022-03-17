@@ -19,6 +19,8 @@ import { Button } from '../../../../components/Button/Button';
 
 import avatar from '../../../../../static/images/Avatar.svg';
 import router from '../../../../router';
+import { userController } from '../../../../controllers';
+import store, { IUser } from '../../../../utils/Store/Store';
 
 const userPasswordTmpl = new Templator(template);
 const authApi = new AuthAPI();
@@ -86,20 +88,11 @@ class ChangeUserPassword extends Block {
 		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
 	}
 
-	private handleClick(event: Event): void {
+	private async handleClick(event: Event): Promise<void> {
 		event.preventDefault();
-		userApi
-			.changePassword(this.inputsValue)
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 500) {
-					router.go('/error');
-				}
-			})
-			.finally(() => {
-				this.inputsValue = {};
-			});
+		await userController.changePassword(this.inputsValue).finally(() => {
+			this.inputsValue = {};
+		});
 	}
 
 	private goToSettings(event: Event): void {
@@ -107,27 +100,22 @@ class ChangeUserPassword extends Block {
 		router.go('/settings');
 	}
 
-	componentDidMount(): void {
-		authApi
-			.getUser()
-			.then(({ avatar }) => {
-				if (avatar) {
-					this.setProps({
-						avatar: new Avatar({
-							imgPath: `${AVATAR_URL}${avatar}`,
-						}).render(),
-					});
-				} else {
-					this.eventBus().emit(Block.EVENTS.FLOW_CDU);
-				}
-			})
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 401) {
-					router.go('/');
-				}
+	private async renderUpdateOnMount(): Promise<void> {
+		const { user }: Record<string, IUser> = await store.getState();
+		const { avatar } = user;
+		if (avatar) {
+			this.setProps({
+				avatar: new Avatar({
+					imgPath: `${AVATAR_URL}${avatar}`,
+				}).render(),
 			});
+		} else {
+			this.eventBus().emit(Block.EVENTS.FLOW_CDU);
+		}
+	}
+
+	componentDidMount(): void {
+		this.renderUpdateOnMount();
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, validate, getInputsValue, handleClick, goToSettings } = this;
 
