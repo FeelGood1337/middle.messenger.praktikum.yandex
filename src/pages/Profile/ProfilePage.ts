@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 // import isEqual from '../../utils/isEqualProps';
-import store, { IUser, StoreEvents } from '../../utils/Store/Store';
+import { IUser } from '../../utils/Store/Store';
 import { Block } from '../../utils/Block/Block';
 import router from '../../router';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './profile.tmpl';
-import { itemsProps, btnsProps, avatarProps } from './itemsProps';
+import { btnsProps, avatarProps } from './itemsProps';
 
 import { userController, authController } from '../../controllers';
 import { AVATAR_URL } from '../../constants';
@@ -17,8 +17,6 @@ import { Items } from '../../components/Items/Items';
 import { Element } from '../../components/Element/Element';
 import { LinkButton } from '../../components/LinkButton/LinkButton';
 import { Button } from '../../components';
-
-import avatar from '../../../static/images/Avatar.svg';
 
 import './profile.css';
 
