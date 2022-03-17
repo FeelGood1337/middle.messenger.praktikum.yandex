@@ -4,8 +4,6 @@ import { Templator } from '../../../../utils/Template-engine/templater';
 import { template } from './userPassword.tmpl';
 import { inputsProps } from './inputProps';
 
-import { AuthAPI } from '../../../../API/auth-api';
-import { UserAPI } from '../../../../API/user-api';
 import { AVATAR_URL } from '../../../../constants';
 import { Form, IForm } from '../../../../utils/form';
 import {
@@ -17,38 +15,15 @@ import { Title } from '../../../../components/Title/Title';
 import { InputWithLabel } from '../../../../components/InputWithLabel/InputWithLabel';
 import { Button } from '../../../../components/Button/Button';
 
-import avatar from '../../../../../static/images/Avatar.svg';
+import { IUser } from '../../../../utils/Store/Store';
 import router from '../../../../router';
 import { userController } from '../../../../controllers';
-import store, { IUser } from '../../../../utils/Store/Store';
 
 const userPasswordTmpl = new Templator(template);
-const authApi = new AuthAPI();
-const userApi = new UserAPI();
 class ChangeUserPassword extends Block {
-	inputsValue: { [key: string]: string };
-	validate: IInputValidate[];
-	form: IForm;
-
-	constructor() {
-		super({
-			profileSvgClass: 'profile-svg',
-			title: new Title({
-				tag: 'h2',
-				className: 'auth__title signup__title',
-				text: 'Изменить пароль',
-			}).render(),
-			avatar: new Avatar({
-				link: 'profile.html',
-				imgPath: avatar,
-			}).render(),
-			button: new Button({
-				text: 'Сохранить',
-				className: 'signup__btn',
-				isDisabled: true,
-			}).render(),
-		});
-	}
+	private inputsValue: Record<string, string>;
+	private validate: IInputValidate[];
+	private form: IForm;
 
 	private getInputs() {
 		this.inputsValue = this.inputsValue || {};
@@ -100,22 +75,7 @@ class ChangeUserPassword extends Block {
 		router.go('/settings');
 	}
 
-	private async renderUpdateOnMount(): Promise<void> {
-		const { user }: Record<string, IUser> = await store.getState();
-		const { avatar } = user;
-		if (avatar) {
-			this.setProps({
-				avatar: new Avatar({
-					imgPath: `${AVATAR_URL}${avatar}`,
-				}).render(),
-			});
-		} else {
-			this.eventBus().emit(Block.EVENTS.FLOW_CDU);
-		}
-	}
-
 	componentDidMount(): void {
-		this.renderUpdateOnMount();
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, validate, getInputsValue, handleClick, goToSettings } = this;
 
@@ -143,13 +103,25 @@ class ChangeUserPassword extends Block {
 	}
 
 	render() {
-		const { profileSvgClass, title, avatar, button } = this.props;
+		const { state }: Record<string, IUser> = this.props;
+		const { avatar } = state;
+
 		return userPasswordTmpl
 			.compile({
-				profileSvgClass,
-				title,
-				avatar,
-				button,
+				profileSvgClass: 'profile-svg',
+				title: new Title({
+					tag: 'h2',
+					className: 'auth__title signup__title',
+					text: 'Изменить пароль',
+				}).render(),
+				avatar: new Avatar({
+					imgPath: `${AVATAR_URL}${avatar}`,
+				}).render(),
+				button: new Button({
+					text: 'Сохранить',
+					className: 'signup__btn',
+					isDisabled: true,
+				}).render(),
 				inputs: this.getInputs(),
 			})
 			.getNode();

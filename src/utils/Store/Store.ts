@@ -1,7 +1,4 @@
-/* eslint-disable indent */
-import { Block } from '../Block/Block';
 import { EventBus } from '../EventBus/EventBus';
-import isEqual from '../isEqualProps';
 import set from '../set';
 
 export enum StoreEvents {
@@ -22,8 +19,9 @@ export interface IUser {
 	login: string;
 	phone: string;
 }
-interface IStoreData {
+export interface IStoreData {
 	user?: IUser;
+	isLoaded?: boolean;
 }
 
 class Store extends EventBus {
@@ -43,26 +41,5 @@ class Store extends EventBus {
 }
 
 const store = new Store();
-
-export const withStore =
-	(mapStateToProps: (state: IStoreData) => Record<string, unknown>) =>
-	(Component: typeof Block) => {
-		let state: IStoreData;
-		return class extends Component {
-			constructor(props: Record<string, any>) {
-				state = mapStateToProps(store.getState());
-				super({ ...props, state });
-				store.on(StoreEvents.UPDATE, () => {
-					const newState = mapStateToProps(store.getState());
-
-					if (!isEqual(state, newState)) {
-						this.setProps({
-							state: newState,
-						});
-					}
-				});
-			}
-		};
-	};
 
 export default store;

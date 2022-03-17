@@ -4,7 +4,7 @@ import { Templator } from '../../../../utils/Template-engine/templater';
 import { template } from './userInfo.tmpl';
 import { inputsProps } from './inputProps';
 
-import store, { IUser } from '../../../../utils/Store/Store';
+import { IUser } from '../../../../utils/Store/Store';
 import { userController } from '../../../../controllers';
 import { AVATAR_URL } from '../../../../constants';
 import { Form, IForm } from '../../../../utils/form';
@@ -17,38 +17,14 @@ import { Title } from '../../../../components/Title/Title';
 import { InputWithLabel } from '../../../../components/InputWithLabel/InputWithLabel';
 import { Button } from '../../../../components/Button/Button';
 
-import avatar from '../../../../../static/images/Avatar.svg';
 import router from '../../../../router';
 
 const userInfoTmpl = new Templator(template);
 
 class ChangeUserInfo extends Block {
-	inputsValue: { [key: string]: string };
-	validate: IInputValidate[];
-	form: IForm;
-
-	constructor() {
-		super({
-			profileSvgClass: 'profile-svg',
-			title: new Title({
-				tag: 'h2',
-				className: 'auth__title signup__title',
-				text: 'Изменить данные',
-			}).render(),
-			avatar: new Avatar({
-				imgPath: avatar,
-			}).render(),
-			button: new Button({
-				text: 'Сохранить',
-				className: 'signup__btn',
-				isDisabled: true,
-			}).render(),
-		});
-
-		this.inputsValue;
-		this.form;
-		this.validate = [];
-	}
+	private inputsValue: Record<string, string>;
+	private validate: IInputValidate[] = [];
+	private form: IForm;
 
 	private getInputs() {
 		this.inputsValue = this.inputsValue || {};
@@ -98,23 +74,7 @@ class ChangeUserInfo extends Block {
 		router.go('/settings');
 	}
 
-	private async renderUpdateOnMount(): Promise<void> {
-		const { user }: Record<string, IUser> = await store.getState();
-		const { avatar } = user;
-		if (avatar) {
-			this.setProps({
-				avatar: new Avatar({
-					imgPath: `${AVATAR_URL}${avatar}`,
-				}).render(),
-			});
-		} else {
-			this.eventBus().emit(Block.EVENTS.FLOW_CDU);
-		}
-	}
-
 	componentDidMount(): void {
-		this.renderUpdateOnMount();
-
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, validate, getInputsValue, handleClick, goToSettings } = this;
 
@@ -142,8 +102,27 @@ class ChangeUserInfo extends Block {
 	}
 
 	render() {
+		const { state }: Record<string, IUser> = this.props;
+		const { avatar } = state;
+
 		return userInfoTmpl
-			.compile({ ...this.props, inputs: this.getInputs() })
+			.compile({
+				profileSvgClass: 'profile-svg',
+				title: new Title({
+					tag: 'h2',
+					className: 'auth__title signup__title',
+					text: 'Изменить данные',
+				}).render(),
+				avatar: new Avatar({
+					imgPath: `${AVATAR_URL}${avatar}`,
+				}).render(),
+				button: new Button({
+					text: 'Сохранить',
+					className: 'signup__btn',
+					isDisabled: true,
+				}).render(),
+				inputs: this.getInputs(),
+			})
 			.getNode();
 	}
 }
