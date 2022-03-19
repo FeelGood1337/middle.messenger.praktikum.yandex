@@ -9,7 +9,6 @@ import './serverError.css';
 
 const serverErrorTmpl = new Templator(template);
 class ServerErrorPage extends Block {
-
 	constructor() {
 		super({
 			title: new Title({
@@ -23,9 +22,10 @@ class ServerErrorPage extends Block {
 				text: 'Internal Server Error',
 			}).render(),
 			linkButton: new LinkButton({
-				text: "Назад к чатам",
-				className: "http-error__btn btn",
+				text: 'Назад к чатам',
+				className: 'http-error__btn btn',
 				href: '/messenger',
+				hasSvgIcon: false,
 			}).render(),
 		});
 	}

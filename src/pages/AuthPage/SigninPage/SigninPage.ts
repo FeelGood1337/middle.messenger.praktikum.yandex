@@ -7,7 +7,6 @@ import { template } from './signin.tmpl';
 import { inputsProps } from './inputProps';
 
 import { authController } from '../../../controllers';
-import { ISingin } from '../../../API/auth-api';
 import { Form, IForm } from '../../../utils/form';
 import { Button } from '../../../components/Button/Button';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
@@ -17,6 +16,7 @@ import {
 	IInputValidate,
 } from '../../../components/InputWithLabel/InputValidate';
 import { Title } from '../../../components/Title/Title';
+import backArrowIcon from '../../../../static/images/linkButton.svg';
 
 import './signin.css';
 
@@ -43,6 +43,8 @@ class SigninPage extends Block {
 				text: 'Регистрация',
 				className: 'auth__btn-link',
 				href: '/sign-up',
+				svgIcon: backArrowIcon,
+				hasSvgIcon: true,
 			}).render(),
 		});
 

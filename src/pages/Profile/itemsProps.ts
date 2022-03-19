@@ -90,16 +90,19 @@ const btnsProps = [
 		className: 'btn-item btn-user-info btn-item_accent',
 		text: 'Изменить данные',
 		href: '/change-user-info',
+		hasSvgIcon: false,
 	},
 	{
 		className: 'btn-item btn-user-password btn-item_accent',
 		text: 'Изменить пароль',
 		href: '/change-user-password',
+		hasSvgIcon: false,
 	},
 	{
 		className: 'btn-item btn-logout btn-item_red',
 		text: 'Выйти',
 		href: '/',
+		hasSvgIcon: false,
 	},
 ];
 

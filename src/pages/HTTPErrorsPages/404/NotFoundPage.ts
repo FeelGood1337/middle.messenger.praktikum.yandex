@@ -6,11 +6,10 @@ import { template } from './notFound.tmpl';
 import { Title } from '../../../components/Title/Title';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 
-import './notFound.css'
+import './notFound.css';
 
 const notFoundTmpl = new Templator(template);
 class NotFoundPage extends Block {
-
 	constructor() {
 		super({
 			title: new Title({
@@ -24,9 +23,10 @@ class NotFoundPage extends Block {
 				text: 'Page not found',
 			}).render(),
 			linkButton: new LinkButton({
-				text: "Назад к чатам",
-				className: "http-error__btn btn",
+				text: 'Назад к чатам',
+				className: 'http-error__btn btn',
 				href: '/messenger',
+				hasSvgIcon: false,
 			}).render(),
 		});
 	}
@@ -40,9 +40,11 @@ class NotFoundPage extends Block {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, goToChat } = this;
 
-			const linkBtn: HTMLButtonElement = element.querySelector('.http-error__btn') as HTMLButtonElement;
+			const linkBtn: HTMLButtonElement = element.querySelector(
+				'.http-error__btn',
+			) as HTMLButtonElement;
 			linkBtn.onclick = goToChat;
-		})
+		});
 	}
 
 	render() {
@@ -50,4 +52,4 @@ class NotFoundPage extends Block {
 	}
 }
 
-export { NotFoundPage }
+export { NotFoundPage };

@@ -10,6 +10,7 @@ import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
 import { IUser } from '../../utils/Store/Store';
 import { AVATAR_URL } from '../../constants';
+import backArrowIcon from '../../../static/images/linkButton.svg';
 
 const chatTmpl = new Templator(template);
 class Chat extends Block {
@@ -39,6 +40,8 @@ class Chat extends Block {
 					text: 'Профиль',
 					className: 'section-caht-list__link-btn',
 					href: '/settings',
+					svgIcon: backArrowIcon,
+					hasSvgIcon: true,
 				}).render(),
 				avatarMini: new AvatarMini({
 					imgPath: `${AVATAR_URL}${avatar}`,

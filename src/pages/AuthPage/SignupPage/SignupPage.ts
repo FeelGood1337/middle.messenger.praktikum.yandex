@@ -16,6 +16,7 @@ import { Title } from '../../../components/Title/Title';
 import { Button } from '../../../components/Button/Button';
 import { LinkButton } from '../../../components/LinkButton/LinkButton';
 import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabel';
+import backArrowIcon from '../../../../static/images/linkButton.svg';
 
 import './signup.css';
 
@@ -42,6 +43,8 @@ class SignupPage extends Block {
 				text: 'Войти',
 				className: 'signup__btn-link',
 				href: '/',
+				svgIcon: backArrowIcon,
+				hasSvgIcon: true,
 			}).render(),
 		});
 

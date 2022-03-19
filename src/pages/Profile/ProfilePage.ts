@@ -28,19 +28,25 @@ type TSpec = {
 
 const profileTmpl = new Templator(template);
 
-function getLinkButton(text: string, className: string, href: string) {
+function getLinkButton(
+	text: string,
+	className: string,
+	href: string,
+	hasSvgIcon: boolean,
+) {
 	return new LinkButton({
 		text,
 		className,
 		href,
+		hasSvgIcon,
 	}).render();
 }
 
 function getBtnItems() {
-	return btnsProps.map(({ text, className, href }) =>
+	return btnsProps.map(({ text, className, href, hasSvgIcon }) =>
 		new Items({
 			className: 'fields-items__item item-btn',
-			items: getLinkButton(text, className, href),
+			items: getLinkButton(text, className, href, hasSvgIcon),
 		}).render(),
 	);
 }

@@ -8,6 +8,8 @@ type TProps = {
 	text: string;
 	className: string;
 	href: string;
+	svgIcon?: string;
+	hasSvgIcon: boolean;
 };
 
 interface ILinkButton {
@@ -25,7 +27,17 @@ class LinkButton extends Block implements ILinkButton {
 	}
 
 	render() {
-		return linkBtnTmpl.compile({ ...this.props }).getNode();
+		const { text, className, href, svgIcon, hasSvgIcon } = this.props;
+		return linkBtnTmpl
+			.compile({
+				text,
+				className,
+				href,
+				svgIcon: hasSvgIcon
+					? `<img class="link-btn__svg" src="${svgIcon}" alt="go to settings" />`
+					: '<div class="hiden"></div>',
+			})
+			.getNode();
 	}
 }
 
