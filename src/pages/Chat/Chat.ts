@@ -21,6 +21,12 @@ import { IUser } from '../../utils/Store/Store';
 import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
 import { chatController } from '../../controllers';
 import { Form, IForm } from '../../utils/form';
+import { IChats } from '../../API/chat-api';
+
+interface IState {
+	user: IUser;
+	chats: IChats[];
+}
 
 const inputsProps = [
 	{
@@ -49,8 +55,11 @@ class Chat extends Block {
 
 	private async handleClickCreateChat(event: Event) {
 		event.preventDefault();
-		// await chatController.createChat();
-		console.log(Chat.inputsValue);
+		await chatController.createChat(Chat.inputsValue);
+	}
+
+	private async getChats(): Promise<void> {
+		await chatController.getChat();
 	}
 
 	private getInputs(): string {
@@ -108,6 +117,7 @@ class Chat extends Block {
 	}
 
 	componentDidMount(): void {
+		this.getChats();
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const { element, goToProfile, handleClickOpenAddChatModal } = this;
 
@@ -124,8 +134,9 @@ class Chat extends Block {
 	}
 
 	render() {
-		const { state }: Record<string, IUser> = this.props;
-		const { avatar, display_name } = state;
+		const { state }: Record<string, IState> = this.props;
+		const { user } = state;
+		const { avatar, display_name } = user;
 
 		return chatTmpl
 			.compile({

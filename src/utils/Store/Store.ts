@@ -1,3 +1,4 @@
+import { IChats } from '../../API/chat-api';
 import { EventBus } from '../EventBus/EventBus';
 import set from '../set';
 
@@ -21,6 +22,7 @@ export interface IUser {
 }
 export interface IStoreData {
 	user?: IUser;
+	chats?: IChats[];
 	isLoaded?: boolean;
 }
 
