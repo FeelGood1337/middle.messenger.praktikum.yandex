@@ -135,8 +135,10 @@ class Chat extends Block {
 
 	render() {
 		const { state }: Record<string, IState> = this.props;
-		const { user } = state;
-		const { avatar, display_name } = user;
+		const { user, chats } = state;
+		const { avatar } = user;
+
+		console.log(chats);
 
 		return chatTmpl
 			.compile({
@@ -158,7 +160,8 @@ class Chat extends Block {
 				kebab: kebabIcon,
 				clip: clipIcon,
 				send: sendIcon,
-				startMessage: display_name === 'svlasov' ? EMPTY_CHATS : NO_SELECTED_CHAT,
+				startMessage:
+					chats === undefined || !chats.length ? EMPTY_CHATS : NO_SELECTED_CHAT,
 				modalTitle: new Title({
 					tag: 'h2',
 					className: 'modal-title',

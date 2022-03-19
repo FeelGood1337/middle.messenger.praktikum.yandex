@@ -11,7 +11,7 @@ import {
 } from './pages';
 
 import './index.css';
-import { userController } from './controllers';
+import { chatController, userController } from './controllers';
 
 document.addEventListener('DOMContentLoaded', async () => {
 	router
@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	try {
 		await userController.getUser();
+		await chatController.getChat();
 	} catch (error) {
 		console.log(error);
 	}
