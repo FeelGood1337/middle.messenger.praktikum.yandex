@@ -33,10 +33,19 @@
 	border-radius: 50%;
 }
 
+.auth__form_chat > .inner .chat-label {
+	display: none;
+}
+
 .chat-list__controlls {
 	display: flex;
 	justify-content: space-between;
 	align-items: baseline;
+}
+
+.auth__form_chat {
+	justify-content: center;
+	align-items: flex-start;
 }
 
 .section-caht-list__link-btn {
