@@ -77,7 +77,9 @@ export const template = `
 			<div class="chat__content">
 				<section class="section-chat-list">
 					<div class="chat-list__controlls">
-						{% linkButtonAddChat %}
+						<button class="chat-add-btn">
+							<img class="chat-add-btn__img" src="{% linkButtonAddChat %}" alt="add new chat"/>
+						</button>
 						{% linkButton %}
 					</div>
 					<input type="text" class="input search" placeholder="Поиск">
@@ -86,7 +88,7 @@ export const template = `
 					</ul>
 				</section>
 				<section class="message">
-					
+					<p>{% startMessage %}</p>
 				</section>
 			</div>
 		</div>

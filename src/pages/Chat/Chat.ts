@@ -8,9 +8,10 @@ import { AvatarMini, LinkButton } from '../../components/index';
 import kebabIcon from '../../../static/images/kebab-menu.svg';
 import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
-import { IUser } from '../../utils/Store/Store';
-import { AVATAR_URL } from '../../constants';
 import backArrowIcon from '../../../static/images/linkButton.svg';
+import addIcon from '../../../static/images/add.svg';
+import { IUser } from '../../utils/Store/Store';
+import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
 
 const chatTmpl = new Templator(template);
 class Chat extends Block {
@@ -26,16 +27,21 @@ class Chat extends Block {
 			const linkBtn: HTMLButtonElement = element.querySelector(
 				'.section-caht-list__link-btn',
 			) as HTMLButtonElement;
+			const addChatBtn: HTMLButtonElement = element.querySelector(
+				'chat-add-btn',
+			) as HTMLButtonElement;
+
 			linkBtn.onclick = goToProfile;
 		});
 	}
 
 	render() {
 		const { state }: Record<string, IUser> = this.props;
-		const { avatar } = state;
+		const { avatar, display_name } = state;
 
 		return chatTmpl
 			.compile({
+				linkButtonAddChat: addIcon,
 				linkButton: new LinkButton({
 					text: 'Профиль',
 					className: 'section-caht-list__link-btn',
@@ -53,6 +59,7 @@ class Chat extends Block {
 				kebab: kebabIcon,
 				clip: clipIcon,
 				send: sendIcon,
+				startMessage: display_name === 'svlasov' ? NO_SELECTED_CHAT : EMPTY_CHATS,
 			})
 			.getNode();
 	}

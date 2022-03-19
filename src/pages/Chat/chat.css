@@ -18,6 +18,27 @@
 	padding: 16px 16px 0;
 }
 
+.chat-add-btn {
+	border: none;
+	background: transparent;
+	padding: 0;
+}
+
+.chat-add-btn:hover {
+	cursor: pointer;
+}
+
+.chat-add-btn:hover .chat-add-btn__img {
+	background: #E0F2F1;
+	border-radius: 50%;
+}
+
+.chat-list__controlls {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
 .section-caht-list__link-btn {
 	align-self: flex-end;
 	padding-bottom: 16px;

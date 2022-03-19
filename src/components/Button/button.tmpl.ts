@@ -1,3 +1,3 @@
-export const template: string = `
+export const template = `
 	<button {% disabled %} class="btn {% className %}">{% text %}</button>
 `;
