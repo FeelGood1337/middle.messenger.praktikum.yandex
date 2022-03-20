@@ -5,6 +5,7 @@ interface IChats {
 	title: string;
 	avatar: string;
 	unread_count: number;
+	created_by: string;
 	last_message: {
 		user: {
 			first_name: string;

@@ -98,3 +98,7 @@ body {
 .modal-chat-input {
 	margin-bottom: 16px;
 }
+
+.hiden {
+	display: none;
+}

@@ -20,7 +20,7 @@ export const template = `
 					</div>
 					<input type="text" class="input search" placeholder="Поиск">
 					<ul class="chat-items">
-						
+						{% chatItems %}
 					</ul>
 				</section>
 				<section class="message">

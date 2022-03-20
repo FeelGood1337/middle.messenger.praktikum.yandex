@@ -19,7 +19,3 @@
 .link-btn__svg {
 	margin-left: var(--link-btn-text-margin-right);
 }
-
-.hiden {
-	display: none;
-}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Block } from '../../utils/Block/Block';
 import router from '../../router';
@@ -21,6 +22,7 @@ import { IUser } from '../../utils/Store/Store';
 import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
 import { chatController } from '../../controllers';
 import { Form, IForm } from '../../utils/form';
+import { IChats } from '../../API/chat-api';
 
 const inputsProps = [
 	{
@@ -54,6 +56,33 @@ class Chat extends Block {
 				modal.style.display = 'none';
 			}
 		};
+	}
+
+	private getChatsList(chats: IChats[]) {
+		return chats
+			.map(
+				(el: IChats, index: number) => `
+			<li class="item" id="chat_${index}">
+				<img 
+					class="avatar-svg__item" 
+					src="${AVATAR_URL}${el.avatar}"
+					alt="avatar chat list"
+					width="32px"
+					height="32px"
+				/>
+				<div class="item__content-wrapper">
+					<div class="item__name">${el.title}</div>
+					<p class="item__para">
+						${el.last_message}
+					</p>
+				</div>
+				<div class="item__date-wrapper">
+					<div class="date">${el.created_by}</div>
+				</div>
+			</li>
+		`,
+			)
+			.join('');
 	}
 
 	private getInputs(): string {
@@ -142,8 +171,6 @@ class Chat extends Block {
 		const { state }: Record<string, IUser> = this.props;
 		const { avatar, chats } = state;
 
-		console.log(chats);
-
 		return chatTmpl
 			.compile({
 				linkButtonAddChat: addIcon,
@@ -177,6 +204,9 @@ class Chat extends Block {
 					className: 'btn-modal btn-modal__create-chat',
 					isDisabled: false,
 				}).render(),
+				chatItems: chats?.length
+					? this.getChatsList(chats)
+					: '<div class="hiden"></div>',
 			})
 			.getNode();
 	}
