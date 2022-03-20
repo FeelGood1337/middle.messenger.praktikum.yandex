@@ -61,6 +61,12 @@
 .item {
 	display: flex;
 	border-bottom: 1px solid #EAEAEA;
+	padding: 16px 0 8px;
+}
+
+.item:hover {
+	cursor: pointer;
+	background: #E0F2F1;
 }
 
 .avatar-svg__item {
