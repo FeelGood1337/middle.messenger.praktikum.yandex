@@ -1,4 +1,4 @@
 import { Chat } from './Chat';
-import { withUserAndChats } from '../../HOC/withUserAndChats';
+import { withUser } from '../../HOC/withUser';
 
-export default withUserAndChats(Chat);
+export default withUser(Chat);

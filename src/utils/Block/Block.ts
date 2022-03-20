@@ -3,7 +3,6 @@
 import { v4 as makeUUID } from 'uuid';
 import { EventBus, IEventBus } from '../EventBus/EventBus';
 import isEqual from '../isEqualProps';
-// import { isEqual } from '../isEqual/isEqual';
 
 type TEvents<T extends object> = {
 	[P in keyof T]: T[P];

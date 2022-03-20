@@ -1,6 +1,6 @@
 import router from '../router';
 import { AuthAPI } from '../API/auth-api';
-import { userController } from '.';
+import { chatController, userController } from '.';
 
 class AuthController {
 	private authApi: AuthAPI;
@@ -12,6 +12,7 @@ class AuthController {
 		await this.authApi
 			.signin(data)
 			.then(() => userController.getUser())
+			.then(() => chatController.getChat())
 			.then(() => router.go('/messenger'))
 			.catch((err) => {
 				const { status } = err;

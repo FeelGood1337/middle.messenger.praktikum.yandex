@@ -24,7 +24,7 @@ export const template = `
 					</ul>
 				</section>
 				<section class="message">
-					<p>{% startMessage %}</p>
+					<div class="message__wrapper"><p class="message__hello">{% startMessage %}</p></div>
 				</section>
 			</div>
 		</div>

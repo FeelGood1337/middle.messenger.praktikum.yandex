@@ -33,7 +33,7 @@
 	border-radius: 50%;
 }
 
-.auth__form_chat > .inner .chat-label {
+.auth__form_chat>.inner .chat-label {
 	display: none;
 }
 
@@ -157,4 +157,19 @@
 	background: url('../../../static/images/Search.svg') no-repeat right;
 	background-position: right 16px bottom 50%;
 	margin-bottom: 16px;
+}
+
+.message__wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+.message__hello {
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 21px;
+	color: #D1D1D1;
 }

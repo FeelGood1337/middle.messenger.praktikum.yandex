@@ -21,12 +21,6 @@ import { IUser } from '../../utils/Store/Store';
 import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
 import { chatController } from '../../controllers';
 import { Form, IForm } from '../../utils/form';
-import { IChats } from '../../API/chat-api';
-
-interface IState {
-	user: IUser;
-	chats: IChats[];
-}
 
 const inputsProps = [
 	{
@@ -53,13 +47,13 @@ class Chat extends Block {
 		router.go('/settings');
 	}
 
-	private async handleClickCreateChat(event: Event) {
-		event.preventDefault();
-		await chatController.createChat(Chat.inputsValue);
-	}
-
-	private async getChats(): Promise<void> {
-		await chatController.getChat();
+	private handleClickModal(modal: HTMLElement): void {
+		modal.style.display = 'flex';
+		window.onclick = (event: Event) => {
+			if (event.target === modal) {
+				modal.style.display = 'none';
+			}
+		};
 	}
 
 	private getInputs(): string {
@@ -86,30 +80,21 @@ class Chat extends Block {
 			.join('');
 	}
 
-	private handleClickOpenAddChatModal() {
-		const { element, handleClickCreateChat, getInputsValue } = this;
+	private async handleClickCreateChat(event: Event): Promise<any> {
+		event.preventDefault();
+
+		const { element } = this;
 		const modal: HTMLElement = element.querySelector(
 			'#createChatModal',
 		) as HTMLElement;
+
 		modal.style.display = 'flex';
 
-		const createChatBtn: HTMLButtonElement = element.querySelector(
-			'.btn-modal__create-chat',
-		) as HTMLButtonElement;
-		const formContainer: HTMLFormElement = element.querySelector(
-			'.auth__form',
-		) as HTMLFormElement;
+		await chatController.createChat(Chat.inputsValue).finally(() => {
+			Chat.inputsValue = {};
+		});
 
-		Chat.form = new Form(formContainer, createChatBtn);
-
-		formContainer.onchange = getInputsValue.bind(this);
-		createChatBtn.onclick = handleClickCreateChat;
-
-		window.onclick = (event: Event) => {
-			if (event.target === modal) {
-				modal.style.display = 'none';
-			}
-		};
+		modal.style.display = 'none';
 	}
 
 	private getInputsValue(): void {
@@ -117,10 +102,18 @@ class Chat extends Block {
 	}
 
 	componentDidMount(): void {
-		this.getChats();
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, goToProfile, handleClickOpenAddChatModal } = this;
+			const {
+				element,
+				goToProfile,
+				getInputsValue,
+				handleClickCreateChat,
+				handleClickModal,
+			} = this;
 
+			const modal: HTMLElement = element.querySelector(
+				'#createChatModal',
+			) as HTMLElement;
 			const linkBtn: HTMLButtonElement = element.querySelector(
 				'.section-caht-list__link-btn',
 			) as HTMLButtonElement;
@@ -128,15 +121,26 @@ class Chat extends Block {
 				'.chat-add-btn',
 			) as HTMLButtonElement;
 
+			const createChatBtn: HTMLButtonElement = element.querySelector(
+				'.btn-modal__create-chat',
+			) as HTMLButtonElement;
+			const formContainer: HTMLFormElement = element.querySelector(
+				'.auth__form',
+			) as HTMLFormElement;
+
+			Chat.form = new Form(formContainer, createChatBtn);
+
+			formContainer.onchange = getInputsValue.bind(this);
+			createChatBtn.onclick = handleClickCreateChat.bind(this);
+
 			linkBtn.onclick = goToProfile;
-			addChatBtn.onclick = handleClickOpenAddChatModal.bind(this);
+			addChatBtn.onclick = () => handleClickModal(modal);
 		});
 	}
 
 	render() {
-		const { state }: Record<string, IState> = this.props;
-		const { user, chats } = state;
-		const { avatar } = user;
+		const { state }: Record<string, IUser> = this.props;
+		const { avatar, chats } = state;
 
 		console.log(chats);
 

@@ -195,24 +195,7 @@ class ProfilePage extends Block {
 		const formData = new FormData();
 		formData.append('avatar', avatarInput.files![0]);
 
-		await userController
-			.updateAvatar(formData)
-			.then(() => {
-				const { user }: Record<string, IUser> = this.props;
-				const { avatar } = user;
-				this.setProps({
-					avatar: new Avatar({
-						imgPath: `${AVATAR_URL}${avatar}`,
-					}).render(),
-				});
-			})
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 500) {
-					router.go('/error');
-				}
-			});
+		await userController.updateAvatar(formData);
 
 		modal.style.display = 'none';
 	}

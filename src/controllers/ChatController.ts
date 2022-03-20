@@ -15,7 +15,7 @@ class ChatController {
 		await chatApi
 			.getChats()
 			.then((chats: IChats[]): void => {
-				store.set('chats', chats);
+				store.set('user.chats', chats);
 			})
 			.catch((err) => {
 				const { status } = err;

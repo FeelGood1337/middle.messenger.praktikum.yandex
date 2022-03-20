@@ -27,9 +27,18 @@ class UserController {
 
 	async updateAvatar(data: FormData): Promise<void> {
 		showSpinner();
-		await userApi.avatar(data).then((user: IUser): void => {
-			store.set('user', user);
-		});
+		await userApi
+			.avatar(data)
+			.then((user: IUser): void => {
+				store.set('user', user);
+			})
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			});
 		hideSpinner();
 	}
 

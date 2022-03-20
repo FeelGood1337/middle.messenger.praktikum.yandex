@@ -12,6 +12,7 @@ type Indexed<T = any> = {
 
 export interface IUser {
 	id: number;
+	chats?: IChats[];
 	avatar: string;
 	display_name: string;
 	email: string;
@@ -36,7 +37,7 @@ class Store extends EventBus {
 		return this.state;
 	}
 
-	set(path: keyof IStoreData, value: unknown) {
+	set(path: any, value: unknown) {
 		set(this.state, path, value);
 		this.emit(StoreEvents.UPDATE);
 	}
