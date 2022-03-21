@@ -83,8 +83,26 @@ class Router implements IRouter {
 		this.history.forward();
 	}
 
+	private getPathList(pathname: string): string[] {
+		const pathList = pathname.split('/');
+		pathList.shift();
+		return pathList;
+	}
+
 	protected getRoute(pathname: string): any {
-		return this.routes.find((route) => route.match(pathname));
+		const pathList = this.getPathList(pathname);
+		return this.routes.find((route) => {
+			const routeCopy = route._pathname;
+			const routeCopyPathList = this.getPathList(routeCopy);
+			if (
+				routeCopyPathList.length === pathList.length &&
+				routeCopyPathList[0] === pathList[0] &&
+				routeCopyPathList[1] === '{chatId}'
+			) {
+				return true;
+			}
+			return route.match(pathname);
+		});
 	}
 }
 
