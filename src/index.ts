@@ -18,11 +18,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 		.use('/', SigninPage)
 		.use('/sign-up', SignupPage)
 		.use('/messenger', Chat)
+		.use('/messenger/{chatId}', Chat)
 		.use('/settings', ProfilePage)
 		.use('/error', ServerErrorPage)
 		.use('/notfound', NotFoundPage)
-		.use('/change-user-info', ChangeUserInfo)
-		.use('/change-user-password', ChangeUserPassword);
+		.use('/settings/change-user-info', ChangeUserInfo)
+		.use('/settings/change-user-password', ChangeUserPassword);
 
 	try {
 		await userController.getUser();

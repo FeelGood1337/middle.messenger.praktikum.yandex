@@ -89,13 +89,13 @@ const btnsProps = [
 	{
 		className: 'btn-item btn-user-info btn-item_accent',
 		text: 'Изменить данные',
-		href: '/change-user-info',
+		href: '/settings/change-user-info',
 		hasSvgIcon: false,
 	},
 	{
 		className: 'btn-item btn-user-password btn-item_accent',
 		text: 'Изменить пароль',
-		href: '/change-user-password',
+		href: '/settings/change-user-password',
 		hasSvgIcon: false,
 	},
 	{

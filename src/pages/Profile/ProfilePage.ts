@@ -202,12 +202,12 @@ class ProfilePage extends Block {
 
 	private handleUserInfoChange(event: Event): void {
 		event?.preventDefault();
-		router.go('/change-user-info');
+		router.go('/settings/change-user-info');
 	}
 
 	private handleUserPasswordChange(event: Event): void {
 		event?.preventDefault();
-		router.go('/change-user-password');
+		router.go('/settings/change-user-password');
 	}
 
 	componentDidMount(): void {

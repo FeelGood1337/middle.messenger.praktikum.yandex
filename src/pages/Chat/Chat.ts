@@ -17,6 +17,7 @@ import kebabIcon from '../../../static/images/kebab-menu.svg';
 import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
 import backArrowIcon from '../../../static/images/linkButton.svg';
+import avatarIcon from '../../../static/images/Avatar.svg';
 import addIcon from '../../../static/images/add.svg';
 import { IUser } from '../../utils/Store/Store';
 import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
@@ -44,6 +45,7 @@ const chatTmpl = new Templator(template);
 class Chat extends Block {
 	private static inputsValue: Record<string, string>;
 	private static form: IForm;
+
 	private goToProfile(event: Event): void {
 		event?.preventDefault();
 		router.go('/settings');
@@ -61,11 +63,11 @@ class Chat extends Block {
 	private getChatsList(chats: IChats[]) {
 		return chats
 			.map(
-				(el: IChats) => `
-			<li class="chat-item" data-chat-id="${el.id}">
+				(el: IChats, index: number) => `
+			<li class="chat-item" data-chat-id="${el.id}" data-chat-index="${index}">
 				<img 
 					class="avatar-svg__item" 
-					src="${AVATAR_URL}${el.avatar}"
+					src="${!el.avatar ? avatarIcon : AVATAR_URL + el.avatar}"
 					alt="avatar chat list"
 					width="32px"
 					height="32px"
@@ -134,6 +136,25 @@ class Chat extends Block {
 		await chatController.getToken(id);
 	}
 
+	private handleSelectChat(chatIndex: string) {
+		const { element } = this;
+		const { state }: Record<string, IUser> = this.props;
+		const { chats } = state;
+		const { id } = chats![parseInt(chatIndex)];
+
+		router.go(`/messenger/${id}`);
+
+		const emptyMessage: HTMLElement = element.querySelector(
+			'.message__wrapper',
+		) as HTMLElement;
+		const messageMain: HTMLElement = element.querySelector(
+			'.message-main',
+		) as HTMLElement;
+
+		messageMain.style.display = 'flex';
+		emptyMessage.style.display = 'none';
+	}
+
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const {
@@ -173,7 +194,9 @@ class Chat extends Block {
 				el.addEventListener('click', (event) => {
 					const { currentTarget } = event;
 					const chatId = (currentTarget as HTMLLIElement).dataset.chatId;
+					const chatIndex = (currentTarget as HTMLLIElement).dataset.chatIndex;
 					this.handleGetToken(chatId as string);
+					this.handleSelectChat(chatIndex as string);
 				});
 			});
 
@@ -206,7 +229,6 @@ class Chat extends Block {
 					width: '32',
 					height: '32',
 				}).render(),
-				avaChatPath: `${AVATAR_URL}${avatar}`,
 				name: 'Segey Vlasov',
 				kebab: kebabIcon,
 				clip: clipIcon,

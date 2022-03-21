@@ -69,6 +69,13 @@
 	background: #E0F2F1;
 }
 
+.message-main {
+	height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .avatar-svg__item {
 	margin-right: 4px;
 	clip-path: circle();

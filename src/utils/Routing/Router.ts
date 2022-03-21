@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Route, TBlockConstructor } from './Route';
 
 interface IRouter {
@@ -59,9 +61,18 @@ class Router implements IRouter {
 		route.render(route, pathname);
 	}
 
+	private getUrlParam(): string {
+		const pathArr = window.location.pathname.split('/');
+		return pathArr[pathArr.length - 1];
+	}
+
 	go(pathname: string): void {
-		this.history.pushState({}, '', pathname);
-		this._onRoute(pathname);
+		// this.history.pushState({}, '', pathname);
+		// this._onRoute(pathname);
+		if (this.getUrlParam() !== pathname) {
+			this.history.pushState({ url: pathname }, pathname, pathname);
+			this._onRoute(pathname);
+		}
 	}
 
 	back(): void {
