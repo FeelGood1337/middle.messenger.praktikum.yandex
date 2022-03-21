@@ -55,7 +55,7 @@ class ChatAPI extends BaseAPI {
 
 		return this._http
 			.post(finalRoute, options)
-			.then((res: any) => this.getResponse(res));
+			.then((res: any) => this.getResponseWithParse(res));
 	}
 }
 

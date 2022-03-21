@@ -30,7 +30,7 @@ class ChatController {
 	async getToken(id: string) {
 		await chatApi
 			.getToken(id)
-			.then((token: string) => {
+			.then(({ token }: Record<string, string>) => {
 				store.set('user.token', token);
 			})
 			.catch((err) => {

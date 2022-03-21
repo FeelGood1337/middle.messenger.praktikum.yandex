@@ -130,6 +130,10 @@ class Chat extends Block {
 		Chat.form.saveValue(<HTMLInputElement>event?.target, Chat.inputsValue);
 	}
 
+	private async handleGetToken(id: string): Promise<void> {
+		await chatController.getToken(id);
+	}
+
 	componentDidMount(): void {
 		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
 			const {
@@ -168,8 +172,8 @@ class Chat extends Block {
 			listLi.map((el: HTMLLIElement) => {
 				el.addEventListener('click', (event) => {
 					const { currentTarget } = event;
-					const chatId = (currentTarget as HTMLElement).dataset.chatId;
-					console.log(chatId);
+					const chatId = (currentTarget as HTMLLIElement).dataset.chatId;
+					this.handleGetToken(chatId as string);
 				});
 			});
 
