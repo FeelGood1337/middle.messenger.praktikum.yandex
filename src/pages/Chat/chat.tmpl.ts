@@ -19,9 +19,11 @@ export const template = `
 						{% linkButton %}
 					</div>
 					<input type="text" class="input search" placeholder="Поиск">
-					<ul class="chat-items">
-						{% chatItems %}
-					</ul>
+					<div id="chats-wrapper">
+						<ul class="chat-items" id="list">
+							{% chatItems %}
+						</ul>
+					</div>
 				</section>
 				<section class="message">
 					<div class="message__wrapper"><p class="message__hello">{% startMessage %}</p></div>

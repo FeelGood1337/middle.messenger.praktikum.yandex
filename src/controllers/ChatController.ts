@@ -26,6 +26,21 @@ class ChatController {
 			});
 		hideSpinner();
 	}
+
+	async getToken(id: string) {
+		await chatApi
+			.getToken(id)
+			.then((token: string) => {
+				store.set('user.token', token);
+			})
+			.catch((err) => {
+				const { status } = err;
+
+				if (status === 500) {
+					router.go('/error');
+				}
+			});
+	}
 }
 
 export default new ChatController();

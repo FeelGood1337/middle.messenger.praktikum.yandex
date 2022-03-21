@@ -44,6 +44,19 @@ class ChatAPI extends BaseAPI {
 			.get(this._url)
 			.then((res: any) => this.getResponseWithParse(res));
 	}
+
+	getToken(id: string): Promise<any> {
+		const options = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+		const finalRoute = `${this._url}token/${id}`;
+
+		return this._http
+			.post(finalRoute, options)
+			.then((res: any) => this.getResponse(res));
+	}
 }
 
 export { ChatAPI, IChats };

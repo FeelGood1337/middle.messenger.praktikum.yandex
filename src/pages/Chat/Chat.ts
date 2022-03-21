@@ -61,8 +61,8 @@ class Chat extends Block {
 	private getChatsList(chats: IChats[]) {
 		return chats
 			.map(
-				(el: IChats, index: number) => `
-			<li class="item" id="chat_${index}">
+				(el: IChats) => `
+			<li class="chat-item" data-chat-id="${el.id}">
 				<img 
 					class="avatar-svg__item" 
 					src="${AVATAR_URL}${el.avatar}"
@@ -159,6 +159,20 @@ class Chat extends Block {
 
 			Chat.form = new Form(formContainer, createChatBtn);
 
+			const listLi = [
+				...(element
+					.querySelector('#chats-wrapper')
+					?.getElementsByTagName('li') as HTMLCollectionOf<HTMLLIElement>),
+			];
+
+			listLi.map((el: HTMLLIElement) => {
+				el.addEventListener('click', (event) => {
+					const { currentTarget } = event;
+					const chatId = (currentTarget as HTMLElement).dataset.chatId;
+					console.log(chatId);
+				});
+			});
+
 			formContainer.onchange = getInputsValue.bind(this);
 			createChatBtn.onclick = handleClickCreateChat.bind(this);
 
@@ -170,6 +184,8 @@ class Chat extends Block {
 	render() {
 		const { state }: Record<string, IUser> = this.props;
 		const { avatar, chats } = state;
+
+		console.log(state);
 
 		return chatTmpl
 			.compile({
