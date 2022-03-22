@@ -11,8 +11,12 @@ export const withStore =
 			constructor(props: Record<string, any>) {
 				state = { ...mapStateToProps(store.getState()) };
 				super({ ...props, state });
+				const pathList = window.location.pathname.split('/');
+				pathList.shift();
+
 				store.on(StoreEvents.UPDATE, () => {
 					const newState = mapStateToProps(store.getState());
+
 					if (!isEqual(state, newState)) {
 						this.setProps({
 							state: newState,

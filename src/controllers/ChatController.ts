@@ -31,8 +31,8 @@ class ChatController {
 		await chatApi
 			.getToken(id)
 			.then(({ token }: Record<string, string>) => {
-				// store.set('user.token', token);
-				localStorage.setItem('user_token', token);
+				store.set('user.token', token);
+				// localStorage.setItem('user_token', token);
 			})
 			.catch((err) => {
 				const { status } = err;

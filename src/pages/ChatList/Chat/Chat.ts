@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { Block } from '../../utils/Block/Block';
-import router from '../../router';
-import { Templator } from '../../utils/Template-engine/templater';
+import { Block } from '../../../utils/Block/Block';
+import router from '../../../router';
+import { Templator } from '../../../utils/Template-engine/templater';
 import { template } from './chat.tmpl';
 
 import {
@@ -11,19 +11,19 @@ import {
 	InputWithLabel,
 	LinkButton,
 	Title,
-} from '../../components/index';
+} from '../../../components/index';
 
-import kebabIcon from '../../../static/images/kebab-menu.svg';
-import clipIcon from '../../../static/images/clip.svg';
-import sendIcon from '../../../static/images/send-btn.svg';
-import backArrowIcon from '../../../static/images/linkButton.svg';
-import avatarIcon from '../../../static/images/Avatar.svg';
-import addIcon from '../../../static/images/add.svg';
-import { IUser } from '../../utils/Store/Store';
-import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
-import { chatController } from '../../controllers';
-import { Form, IForm } from '../../utils/form';
-import { IChats } from '../../API/chat-api';
+import kebabIcon from '../../../../static/images/kebab-menu.svg';
+import clipIcon from '../../../../static/images/clip.svg';
+import sendIcon from '../../../../static/images/send-btn.svg';
+import backArrowIcon from '../../../../static/images/linkButton.svg';
+import avatarIcon from '../../../../static/images/Avatar.svg';
+import addIcon from '../../../../static/images/add.svg';
+import { IUser } from '../../../utils/Store/Store';
+import { chatController } from '../../../controllers';
+import { Form, IForm } from '../../../utils/form';
+import { IChats } from '../../../API/chat-api';
+import { AVATAR_URL } from '../../../constants';
 
 const inputsProps = [
 	{
@@ -43,8 +43,8 @@ const inputsProps = [
 
 const chatTmpl = new Templator(template);
 class Chat extends Block {
-	private static inputsValue: Record<string, string>;
-	private static form: IForm;
+	private inputsValue: Record<string, string>;
+	private form: IForm;
 
 	private goToProfile(event: Event): void {
 		event?.preventDefault();
@@ -88,13 +88,13 @@ class Chat extends Block {
 	}
 
 	private getInputs(): string {
-		Chat.inputsValue = Chat.inputsValue || {};
+		this.inputsValue = this.inputsValue || {};
 
 		return inputsProps
 			.map(
 				({ className, labelText, labelClassName, labelId, attributes, name }) => {
-					const value = Chat.inputsValue[name]
-						? `value="${Chat.inputsValue[name]}"`
+					const value = this.inputsValue[name]
+						? `value="${this.inputsValue[name]}"`
 						: ' ';
 
 					return new InputWithLabel({
@@ -121,96 +121,97 @@ class Chat extends Block {
 
 		modal.style.display = 'flex';
 
-		await chatController.createChat(Chat.inputsValue).finally(() => {
-			Chat.inputsValue = {};
+		await chatController.createChat(this.inputsValue).finally(() => {
+			this.inputsValue = {};
 		});
 
 		modal.style.display = 'none';
 	}
 
 	private getInputsValue(): void {
-		Chat.form.saveValue(<HTMLInputElement>event?.target, Chat.inputsValue);
+		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
 	}
 
-	private async handleGetToken(id: string): Promise<void> {
-		await chatController.getToken(id);
-	}
+	// private async handleGetToken(id: string): Promise<void> {
+	// 	await chatController.getToken(id);
+	// }
 
 	private handleSelectChat(chatIndex: string) {
-		const { element } = this;
+		// const { element } = this;
 		const { state }: Record<string, IUser> = this.props;
 		const { chats } = state;
 		const { id } = chats![parseInt(chatIndex)];
 
 		router.go(`/messenger/${id}`);
 
-		const emptyMessage: HTMLElement = element.querySelector(
-			'.message__wrapper',
-		) as HTMLElement;
-		const messageMain: HTMLElement = element.querySelector(
-			'.message-main',
-		) as HTMLElement;
+		// const messageMain: HTMLElement = element.querySelector(
+		// 	'.message-main',
+		// ) as HTMLElement;
 
-		messageMain.style.display = 'flex';
-		emptyMessage.style.display = 'none';
+		// messageMain.style.display = 'flex';
 	}
 
-	componentDidMount(): void {
-		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const {
-				element,
-				goToProfile,
-				getInputsValue,
-				handleClickCreateChat,
-				handleClickModal,
-			} = this;
+	// componentDidMount(): void {
+	// 	// const pathList = window.location.pathname.split('/');
+	// 	// pathList.shift();
+	// 	// console.log(pathList);
+	// 	this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
+	// 		const {
+	// 			element,
+	// 			goToProfile,
+	// 			getInputsValue,
+	// 			handleClickCreateChat,
+	// 			handleClickModal,
+	// 		} = this;
 
-			const modal: HTMLElement = element.querySelector(
-				'#createChatModal',
-			) as HTMLElement;
-			const linkBtn: HTMLButtonElement = element.querySelector(
-				'.section-caht-list__link-btn',
-			) as HTMLButtonElement;
-			const addChatBtn: HTMLButtonElement = element.querySelector(
-				'.chat-add-btn',
-			) as HTMLButtonElement;
+	// 		const modal: HTMLElement = element.querySelector(
+	// 			'#createChatModal',
+	// 		) as HTMLElement;
+	// 		const linkBtn: HTMLButtonElement = element.querySelector(
+	// 			'.section-caht-list__link-btn',
+	// 		) as HTMLButtonElement;
+	// 		const addChatBtn: HTMLButtonElement = element.querySelector(
+	// 			'.chat-add-btn',
+	// 		) as HTMLButtonElement;
 
-			const createChatBtn: HTMLButtonElement = element.querySelector(
-				'.btn-modal__create-chat',
-			) as HTMLButtonElement;
-			const formContainer: HTMLFormElement = element.querySelector(
-				'.auth__form',
-			) as HTMLFormElement;
+	// 		const createChatBtn: HTMLButtonElement = element.querySelector(
+	// 			'.btn-modal__create-chat',
+	// 		) as HTMLButtonElement;
+	// 		const formContainer: HTMLFormElement = element.querySelector(
+	// 			'.auth__form',
+	// 		) as HTMLFormElement;
 
-			Chat.form = new Form(formContainer, createChatBtn);
+	// 		this.form = new Form(formContainer, createChatBtn);
 
-			const listLi = [
-				...(element
-					.querySelector('#chats-wrapper')
-					?.getElementsByTagName('li') as HTMLCollectionOf<HTMLLIElement>),
-			];
+	// 		const listLi = [
+	// 			...(element
+	// 				.querySelector('#chats-wrapper')
+	// 				?.getElementsByTagName('li') as HTMLCollectionOf<HTMLLIElement>),
+	// 		];
 
-			listLi.map((el: HTMLLIElement) => {
-				el.addEventListener('click', (event) => {
-					const { currentTarget } = event;
-					const chatId = (currentTarget as HTMLLIElement).dataset.chatId;
-					const chatIndex = (currentTarget as HTMLLIElement).dataset.chatIndex;
-					this.handleGetToken(chatId as string);
-					this.handleSelectChat(chatIndex as string);
-				});
-			});
+	// 		listLi.map((el: HTMLLIElement) => {
+	// 			el.addEventListener('click', async (event) => {
+	// 				const { currentTarget } = event;
+	// 				// const chatId = (currentTarget as HTMLLIElement).dataset.chatId;
+	// 				const chatIndex = (currentTarget as HTMLLIElement).dataset.chatIndex;
+	// 				// await this.handleGetToken(chatId as string);
+	// 				this.handleSelectChat(chatIndex as string);
+	// 			});
+	// 		});
 
-			formContainer.onchange = getInputsValue.bind(this);
-			createChatBtn.onclick = handleClickCreateChat.bind(this);
+	// 		formContainer.onchange = getInputsValue.bind(this);
+	// 		createChatBtn.onclick = handleClickCreateChat.bind(this);
 
-			linkBtn.onclick = goToProfile;
-			addChatBtn.onclick = () => handleClickModal(modal);
-		});
-	}
+	// 		linkBtn.onclick = goToProfile;
+	// 		addChatBtn.onclick = () => handleClickModal(modal);
+	// 	});
+	// }
 
 	render() {
 		const { state }: Record<string, IUser> = this.props;
 		const { avatar, chats } = state;
+
+		console.log(state);
 
 		return chatTmpl
 			.compile({
@@ -231,8 +232,6 @@ class Chat extends Block {
 				kebab: kebabIcon,
 				clip: clipIcon,
 				send: sendIcon,
-				startMessage:
-					chats === undefined || !chats.length ? EMPTY_CHATS : NO_SELECTED_CHAT,
 				modalTitle: new Title({
 					tag: 'h2',
 					className: 'modal-title',

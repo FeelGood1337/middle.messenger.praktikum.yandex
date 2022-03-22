@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { isEqual } from '../isEqual/isEqual';
 import { render } from '../renderDOM';
 import { Block } from '../Block/Block';

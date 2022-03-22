@@ -11,6 +11,7 @@ interface IRouter {
 }
 
 class Router implements IRouter {
+	_TEMPLATE_REGEXP = /\{(.*?)\}/gi;
 	history: History;
 	routes: Route[];
 	_currentRoute: Route | null;
@@ -48,6 +49,7 @@ class Router implements IRouter {
 
 	private _onRoute(pathname: string): void {
 		const route = this.getRoute(pathname);
+
 		if (!route) {
 			this.go('/notfound');
 			return;
@@ -90,15 +92,23 @@ class Router implements IRouter {
 	}
 
 	protected getRoute(pathname: string): any {
-		const pathList = this.getPathList(pathname);
+		// const pathList = this.getPathList(pathname);
+		// return this.routes.find((route) => {
+		// 	const routeCopyPath = route._pathname;
+		// 	const routeCopyPathList = this.getPathList(routeCopyPath);
+		// 	if (
+		// 		routeCopyPathList.length === pathList.length &&
+		// 		routeCopyPathList[0] === pathList[0] &&
+		// 		routeCopyPathList[1] === '{chatId}'
+		// 	) {
+		// 		return true;
+		// 	}
+		// 	return route.match(pathname);
+		// });
+		const regExp = this._TEMPLATE_REGEXP;
 		return this.routes.find((route) => {
-			const routeCopy = route._pathname;
-			const routeCopyPathList = this.getPathList(routeCopy);
-			if (
-				routeCopyPathList.length === pathList.length &&
-				routeCopyPathList[0] === pathList[0] &&
-				routeCopyPathList[1] === '{chatId}'
-			) {
+			const args = regExp.exec(route._pathname);
+			if (args) {
 				return true;
 			}
 			return route.match(pathname);
