@@ -35,7 +35,7 @@ class Route {
 		return isEqual(pathname, this._pathname);
 	}
 
-	protected render(): void {
+	render(): void {
 		if (!this._block) {
 			this._block = new this._blockClass();
 			render(this._props.rootQuery, this._block);

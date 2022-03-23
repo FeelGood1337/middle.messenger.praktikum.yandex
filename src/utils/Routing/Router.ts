@@ -60,21 +60,21 @@ class Router implements IRouter {
 		}
 
 		this._currentRoute = route;
-		route.render(route, pathname);
+		route.render();
 	}
 
-	private getUrlParam(): string {
+	getUrlParam(): string {
 		const pathArr = window.location.pathname.split('/');
 		return pathArr[pathArr.length - 1];
 	}
 
 	go(pathname: string): void {
-		// this.history.pushState({}, '', pathname);
-		// this._onRoute(pathname);
-		if (this.getUrlParam() !== pathname) {
-			this.history.pushState({ url: pathname }, pathname, pathname);
-			this._onRoute(pathname);
-		}
+		// if (this.getUrlParam() !== pathname) {
+		// 	this.history.pushState({ url: pathname }, pathname, pathname);
+		// 	this._onRoute(pathname);
+		// }
+		this.history.pushState({}, pathname, pathname);
+		this._onRoute(pathname);
 	}
 
 	back(): void {
@@ -91,20 +91,7 @@ class Router implements IRouter {
 		return pathList;
 	}
 
-	protected getRoute(pathname: string): any {
-		// const pathList = this.getPathList(pathname);
-		// return this.routes.find((route) => {
-		// 	const routeCopyPath = route._pathname;
-		// 	const routeCopyPathList = this.getPathList(routeCopyPath);
-		// 	if (
-		// 		routeCopyPathList.length === pathList.length &&
-		// 		routeCopyPathList[0] === pathList[0] &&
-		// 		routeCopyPathList[1] === '{chatId}'
-		// 	) {
-		// 		return true;
-		// 	}
-		// 	return route.match(pathname);
-		// });
+	protected getRoute(pathname: string): Route | undefined {
 		const regExp = this._TEMPLATE_REGEXP;
 		return this.routes.find((route) => {
 			const args = regExp.exec(route._pathname);

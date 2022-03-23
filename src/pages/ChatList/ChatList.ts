@@ -207,6 +207,8 @@ class ChatList extends Block {
 		const { state }: Record<string, IUser> = this.props;
 		const { avatar, chats } = state;
 
+		console.log(state);
+
 		return chatTmpl
 			.compile({
 				linkButtonAddChat: addIcon,

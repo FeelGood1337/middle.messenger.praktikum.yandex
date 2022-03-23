@@ -4,7 +4,7 @@ import {
 	SignupPage,
 	NotFoundPage,
 	ServerErrorPage,
-	Chat,
+	// Chat,
 	ChatList,
 	ProfilePage,
 	ChangeUserInfo,
@@ -18,13 +18,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 	router
 		.use('/', SigninPage)
 		.use('/sign-up', SignupPage)
-		.use('/messenger', ChatList)
 		.use('/settings', ProfilePage)
 		.use('/error', ServerErrorPage)
 		.use('/notfound', NotFoundPage)
 		.use('/settings/change-user-info', ChangeUserInfo)
 		.use('/settings/change-user-password', ChangeUserPassword)
-		.use('/messenger/{chatId}', Chat);
+		.use('/messenger/{chatId}', ChatList)
+		.use('/messenger', ChatList);
 
 	try {
 		await userController.getUser();

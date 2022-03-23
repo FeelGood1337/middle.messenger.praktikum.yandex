@@ -7,7 +7,7 @@ const chatApi = new ChatAPI();
 
 class ChatController {
 	async createChat(body: Record<string, string>): Promise<void> {
-		await chatApi.createChat(body);
+		await chatApi.createChat(body).then(() => this.getChat());
 	}
 
 	async getChat(): Promise<void> {
