@@ -63,17 +63,14 @@ class Router implements IRouter {
 		route.render();
 	}
 
-	getUrlParam(): string {
+	getUrlParam(): Record<string, string> | null {
 		const pathArr = window.location.pathname.split('/');
-		return pathArr[pathArr.length - 1];
+		pathArr.shift();
+		return pathArr.length === 2 ? { chatId: pathArr[1] } : null;
 	}
 
 	go(pathname: string): void {
-		// if (this.getUrlParam() !== pathname) {
-		// 	this.history.pushState({ url: pathname }, pathname, pathname);
-		// 	this._onRoute(pathname);
-		// }
-		this.history.pushState({}, pathname, pathname);
+		this.history.pushState({ url: pathname }, pathname, pathname);
 		this._onRoute(pathname);
 	}
 
@@ -83,12 +80,6 @@ class Router implements IRouter {
 
 	forward(): void {
 		this.history.forward();
-	}
-
-	private getPathList(pathname: string): string[] {
-		const pathList = pathname.split('/');
-		pathList.shift();
-		return pathList;
 	}
 
 	protected getRoute(pathname: string): Route | undefined {

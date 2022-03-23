@@ -132,9 +132,9 @@ class ChatList extends Block {
 		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
 	}
 
-	// private async handleGetToken(id: string): Promise<void> {
-	// 	await chatController.getToken(id);
-	// }
+	private async handleGetToken(id: string): Promise<void> {
+		await chatController.getToken(id);
+	}
 
 	private handleSelectChat(chatIndex: string) {
 		const { state }: Record<string, IUser> = this.props;
@@ -146,7 +146,11 @@ class ChatList extends Block {
 		const messageMain: HTMLElement = document.querySelector(
 			'.message-main',
 		) as HTMLElement;
+		const emptyMessage: HTMLElement = document.querySelector(
+			'.message__wrapper',
+		) as HTMLElement;
 
+		emptyMessage.style.display = 'none';
 		messageMain.style.display = 'flex';
 	}
 
@@ -188,9 +192,9 @@ class ChatList extends Block {
 			listLi.map((el: HTMLLIElement) => {
 				el.addEventListener('click', async (event) => {
 					const { currentTarget } = event;
-					// const chatId = (currentTarget as HTMLLIElement).dataset.chatId;
+					const chatId = (currentTarget as HTMLLIElement).dataset.chatId;
 					const chatIndex = (currentTarget as HTMLLIElement).dataset.chatIndex;
-					// await this.handleGetToken(chatId as string);
+					await this.handleGetToken(chatId as string);
 					this.handleSelectChat(chatIndex as string);
 				});
 			});
@@ -207,6 +211,7 @@ class ChatList extends Block {
 		const { state }: Record<string, IUser> = this.props;
 		const { avatar, chats } = state;
 
+		console.log(this.props);
 		console.log(state);
 
 		return chatTmpl
@@ -230,7 +235,6 @@ class ChatList extends Block {
 				send: sendIcon,
 				startMessage:
 					chats === undefined || !chats.length ? EMPTY_CHATS : NO_SELECTED_CHAT,
-				chatBody: '<div class="hiden"></div>',
 				modalTitle: new Title({
 					tag: 'h2',
 					className: 'modal-title',

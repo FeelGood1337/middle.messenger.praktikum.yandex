@@ -20,6 +20,8 @@ export interface IUser {
 	second_name: string;
 	login: string;
 	phone: string;
+	token?: string;
+	chatId?: string | null;
 }
 export interface IStoreData {
 	user?: IUser;
