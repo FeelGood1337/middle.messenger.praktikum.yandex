@@ -62,13 +62,7 @@ class Router implements IRouter {
 		route.render();
 	}
 
-	getUrlParam(): Record<string, string> | null {
-		const pathArr = window.location.pathname.split('/');
-		pathArr.shift();
-		return pathArr.length === 2 ? { chatId: pathArr[1] } : null;
-	}
-
-	getParams() {
+	getParams(): Record<string, string> {
 		return this._currentRoute!.getParams(window.location.pathname);
 	}
 

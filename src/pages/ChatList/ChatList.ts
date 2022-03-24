@@ -212,7 +212,6 @@ class ChatList extends Block {
 		const { avatar, chats } = state;
 
 		// console.log(this.props.router.getParams());
-		console.log(state);
 
 		return chatTmpl
 			.compile({
