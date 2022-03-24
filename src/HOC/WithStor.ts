@@ -12,6 +12,9 @@ export const withStore =
 				state = { ...mapStateToProps(store.getState()) };
 				super({ ...props, state });
 
+				if (props !== undefined) {
+					console.log(props.router.getParams());
+				}
 				store.on(StoreEvents.UPDATE, () => {
 					const newState = mapStateToProps(store.getState());
 					if (!isEqual(state, newState)) {

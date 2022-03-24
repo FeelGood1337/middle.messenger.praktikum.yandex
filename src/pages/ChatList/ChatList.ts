@@ -211,7 +211,7 @@ class ChatList extends Block {
 		const { state }: Record<string, IUser> = this.props;
 		const { avatar, chats } = state;
 
-		console.log(this.props);
+		// console.log(this.props.router.getParams());
 		console.log(state);
 
 		return chatTmpl
