@@ -9,7 +9,6 @@ export const withStore =
 		let state: IStoreData = {};
 		return class extends Component {
 			constructor(props: Record<string, any>) {
-				console.log(props);
 				state = { ...mapStateToProps(store.getState()) };
 				super({ ...props, state });
 

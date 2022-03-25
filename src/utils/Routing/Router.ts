@@ -67,7 +67,7 @@ class Router implements IRouter {
 	}
 
 	go(pathname: string): void {
-		this.history.pushState({ url: pathname }, pathname, pathname);
+		this.history.pushState({ ...this.getParams() }, pathname, pathname);
 		this._onRoute(pathname);
 	}
 
