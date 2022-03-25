@@ -1,19 +1,15 @@
 import { ChatAPI, IChats } from '../API/chat-api';
 import router from '../router';
-import { hideSpinner, showSpinner } from '../utils/spinner';
 import store from '../utils/Store/Store';
 
 const chatApi = new ChatAPI();
 
 class ChatController {
 	async createChat(body: Record<string, string>): Promise<void> {
-		// showSpinner();
 		await chatApi.createChat(body).then(() => this.getChat());
-		// hideSpinner();
 	}
 
 	async getChat(): Promise<void> {
-		// showSpinner();
 		await chatApi
 			.getChats()
 			.then((chats: IChats[]): void => {
@@ -26,11 +22,9 @@ class ChatController {
 					router.go('/error');
 				}
 			});
-		// hideSpinner();
 	}
 
 	async getToken(id: string) {
-		// showSpinner();
 		await chatApi
 			.getToken(id)
 			.then(({ token }: Record<string, string>) => {
@@ -44,7 +38,6 @@ class ChatController {
 					router.go('/error');
 				}
 			});
-		// hideSpinner();
 	}
 }
 

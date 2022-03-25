@@ -24,7 +24,6 @@ import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
 import { chatController } from '../../controllers';
 import { Form, IForm } from '../../utils/form';
 import { IChats } from '../../API/chat-api';
-import { hideSpinner, showSpinner } from '../../utils/spinner';
 
 interface IProps {
 	state: IUser;
