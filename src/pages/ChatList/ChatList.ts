@@ -23,7 +23,7 @@ import avatarIcon from '../../../static/images/Avatar.svg';
 import addIcon from '../../../static/images/add.svg';
 import { IUser } from '../../utils/Store/Store';
 import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
-import { chatController } from '../../controllers';
+import { chatController, userController } from '../../controllers';
 import { Form, IForm } from '../../utils/form';
 import { IChats } from '../../API/chat-api';
 
@@ -32,7 +32,7 @@ interface IProps {
 	router: typeof router;
 }
 
-const inputsProps = [
+const inputsPropsAddChat = [
 	{
 		name: 'title',
 		className: 'modal-chat-input',
@@ -48,10 +48,28 @@ const inputsProps = [
 	},
 ];
 
+const inputsPropsAddUser = [
+	{
+		name: 'login',
+		className: 'modal-chat-input',
+		labelClassName: 'chat-label',
+		labelText: 'Логин',
+		labelId: 'login',
+		attributes: `
+			type="text"
+			id="login"
+			placeholder="Введите логин"
+			required
+		`,
+	},
+];
+
 const chatTmpl = new Templator(template);
 class ChatList extends Block {
 	private inputsValue: Record<string, string>;
 	private form: IForm;
+	private formSearch: IForm;
+	private searchUserList: any[];
 
 	private goToProfile(event: Event): void {
 		event?.preventDefault();
@@ -59,6 +77,7 @@ class ChatList extends Block {
 	}
 
 	private handleClickModal(modal: HTMLElement): void {
+		event?.preventDefault();
 		modal.style.display = 'flex';
 		window.onclick = (event: Event) => {
 			if (event.target === modal) {
@@ -98,7 +117,31 @@ class ChatList extends Block {
 	private getInputs(): string {
 		this.inputsValue = this.inputsValue || {};
 
-		return inputsProps
+		return inputsPropsAddChat
+			.map(
+				({ className, labelText, labelClassName, labelId, attributes, name }) => {
+					const value = this.inputsValue[name]
+						? `value="${this.inputsValue[name]}"`
+						: ' ';
+
+					return new InputWithLabel({
+						className,
+						labelClassName,
+						labelText,
+						labelId,
+						attributes,
+						name,
+						value,
+					}).render().outerHTML;
+				},
+			)
+			.join('');
+	}
+
+	private getInputsAddUser(): string {
+		this.inputsValue = this.inputsValue || {};
+
+		return inputsPropsAddUser
 			.map(
 				({ className, labelText, labelClassName, labelId, attributes, name }) => {
 					const value = this.inputsValue[name]
@@ -136,8 +179,37 @@ class ChatList extends Block {
 		modal.style.display = 'none';
 	}
 
+	private async handleSearchUsers(event: Event): Promise<any> {
+		event.preventDefault();
+
+		const { element } = this;
+		const modal: HTMLElement = element.querySelector(
+			'#searchUserModal',
+		) as HTMLElement;
+		const modalFly: HTMLElement = element.querySelector(
+			'#kebabMenuModal',
+		) as HTMLElement;
+
+		modal.style.display = 'flex';
+
+		await userController
+			.searchUser(this.inputsValue)
+			.then((res) => (this.searchUserList = res))
+			.finally(() => {
+				this.inputsValue = {};
+			});
+
+		console.log(this.searchUserList);
+
+		modalFly.style.display = 'none';
+	}
+
 	private getInputsValue(): void {
 		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
+	}
+
+	private getSearchInputsValue(): void {
+		this.formSearch.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
 	}
 
 	private async handleGetToken(id: string): Promise<void> {
@@ -158,7 +230,9 @@ class ChatList extends Block {
 				element,
 				goToProfile,
 				getInputsValue,
+				getSearchInputsValue,
 				handleClickCreateChat,
+				handleSearchUsers,
 				handleClickModal,
 			} = this;
 
@@ -167,6 +241,9 @@ class ChatList extends Block {
 			) as HTMLElement;
 			const modalFly: HTMLElement = element.querySelector(
 				'#kebabMenuModal',
+			) as HTMLElement;
+			const modalAddUser: HTMLElement = element.querySelector(
+				'#searchUserModal',
 			) as HTMLElement;
 			const linkBtn: HTMLButtonElement = element.querySelector(
 				'.section-caht-list__link-btn',
@@ -178,14 +255,27 @@ class ChatList extends Block {
 			const headerMenuBtn: HTMLButtonElement = element.querySelector(
 				'.message-header__menu',
 			) as HTMLButtonElement;
+			const addUseruBtn: HTMLButtonElement = element.querySelector(
+				'.add-user__btn',
+			) as HTMLButtonElement;
+			const searchBtn: HTMLButtonElement = element.querySelector(
+				'.btn-modal__add-to-chat',
+			) as HTMLButtonElement;
 			const createChatBtn: HTMLButtonElement = element.querySelector(
 				'.btn-modal__create-chat',
 			) as HTMLButtonElement;
 			const formContainer: HTMLFormElement = element.querySelector(
 				'.auth__form',
 			) as HTMLFormElement;
+			const formContainerSearch: HTMLFormElement = element.querySelector(
+				'.auth__form_search',
+			) as HTMLFormElement;
+			const searchInput: HTMLInputElement = element.querySelector(
+				'#login',
+			) as HTMLInputElement;
 
 			this.form = new Form(formContainer, createChatBtn);
+			this.formSearch = new Form(formContainerSearch, addUseruBtn);
 
 			const listLi = [
 				...(element
@@ -204,11 +294,14 @@ class ChatList extends Block {
 			});
 
 			formContainer.onchange = getInputsValue.bind(this);
+			formContainerSearch.onchange = getSearchInputsValue.bind(this);
+			searchBtn.onclick = handleSearchUsers.bind(this);
 			createChatBtn.onclick = handleClickCreateChat.bind(this);
 
 			linkBtn.onclick = goToProfile;
 			addChatBtn.onclick = () => handleClickModal(modal);
 			headerMenuBtn.onclick = () => handleClickModal(modalFly);
+			addUseruBtn.onclick = () => handleClickModal(modalAddUser);
 		});
 	}
 
@@ -218,8 +311,6 @@ class ChatList extends Block {
 		const { chatId } = router.getParams();
 		const currentChat = chats?.filter((el: IChats) => el.id === parseInt(chatId));
 		const [chat] = currentChat as IChats[];
-
-		console.log(chat);
 
 		if (chat !== undefined) {
 			return chatTmpl
@@ -247,6 +338,12 @@ class ChatList extends Block {
 						tag: 'h2',
 						className: 'modal-title',
 						text: 'Укажите название чата',
+					}).render(),
+					modalInputSearch: this.getInputsAddUser(),
+					modalAddUsetToChatBtn: new Button({
+						text: 'Добавить в чат',
+						className: 'btn-modal btn-modal__add-to-chat',
+						isDisabled: false,
 					}).render(),
 					modalInput: this.getInputs(),
 					modalBtn: new Button({

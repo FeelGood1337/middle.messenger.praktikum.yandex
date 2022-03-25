@@ -62,6 +62,14 @@ export const template = `
 									</form>
 								</div>
 							</div>
+							<div class="modal" id="searchUserModal">
+								<div class="modal-wrapper modal-wrapper__chat-create">
+									<form class="auth__form auth__form_search" novalidate="true">
+										{% modalInputSearch %}
+										{% modalAddUsetToChatBtn %}
+									</form>
+								</div>
+							</div>
 						</div>
 						<div class="message-body"></div>
 						<div class="message-footer">
