@@ -26,7 +26,7 @@ class Route {
 		);
 	}
 
-	protected navigate(pathname: string): void {
+	navigate(pathname: string): void {
 		if (this.match(pathname)) {
 			this._pathname = pathname;
 			this.render();
