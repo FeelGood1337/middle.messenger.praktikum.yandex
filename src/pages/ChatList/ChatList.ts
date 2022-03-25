@@ -361,6 +361,11 @@ class ChatList extends Block {
 		} else {
 			return chatTmpl
 				.compile({
+					modalAddUsetToChatBtn: new Button({
+						text: 'Добавить в чат',
+						className: 'btn-modal btn-modal__add-to-chat',
+						isDisabled: false,
+					}).render(),
 					msgDisplay: 'flex',
 					mainDisplay: 'none',
 					linkButtonAddChat: addIcon,

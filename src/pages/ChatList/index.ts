@@ -6,7 +6,7 @@ import { Block } from '../../utils/Block/Block';
 function withChildren(Component: typeof Block) {
 	return class extends Component {
 		constructor(props: Record<string, any>) {
-			super({ ...props, name: 'Segey Vlasov' });
+			super({ ...props });
 		}
 	};
 }
