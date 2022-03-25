@@ -14,6 +14,8 @@ import {
 } from '../../components/index';
 
 import kebabIcon from '../../../static/images/kebab-menu.svg';
+import addUserIcon from '../../../static/images/addUser.svg';
+import removeUserIcon from '../../../static/images/remove.svg';
 import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
 import backArrowIcon from '../../../static/images/linkButton.svg';
@@ -163,6 +165,9 @@ class ChatList extends Block {
 			const modal: HTMLElement = element.querySelector(
 				'#createChatModal',
 			) as HTMLElement;
+			const modalFly: HTMLElement = element.querySelector(
+				'#kebabMenuModal',
+			) as HTMLElement;
 			const linkBtn: HTMLButtonElement = element.querySelector(
 				'.section-caht-list__link-btn',
 			) as HTMLButtonElement;
@@ -170,6 +175,9 @@ class ChatList extends Block {
 				'.chat-add-btn',
 			) as HTMLButtonElement;
 
+			const headerMenuBtn: HTMLButtonElement = element.querySelector(
+				'.message-header__menu',
+			) as HTMLButtonElement;
 			const createChatBtn: HTMLButtonElement = element.querySelector(
 				'.btn-modal__create-chat',
 			) as HTMLButtonElement;
@@ -200,6 +208,7 @@ class ChatList extends Block {
 
 			linkBtn.onclick = goToProfile;
 			addChatBtn.onclick = () => handleClickModal(modal);
+			headerMenuBtn.onclick = () => handleClickModal(modalFly);
 		});
 	}
 
@@ -245,6 +254,8 @@ class ChatList extends Block {
 						className: 'btn-modal btn-modal__create-chat',
 						isDisabled: false,
 					}).render(),
+					modalAddBtn: addUserIcon,
+					modalRemoveBtn: removeUserIcon,
 					chatItems: chats?.length
 						? this.getChatsList(chats)
 						: '<div class="hiden"></div>',

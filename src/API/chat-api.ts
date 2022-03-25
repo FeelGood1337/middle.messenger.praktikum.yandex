@@ -39,6 +39,20 @@ class ChatAPI extends BaseAPI {
 			.then((res: any) => this.getResponse(res));
 	}
 
+	addUserToChat(data: Record<string, any>): Promise<any> {
+		const options = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		};
+		const finalRoute = `${this._url}users`;
+
+		return this._http
+			.put(finalRoute, options)
+			.then((res: any) => this.getResponseWithParse(res));
+	}
+
 	getChats(): Promise<any> {
 		return this._http
 			.get(this._url)

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-// import { isEqual } from '../isEqual/isEqual';
 import { render } from '../renderDOM';
 import { Block } from '../Block/Block';
 import trim from '../trim';
@@ -33,14 +32,7 @@ class Route {
 		}
 	}
 
-	// leave(): void {
-	// 	if (this._block) {
-	// 		this._block.hide();
-	// 	}
-	// }
-
 	match(pathname: string): boolean {
-		// return isEqual(pathname, this._pathname);
 		return this._regexp.test(pathname);
 	}
 
@@ -54,13 +46,6 @@ class Route {
 	}
 
 	render(): void {
-		// if (!this._block) {
-		// 	this._block = new this._blockClass();
-		// 	render(this._props.rootQuery, this._block);
-		// 	return;
-		// }
-
-		// this._block.show();
 		this._block = new this._blockClass();
 		render(this._props.rootQuery, this._block);
 	}

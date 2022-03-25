@@ -187,3 +187,36 @@
 	line-height: 21px;
 	color: #D1D1D1;
 }
+
+.modalFly {
+	display: none;
+	box-shadow: 0px 4px 30px rgba(108, 72, 0, 0.2);
+	background-color: #fff;
+	padding: 16px;
+	border-radius: 16px;
+	position: absolute;
+	top: 48px;
+	right: 16px;
+}
+
+.add-user__btn {
+	margin-bottom: 16px;
+}
+
+.add-user__btn,
+.remove-user__btn {
+	display: flex;
+	align-items: center;
+	background: transparent;
+	border: none;
+}
+
+.add-user__btn .text,
+.remove-user__btn .text {
+	margin-left: 8px;
+}
+
+.add-user__btn:hover,
+.remove-user__btn:hover {
+	cursor: pointer;
+}

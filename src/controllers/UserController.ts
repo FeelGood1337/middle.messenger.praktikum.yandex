@@ -53,6 +53,16 @@ class UserController {
 			});
 	}
 
+	async searchUser(body: Record<string, string>): Promise<void> {
+		await userApi.searchUser(body).catch((err) => {
+			const { status } = err;
+
+			if (status === 500) {
+				router.go('/error');
+			}
+		});
+	}
+
 	async changePassword(data: Record<string, string>): Promise<void> {
 		await userApi
 			.changePassword(data)

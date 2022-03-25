@@ -24,6 +24,16 @@ class ChatController {
 			});
 	}
 
+	async addUserToChat(data: Record<string, any>): Promise<void> {
+		await chatApi.addUserToChat(data).catch((err) => {
+			const { status } = err;
+
+			if (status === 500) {
+				router.go('/error');
+			}
+		});
+	}
+
 	async getToken(id: string) {
 		await chatApi
 			.getToken(id)

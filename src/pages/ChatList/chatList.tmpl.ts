@@ -40,6 +40,28 @@ export const template = `
 									alt="kebab menu"
 								/>
 							</button>
+							<div class="modalFly" id="kebabMenuModal">
+								<div class="modalFly-wrapper modalFly-wrapper__kebab-menu">
+									<form class="auth__form auth__form_menu" novalidate="true">
+										<button class="add-user__btn">
+											<img 
+												class="add-user__img"
+												src="{% modalAddBtn %}"
+												alt="add user"
+											/>
+											<span class="text">Добавить пользователя</span>
+										</button>
+										<button class="remove-user__btn">
+											<img 
+												class="remove-user__img"
+												src="{% modalRemoveBtn %}"
+												alt="remove user"
+											/>
+											<span class="text">Удалить пользователя</span>
+										</button>
+									</form>
+								</div>
+							</div>
 						</div>
 						<div class="message-body"></div>
 						<div class="message-footer">

@@ -32,6 +32,20 @@ class UserAPI extends BaseAPI {
 			.then((res: any) => this.getResponseWithParse(res));
 	}
 
+	searchUser(body: Record<string, string>): Promise<any> {
+		const options = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(body),
+		};
+		const finalRoute = `${this._url}search`;
+
+		return this._http
+			.post(finalRoute, options)
+			.then((res: any) => this.getResponseWithParse(res));
+	}
+
 	changePassword(body: Record<string, string>): Promise<any> {
 		const options = {
 			headers: {
