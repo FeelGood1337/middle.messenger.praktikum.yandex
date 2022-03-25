@@ -68,28 +68,29 @@ class ChatList extends Block {
 
 	private getChatsList(chats: IChats[]) {
 		return chats
-			.map(
-				(el: IChats, index: number) => `
-			<li class="chat-item" data-chat-id="${el.id}" data-chat-index="${index}">
-				<img 
-					class="avatar-svg__item" 
-					src="${!el.avatar ? avatarIcon : AVATAR_URL + el.avatar}"
-					alt="avatar chat list"
-					width="32px"
-					height="32px"
-				/>
-				<div class="item__content-wrapper">
-					<div class="item__name">${el.title}</div>
-					<p class="item__para">
-						${el.last_message}
-					</p>
-				</div>
-				<div class="item__date-wrapper">
-					<div class="date">${el.created_by}</div>
-				</div>
-			</li>
-		`,
-			)
+			.map((el: IChats, index: number): string => {
+				const { avatar, id, last_message, created_by } = el;
+				return `
+					<li class="chat-item" data-chat-id="${id}" data-chat-index="${index}">
+						<img 
+							class="avatar-svg__item" 
+							src="${!avatar ? avatarIcon : AVATAR_URL + avatar}"
+							alt="avatar chat list"
+							width="32px"
+							height="32px"
+						/>
+						<div class="item__content-wrapper">
+							<div class="item__name">${el.title}</div>
+							<p class="item__para">
+								${last_message ? last_message : ''}
+							</p>
+						</div>
+						<div class="item__date-wrapper">
+							<div class="date">${created_by}</div>
+						</div>
+					</li>
+				`;
+			})
 			.join('');
 	}
 
@@ -205,10 +206,12 @@ class ChatList extends Block {
 
 	render() {
 		const { state, router }: IProps = this.props as IProps;
-		const { avatar, chats } = state;
+		const { chats } = state;
 		const { chatId } = router.getParams();
 		const currentChat = chats?.filter((el: IChats) => el.id === parseInt(chatId));
 		const [chat] = currentChat as IChats[];
+
+		console.log(chat);
 
 		if (chat !== undefined) {
 			return chatTmpl
@@ -224,7 +227,7 @@ class ChatList extends Block {
 						hasSvgIcon: true,
 					}).render(),
 					avatarMini: new AvatarMini({
-						imgPath: `${AVATAR_URL}${avatar}`,
+						imgPath: chat.avatar ? `${AVATAR_URL}${chat.avatar}` : avatarIcon,
 						width: '32',
 						height: '32',
 					}).render(),
