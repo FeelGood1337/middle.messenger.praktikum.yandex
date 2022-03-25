@@ -139,9 +139,7 @@ class ChatList extends Block {
 	}
 
 	private async handleGetToken(id: string): Promise<void> {
-		// showSpinner();
 		await chatController.getToken(id);
-		// hideSpinner();
 	}
 
 	private handleSelectChat(chatIndex: string) {
@@ -150,15 +148,6 @@ class ChatList extends Block {
 		const { id } = chats![parseInt(chatIndex)];
 
 		router.go(`/messenger/${id}`);
-
-		const messageMain: HTMLElement = document.querySelector(
-			'.message-main',
-		) as HTMLElement;
-		const emptyMessage: HTMLElement = document.querySelector(
-			'.message__wrapper',
-		) as HTMLElement;
-		emptyMessage.style.display = 'none';
-		messageMain.style.display = 'flex';
 	}
 
 	componentDidMount(): void {
@@ -221,45 +210,78 @@ class ChatList extends Block {
 		const currentChat = chats?.filter((el: IChats) => el.id === parseInt(chatId));
 		const [chat] = currentChat as IChats[];
 
-		console.log(chatId);
-
-		return chatTmpl
-			.compile({
-				linkButtonAddChat: addIcon,
-				linkButton: new LinkButton({
-					text: 'Профиль',
-					className: 'section-caht-list__link-btn',
-					href: '/settings',
-					svgIcon: backArrowIcon,
-					hasSvgIcon: true,
-				}).render(),
-				avatarMini: new AvatarMini({
-					imgPath: `${AVATAR_URL}${avatar}`,
-					width: '32',
-					height: '32',
-				}).render(),
-				name: chat !== undefined ? chat.title : '<div class="hiden"></div>',
-				kebab: kebabIcon,
-				clip: clipIcon,
-				send: sendIcon,
-				startMessage:
-					chats === undefined || !chats.length ? EMPTY_CHATS : NO_SELECTED_CHAT,
-				modalTitle: new Title({
-					tag: 'h2',
-					className: 'modal-title',
-					text: 'Укажите название чата',
-				}).render(),
-				modalInput: this.getInputs(),
-				modalBtn: new Button({
-					text: 'Создать',
-					className: 'btn-modal btn-modal__create-chat',
-					isDisabled: false,
-				}).render(),
-				chatItems: chats?.length
-					? this.getChatsList(chats)
-					: '<div class="hiden"></div>',
-			})
-			.getNode();
+		if (chat !== undefined) {
+			return chatTmpl
+				.compile({
+					msgDisplay: 'none',
+					mainDisplay: 'flex',
+					linkButtonAddChat: addIcon,
+					linkButton: new LinkButton({
+						text: 'Профиль',
+						className: 'section-caht-list__link-btn',
+						href: '/settings',
+						svgIcon: backArrowIcon,
+						hasSvgIcon: true,
+					}).render(),
+					avatarMini: new AvatarMini({
+						imgPath: `${AVATAR_URL}${avatar}`,
+						width: '32',
+						height: '32',
+					}).render(),
+					name: chat.title,
+					kebab: kebabIcon,
+					clip: clipIcon,
+					send: sendIcon,
+					modalTitle: new Title({
+						tag: 'h2',
+						className: 'modal-title',
+						text: 'Укажите название чата',
+					}).render(),
+					modalInput: this.getInputs(),
+					modalBtn: new Button({
+						text: 'Создать',
+						className: 'btn-modal btn-modal__create-chat',
+						isDisabled: false,
+					}).render(),
+					chatItems: chats?.length
+						? this.getChatsList(chats)
+						: '<div class="hiden"></div>',
+				})
+				.getNode();
+		} else {
+			return chatTmpl
+				.compile({
+					msgDisplay: 'flex',
+					mainDisplay: 'none',
+					linkButtonAddChat: addIcon,
+					linkButton: new LinkButton({
+						text: 'Профиль',
+						className: 'section-caht-list__link-btn',
+						href: '/settings',
+						svgIcon: backArrowIcon,
+						hasSvgIcon: true,
+					}).render(),
+					startMessage:
+						chats === undefined || !chats.length
+							? EMPTY_CHATS
+							: NO_SELECTED_CHAT,
+					modalTitle: new Title({
+						tag: 'h2',
+						className: 'modal-title',
+						text: 'Укажите название чата',
+					}).render(),
+					modalInput: this.getInputs(),
+					modalBtn: new Button({
+						text: 'Создать',
+						className: 'btn-modal btn-modal__create-chat',
+						isDisabled: false,
+					}).render(),
+					chatItems: chats?.length
+						? this.getChatsList(chats)
+						: '<div class="hiden"></div>',
+				})
+				.getNode();
+		}
 	}
 }
 

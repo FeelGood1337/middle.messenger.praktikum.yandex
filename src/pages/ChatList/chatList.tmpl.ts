@@ -26,8 +26,8 @@ export const template = `
 					</div>
 				</section>
 				<section class="message">
-					<div class="message__wrapper"><p class="message__hello">{% startMessage %}</p></div>
-					<div class="message-main">
+					<div class="message__wrapper" style="display: {% msgDisplay %};"><p class="message__hello">{% startMessage %}</p></div>
+					<div class="message-main" style="display: {% mainDisplay %};">
 						<div class="message-header">
 							<div class="avatar-wrapper">
 								{% avatarMini %}
