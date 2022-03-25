@@ -7,13 +7,13 @@ const chatApi = new ChatAPI();
 
 class ChatController {
 	async createChat(body: Record<string, string>): Promise<void> {
-		showSpinner();
+		// showSpinner();
 		await chatApi.createChat(body).then(() => this.getChat());
-		hideSpinner();
+		// hideSpinner();
 	}
 
 	async getChat(): Promise<void> {
-		showSpinner();
+		// showSpinner();
 		await chatApi
 			.getChats()
 			.then((chats: IChats[]): void => {
@@ -26,11 +26,11 @@ class ChatController {
 					router.go('/error');
 				}
 			});
-		hideSpinner();
+		// hideSpinner();
 	}
 
 	async getToken(id: string) {
-		showSpinner();
+		// showSpinner();
 		await chatApi
 			.getToken(id)
 			.then(({ token }: Record<string, string>) => {
@@ -44,7 +44,7 @@ class ChatController {
 					router.go('/error');
 				}
 			});
-		hideSpinner();
+		// hideSpinner();
 	}
 }
 

@@ -54,9 +54,9 @@ class Router implements IRouter {
 			return;
 		}
 
-		if (this._currentRoute && this._currentRoute !== route) {
-			this._currentRoute.leave();
-		}
+		// if (this._currentRoute && this._currentRoute !== route) {
+		// 	this._currentRoute.leave();
+		// }
 
 		this._currentRoute = route;
 		route.render();

@@ -24,6 +24,12 @@ import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
 import { chatController } from '../../controllers';
 import { Form, IForm } from '../../utils/form';
 import { IChats } from '../../API/chat-api';
+import { hideSpinner, showSpinner } from '../../utils/spinner';
+
+interface IProps {
+	state: IUser;
+	router: typeof router;
+}
 
 const inputsProps = [
 	{
@@ -133,7 +139,9 @@ class ChatList extends Block {
 	}
 
 	private async handleGetToken(id: string): Promise<void> {
+		// showSpinner();
 		await chatController.getToken(id);
+		// hideSpinner();
 	}
 
 	private handleSelectChat(chatIndex: string) {
@@ -149,7 +157,6 @@ class ChatList extends Block {
 		const emptyMessage: HTMLElement = document.querySelector(
 			'.message__wrapper',
 		) as HTMLElement;
-
 		emptyMessage.style.display = 'none';
 		messageMain.style.display = 'flex';
 	}
@@ -208,11 +215,13 @@ class ChatList extends Block {
 	}
 
 	render() {
-		const { state }: Record<string, IUser> = this.props;
+		const { state, router }: IProps = this.props as IProps;
 		const { avatar, chats } = state;
+		const { chatId } = router.getParams();
+		const currentChat = chats?.filter((el: IChats) => el.id === parseInt(chatId));
+		const [chat] = currentChat as IChats[];
 
-		console.log(this.props.router.history);
-		console.log(this.props.router.getParams());
+		console.log(chatId);
 
 		return chatTmpl
 			.compile({
@@ -229,7 +238,7 @@ class ChatList extends Block {
 					width: '32',
 					height: '32',
 				}).render(),
-				name: 'Segey Vlasov',
+				name: chat !== undefined ? chat.title : '<div class="hiden"></div>',
 				kebab: kebabIcon,
 				clip: clipIcon,
 				send: sendIcon,

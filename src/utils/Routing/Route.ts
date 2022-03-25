@@ -33,11 +33,11 @@ class Route {
 		}
 	}
 
-	leave(): void {
-		if (this._block) {
-			this._block.hide();
-		}
-	}
+	// leave(): void {
+	// 	if (this._block) {
+	// 		this._block.hide();
+	// 	}
+	// }
 
 	match(pathname: string): boolean {
 		// return isEqual(pathname, this._pathname);
@@ -54,13 +54,15 @@ class Route {
 	}
 
 	render(): void {
-		if (!this._block) {
-			this._block = new this._blockClass();
-			render(this._props.rootQuery, this._block);
-			return;
-		}
+		// if (!this._block) {
+		// 	this._block = new this._blockClass();
+		// 	render(this._props.rootQuery, this._block);
+		// 	return;
+		// }
 
-		this._block.show();
+		// this._block.show();
+		this._block = new this._blockClass();
+		render(this._props.rootQuery, this._block);
 	}
 }
 
