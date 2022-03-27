@@ -12,8 +12,8 @@ interface ITemplator {
 	get(
 		obj: TObjectKeys,
 		path: string,
-		defaultValue?: string | boolean | Function | undefined,
-	): string | boolean | Function | undefined | TObjectKeys;
+		defaultValue?: string | boolean | (() => any) | undefined,
+	): string | boolean | (() => any) | undefined | TObjectKeys;
 	getNode(): ChildNode | HTMLElement;
 }
 
@@ -28,9 +28,10 @@ class Templator implements ITemplator {
 		this._html = '';
 	}
 
-	compile(ctx: TObjectKeys) {
+	compile(ctx: TObjectKeys): string {
 		this._html = this._compileTemplate(ctx);
-		return this;
+		// return this;
+		return this._html;
 	}
 
 	_compileTemplate(ctx: TObjectKeys) {

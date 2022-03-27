@@ -3,6 +3,7 @@
 import { v4 as makeUUID } from 'uuid';
 import { EventBus, IEventBus } from '../EventBus/EventBus';
 import isEqual from '../isEqualProps';
+import { Templator } from '../Template-engine/templater';
 
 type TEvents<T extends object> = {
 	[P in keyof T]: T[P];
@@ -30,19 +31,26 @@ abstract class Block {
 	protected children: Record<string, Block>;
 	protected eventBus: () => IEventBus;
 
-	constructor(props: Record<string, any> = {}) {
+	constructor(propsAndChildren: Record<string, any> = {}) {
 		const eventBus = new EventBus();
+
+		const { props, children } = this._getChildren(propsAndChildren);
+
+		this.children = children;
 
 		// Генерируем уникальный UUID V4
 		this._id = makeUUID();
 
 		this.props = this._makePropsProxy({ ...props, _id: this._id });
+		this.initChildren();
 
 		this.eventBus = (): IEventBus => eventBus;
 
 		this._registerEvents(eventBus);
 		eventBus.emit(Block.EVENTS.INIT);
 	}
+
+	protected initChildren() {}
 
 	private _registerEvents(eventBus: IEventBus): void {
 		eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
@@ -51,13 +59,41 @@ abstract class Block {
 		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
 	}
 
-	init(): void {
-		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+	private init(): void {
+		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+		// this.eventBus().emit(Block.EVENTS.FLOW_CDM);
+	}
+
+	private _getChildren(propsAndChildren: Record<string, any>): Record<string, any> {
+		const children: Record<string, any> = {};
+		const props: Record<string, any> = {};
+
+		Object.entries(propsAndChildren).map(([key, value]) => {
+			if (value instanceof Block) {
+				children[key] = value;
+			} else if (
+				Array.isArray(value) &&
+				value.every((val) => val instanceof Block)
+			) {
+				children[key] = value;
+			} else {
+				props[key] = value;
+			}
+		});
+
+		return { props, children };
 	}
 
 	private _componentDidMount(): void {
 		this.componentDidMount();
+		Object.values(this.children).forEach((child) => {
+			child.dispatchComponentDidMount();
+		});
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+	}
+
+	dispatchComponentDidMount() {
+		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
 	componentDidMount(): void {}
@@ -71,7 +107,7 @@ abstract class Block {
 			return;
 		}
 		this._render();
-		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+		// this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
 	componentDidUpdate(
@@ -112,16 +148,43 @@ abstract class Block {
 		});
 	}
 
+	private _createDocumentElement(tagName: string) {
+		return document.createElement(tagName);
+	}
+
+	compile(template: Templator, context: Record<string, any>): DocumentFragment {
+		const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
+
+		Object.entries(this.children).forEach(([key, child]) => {
+			context[key] = `<div data-id="${child._id}"></div>`;
+		});
+
+		const htmlString = template.compile({ ...context });
+		fragment.innerHTML = htmlString;
+
+		Object.entries(this.children).forEach(([key, child]) => {
+			const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
+
+			if (!stub) {
+				return;
+			}
+
+			stub.replaceWith(child.getContent());
+		});
+
+		return fragment.content;
+	}
+
 	private _render(): void {
-		const fragment = this.render();
+		const fragment: DocumentFragment = this.render();
+		const newElement = fragment.firstElementChild as HTMLElement;
 
 		if (this._element) {
 			this._removeEvents();
-			this._element.replaceWith(fragment);
+			this._element.replaceWith(newElement);
 		}
 
-		this._element = fragment;
-		this._removeEvents();
+		this._element = newElement;
 		this._addEvents();
 	}
 

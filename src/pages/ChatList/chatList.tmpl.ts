@@ -1,12 +1,12 @@
+// export const template =
+// 	'<div class="message__wrapper">{% tes %} {% modalAddUsetToChatBtn %}</div>';
 export const template = `
 	<main class="main">
 		<div class="chat">
 			<div class="chat__content">
 				<section class="section-chat-list">
 					<div class="chat-list__controlls">
-						<button class="chat-add-btn">
-							<img class="chat-add-btn__img" src="{% linkButtonAddChat %}" alt="add new chat"/>
-						</button>
+						{% btnAddChat %}
 						<div class="modal" id="createChatModal">
 							<div class="modal-wrapper modal-wrapper__chat-create">
 								<form class="auth__form auth__form_chat" novalidate="true">
@@ -34,7 +34,7 @@ export const template = `
 								<span class="message-header__name">{% name %}</span>
 							</div>
 							<button class="message-header__menu">
-								<img 
+								<img
 									class="kebab-img"
 									src="{% kebab %}"
 									alt="kebab menu"
@@ -44,7 +44,7 @@ export const template = `
 								<div class="modalFly-wrapper modalFly-wrapper__kebab-menu">
 									<form class="auth__form auth__form_menu" novalidate="true">
 										<button class="add-user__btn">
-											<img 
+											<img
 												class="add-user__img"
 												src="{% modalAddBtn %}"
 												alt="add user"
@@ -52,7 +52,7 @@ export const template = `
 											<span class="text">Добавить пользователя</span>
 										</button>
 										<button class="remove-user__btn">
-											<img 
+											<img
 												class="remove-user__img"
 												src="{% modalRemoveBtn %}"
 												alt="remove user"
@@ -75,7 +75,7 @@ export const template = `
 						<div class="message-footer">
 							<form class="message-form">
 								<button class="message-form__clip">
-									<img 
+									<img
 										class="clip-img"
 										src="{% clip %}"
 										alt="clip btn"
@@ -88,7 +88,7 @@ export const template = `
 									placeholder="Сообщение"
 								/>
 								<button class="message-form__send">
-									<img 
+									<img
 										class="send-img"
 										src="{% send %}"
 										alt="send message"

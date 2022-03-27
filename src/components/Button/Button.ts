@@ -8,7 +8,9 @@ type TProps = {
 	text: string;
 	className: string;
 	isDisabled: boolean;
-	events?: any;
+	events?: {
+		click?: (arg?: any) => any;
+	};
 };
 
 interface IButton {
@@ -22,18 +24,21 @@ class Button extends Block implements IButton {
 
 	constructor(props: TProps) {
 		super(props);
-		this.props = props;
 	}
 
 	render() {
-		const { text, className, isDisabled } = this.props;
-		return btnTmpl
-			.compile({
-				text,
-				className,
-				disabled: isDisabled ? 'disabled' : '',
-			})
-			.getNode();
+		const { isDisabled } = this.props;
+		return this.compile(btnTmpl, {
+			...this.props,
+			disabled: isDisabled ? 'disabled' : '',
+		});
+		// return btnTmpl
+		// 	.compile({
+		// 		text,
+		// 		className,
+		// 		disabled: isDisabled ? 'disabled' : '',
+		// 	})
+		// 	.getNode();
 	}
 }
 

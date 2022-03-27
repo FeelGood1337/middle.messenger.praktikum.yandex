@@ -6,7 +6,7 @@ type TProps = {
 	text: string;
 	className: string;
 	tag: string;
-}
+};
 
 interface ITitle {
 	props: TProps;
@@ -19,14 +19,12 @@ class Title extends Block implements ITitle {
 	props: TProps;
 	constructor(props: TProps) {
 		super(props);
-		this.props = props;
 	}
 
-	render() {
-		// return this.compile(template, { ...this.props });
-		return titleTmpl.compile({ ...this.props }).getNode();
+	render(): any {
+		// return titleTmpl.compile({ ...this.props });
+		return this.compile(titleTmpl, { ...this.props });
 	}
-
 }
 
 export { Title };

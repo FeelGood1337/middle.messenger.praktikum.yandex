@@ -10,6 +10,9 @@ type TProps = {
 	href: string;
 	svgIcon?: string;
 	hasSvgIcon: boolean;
+	events?: {
+		click?: (arg?: any) => any;
+	};
 };
 
 interface ILinkButton {
@@ -23,21 +26,18 @@ class LinkButton extends Block implements ILinkButton {
 	props: TProps;
 	constructor(props: TProps) {
 		super(props);
-		this.props = props;
 	}
 
 	render() {
 		const { text, className, href, svgIcon, hasSvgIcon } = this.props;
-		return linkBtnTmpl
-			.compile({
-				text,
-				className,
-				href,
-				svgIcon: hasSvgIcon
-					? `<img class="link-btn__svg" src="${svgIcon}" alt="go to settings" />`
-					: '<div class="hiden"></div>',
-			})
-			.getNode();
+		return this.compile(linkBtnTmpl, {
+			text,
+			className,
+			href,
+			svgIcon: hasSvgIcon
+				? `<img class="link-btn__svg" src="${svgIcon}" alt="go to settings" />`
+				: '<div class="hiden"></div>',
+		});
 	}
 }
 
