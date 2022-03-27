@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { IChats } from '../../API/chat-api';
 import { template } from './chatsList.tmpl';
@@ -29,11 +30,17 @@ class ChatsList extends Block {
 	}
 
 	render() {
-		this.children.chatItems = this.props.chats.map((el: IChats): Items => {
-			const { avatar, id, last_message, created_by } = el;
-			return new Items({
-				className: 'chat-item',
-				items: `<img
+		this.children.chatItems =
+			this.props.chats === undefined
+				? new Items({
+						className: '',
+						items: ' ',
+				  })
+				: this.props.chats.map((el: IChats): Items => {
+						const { avatar, id, last_message, created_by } = el;
+						return new Items({
+							className: 'chat-item',
+							items: `<img
 								class="avatar-svg__item"
 								src="${!avatar ? avatarIcon : AVATAR_URL + avatar}"
 								alt="avatar chat list"
@@ -49,14 +56,14 @@ class ChatsList extends Block {
 							<div class="item__date-wrapper">
 								<div class="date">${created_by}</div>
 							</div>`,
-				events: {
-					click: (e: Event) => {
-						e.preventDefault();
-						router.go(`/messenger/${id}`);
-					},
-				},
-			});
-		});
+							events: {
+								click: (e: Event) => {
+									e.preventDefault();
+									router.go(`/messenger/${id}`);
+								},
+							},
+						});
+				  });
 		return this.compile(chatListTmpl, {});
 	}
 }

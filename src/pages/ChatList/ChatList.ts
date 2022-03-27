@@ -383,13 +383,7 @@ class ChatList extends Block {
 					click: (e: Event) => this.handleClickCreateChat(e),
 				},
 			}),
-			chatItems:
-				this.props.chats === undefined
-					? new Items({
-							className: '',
-							items: ' ',
-					  })
-					: new ChatsList({ chats: this.props.chats }),
+			chatItems: new ChatsList({ chats: this.props.chats }),
 		};
 	}
 
