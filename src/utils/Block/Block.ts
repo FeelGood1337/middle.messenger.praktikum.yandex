@@ -156,10 +156,17 @@ abstract class Block {
 		const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
 
 		Object.entries(this.children).forEach(([key, child]) => {
+			if (Array.isArray(child)) {
+				context[key] = child.map(
+					(el: Block) => `<div data-id="${el._id}"></div>`,
+				);
+				return;
+			}
 			context[key] = `<div data-id="${child._id}"></div>`;
 		});
 
 		const htmlString = template.compile({ ...context });
+		console.log(htmlString);
 		fragment.innerHTML = htmlString;
 
 		Object.entries(this.children).forEach(([key, child]) => {

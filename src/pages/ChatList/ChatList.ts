@@ -9,6 +9,7 @@ import {
 	AvatarMini,
 	Button,
 	InputWithLabel,
+	Items,
 	LinkButton,
 	Title,
 } from '../../components/index';
@@ -337,12 +338,43 @@ class ChatList extends Block {
 					},
 				},
 			}),
+			chatItems: this.getChatsList(this.props.chats),
 		};
+	}
+
+	private getChatsList(chats: IChats[]) {
+		return chats.map((el: IChats): Items => {
+			const { avatar, id, last_message, created_by } = el;
+			return new Items({
+				className: 'chat-item',
+				items: `<img
+								class="avatar-svg__item"
+								src="${!avatar ? avatarIcon : AVATAR_URL + avatar}"
+								alt="avatar chat list"
+								width="32px"
+								height="32px"
+							/>
+							<div class="item__content-wrapper">
+								<div class="item__name">${el.title}</div>
+								<p class="item__para">
+									${last_message ? last_message : ''}
+								</p>
+							</div>
+							<div class="item__date-wrapper">
+								<div class="date">${created_by}</div>
+							</div>`,
+				events: {
+					click: (e: Event) => {
+						e.preventDefault();
+						router.go(`/messenger/${id}`);
+					},
+				},
+			});
+		});
 	}
 
 	private async handleSearchUsers(event: Event): Promise<any> {
 		event.preventDefault();
-
 		await userController
 			.searchUser({ login: 'vv' })
 			.then((res) => {
@@ -355,22 +387,10 @@ class ChatList extends Block {
 		console.log(this.searchUserList);
 	}
 
-	// componentDidUpdate(
-	// 	oldProps: Record<string, any>,
-	// 	newProps: Record<string, any>,
-	// ): boolean {
-	// 	if (!isEqual(oldProps, newProps)) {
-	// 		console.log(newProps, oldProps);
-	// 		this.children.tes.setProps({
-	// 			text: newProps.name,
-	// 		});
-	// 	}
-
-	// 	return true;
-	// }
-
 	render() {
-		return this.compile(chatTmpl, { ...this.props });
+		return this.compile(chatTmpl, {
+			...this.props,
+		});
 
 		// if (chat !== undefined) {
 		// 	return chatTmpl

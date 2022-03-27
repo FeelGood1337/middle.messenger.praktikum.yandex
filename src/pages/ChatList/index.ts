@@ -18,6 +18,7 @@ function withChildren(Component: typeof Block) {
 
 			super({
 				...props,
+				chats,
 				startMessage:
 					chats === undefined || chats.length === 0
 						? EMPTY_CHATS

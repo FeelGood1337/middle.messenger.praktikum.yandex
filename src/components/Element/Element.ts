@@ -3,28 +3,27 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './element.tmpl';
 
 type TProps = {
-  tag: string;
-  className: string;
-  content: string;
-}
+	tag: string;
+	className: string;
+	content: string;
+};
 
 interface IElement {
-  props: TProps;
-  render(): ChildNode | HTMLElement;
+	props: TProps;
+	render(): ChildNode | HTMLElement;
 }
 
 const elTmpl = new Templator(template);
 class Element extends Block implements IElement {
-  props: TProps;
+	props: TProps;
 
-  constructor(props: TProps) {
-    super(props);
-    this.props = props;
-  }
+	constructor(props: TProps) {
+		super(props);
+	}
 
-  render() {
-    return elTmpl.compile({ ...this.props }).getNode();
-  }
+	render() {
+		return this.compile(elTmpl, { ...this.props });
+	}
 }
 
 export { Element };
