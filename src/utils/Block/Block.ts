@@ -26,6 +26,7 @@ abstract class Block {
 
 	private _element: HTMLElement;
 	private _id = '';
+	private _arrId = '';
 
 	protected props: Record<string, any>;
 	protected children: Record<string, Block>;
@@ -40,6 +41,7 @@ abstract class Block {
 
 		// Генерируем уникальный UUID V4
 		this._id = makeUUID();
+		this._arrId = makeUUID();
 
 		this.props = this._makePropsProxy({ ...props, _id: this._id });
 		this.initChildren();
@@ -81,12 +83,16 @@ abstract class Block {
 			}
 		});
 
-		return { props, children };
+		return { children, props };
 	}
 
 	private _componentDidMount(): void {
 		this.componentDidMount();
 		Object.values(this.children).forEach((child) => {
+			if (Array.isArray(child)) {
+				child.map((el: Block) => el.dispatchComponentDidMount());
+				return;
+			}
 			child.dispatchComponentDidMount();
 		});
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
@@ -157,19 +163,27 @@ abstract class Block {
 
 		Object.entries(this.children).forEach(([key, child]) => {
 			if (Array.isArray(child)) {
-				context[key] = child.map(
-					(el: Block) => `<div data-id="${el._id}"></div>`,
-				);
+				context[key] = child
+					.map((el: Block) => `<div data-id="${el._id}"></div>`)
+					.join('');
+				context[key] = `<div data-id="${this._arrId}">${context[key]}</div>`;
 				return;
 			}
 			context[key] = `<div data-id="${child._id}"></div>`;
 		});
 
 		const htmlString = template.compile({ ...context });
-		console.log(htmlString);
 		fragment.innerHTML = htmlString;
 
 		Object.entries(this.children).forEach(([key, child]) => {
+			if (Array.isArray(child)) {
+				const stub = fragment.content.querySelector(`[data-id="${this._arrId}"]`);
+				child.map((el: Block, index: number) => {
+					stub?.children[index].replaceWith(el.getContent());
+				});
+				return;
+			}
+
 			const stub = fragment.content.querySelector(`[data-id="${child._id}"]`);
 
 			if (!stub) {

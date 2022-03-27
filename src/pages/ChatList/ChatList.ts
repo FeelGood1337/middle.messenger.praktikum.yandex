@@ -379,7 +379,7 @@ class ChatList extends Block {
 			.searchUser({ login: 'vv' })
 			.then((res) => {
 				this.searchUserList = res;
-				this.setProps({ name: 'dadsd' });
+				this.children.linkButton.setProps({ name: 'dadsd' });
 			})
 			.finally(() => {
 				this.inputsValue = {};
