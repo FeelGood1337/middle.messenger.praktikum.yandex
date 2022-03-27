@@ -22,7 +22,7 @@ export const template = `
 					</div>
 				</section>
 				<section class="message">
-					<div class="message__wrapper" style="display: {% msgDisplay %};"><p class="message__hello">{% startMessage %}</p></div>
+					{% startMessage %}
 					<div class="message-main" style="display: {% mainDisplay %};">
 						<div class="message-header">
 							<div class="avatar-wrapper">

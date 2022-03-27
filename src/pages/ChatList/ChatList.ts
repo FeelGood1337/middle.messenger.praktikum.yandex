@@ -25,11 +25,12 @@ import backArrowIcon from '../../../static/images/linkButton.svg';
 import avatarIcon from '../../../static/images/Avatar.svg';
 import addIcon from '../../../static/images/add.svg';
 import store, { IUser } from '../../utils/Store/Store';
-import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
+import { AVATAR_URL } from '../../constants';
 import { chatController, userController } from '../../controllers';
 import { Form, IForm } from '../../utils/form';
 import { IChats } from '../../API/chat-api';
 import isEqual from '../../utils/isEqualProps';
+import Message from '../../components/Message/Message';
 
 interface IProps {
 	state: IUser;
@@ -310,11 +311,7 @@ class ChatList extends Block {
 	// }
 
 	protected initChildren(): void {
-		// const { state, router }: IProps = this.props as IProps;
-		// const { chats } = state;
-		// const { chatId } = router.getParams();
-		// const currentChat = chats?.filter((el: IChats) => el.id === parseInt(chatId));
-		// const [chat] = currentChat as IChats[];
+		const isChatSelected = Object.keys(router.getParams()).length === 0;
 
 		this.children = {
 			btnAddChat: new Button({
@@ -384,6 +381,9 @@ class ChatList extends Block {
 				},
 			}),
 			chatItems: new ChatsList({ chats: this.props.chats }),
+			startMessage: isChatSelected
+				? new Message({ chats: this.props.chats, msgDisplay: 'flex' })
+				: new Message({ chats: this.props.chats, msgDisplay: 'none' }),
 		};
 	}
 
@@ -401,6 +401,9 @@ class ChatList extends Block {
 				const { user }: Record<string, IUser> = store.getState();
 				const { chats } = user;
 				this.children.chatItems.setProps({
+					chats,
+				});
+				this.children.startMessage.setProps({
 					chats,
 				});
 			})
@@ -426,37 +429,6 @@ class ChatList extends Block {
 		};
 	}
 
-	private getChatsList(chats: IChats[]) {
-		return chats.map((el: IChats): Items => {
-			const { avatar, id, last_message, created_by } = el;
-			return new Items({
-				className: 'chat-item',
-				items: `<img
-								class="avatar-svg__item"
-								src="${!avatar ? avatarIcon : AVATAR_URL + avatar}"
-								alt="avatar chat list"
-								width="32px"
-								height="32px"
-							/>
-							<div class="item__content-wrapper">
-								<div class="item__name">${el.title}</div>
-								<p class="item__para">
-									${last_message ? last_message : ''}
-								</p>
-							</div>
-							<div class="item__date-wrapper">
-								<div class="date">${created_by}</div>
-							</div>`,
-				events: {
-					click: (e: Event) => {
-						e.preventDefault();
-						router.go(`/messenger/${id}`);
-					},
-				},
-			});
-		});
-	}
-
 	componentDidUpdate(
 		oldProps: Record<string, any>,
 		newProps: Record<string, any>,
@@ -478,6 +450,14 @@ class ChatList extends Block {
 	}
 
 	render() {
+		// const { state, router }: IProps = this.props as IProps;
+		// const { chats } = state;
+		// const { chatId } = router.getParams();
+		// const currentChat = chats?.filter((el: IChats) => el.id === parseInt(chatId));
+		// const [chat] = currentChat as IChats[];
+
+		this.initChildren();
+
 		return this.compile(chatTmpl, {
 			...this.props,
 		});
