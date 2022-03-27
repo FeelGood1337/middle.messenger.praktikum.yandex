@@ -1,5 +1,3 @@
-// export const template =
-// 	'<div class="message__wrapper">{% tes %} {% modalAddUsetToChatBtn %}</div>';
 export const template = `
 	<main class="main">
 		<div class="chat">
@@ -20,9 +18,7 @@ export const template = `
 					</div>
 					<input type="text" class="input search" placeholder="Поиск">
 					<div id="chats-wrapper">
-						<ul class="chat-items" id="list">
-							{% chatItems %}
-						</ul>
+						{% chatItems %}
 					</div>
 				</section>
 				<section class="message">

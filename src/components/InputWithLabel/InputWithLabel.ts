@@ -4,7 +4,6 @@ import { template } from './inputWithLabel.tmpl';
 
 import './inputWithLabel.css';
 
-
 type TProps = {
 	className: string;
 	labelClassName: string;
@@ -13,7 +12,10 @@ type TProps = {
 	attributes: string;
 	name: string;
 	value: string;
-}
+	events?: {
+		input: (args: any) => any;
+	};
+};
 
 interface IInputWithLabel {
 	props: TProps;
@@ -26,15 +28,11 @@ class InputWithLabel extends Block implements IInputWithLabel {
 
 	constructor(props: TProps) {
 		super(props);
-		this.props = props;
 	}
 
 	render() {
-		// return this.compile(template, { ...this.props });
-		return inputTmplt.compile({ ...this.props }).getNode();
+		return this.compile(inputTmplt, { ...this.props });
 	}
 }
 
-export {
-	InputWithLabel
-};
+export { InputWithLabel };

@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Block } from '../../utils/Block/Block';
@@ -8,6 +9,7 @@ import { template } from './chatList.tmpl';
 import {
 	AvatarMini,
 	Button,
+	ChatsList,
 	InputWithLabel,
 	Items,
 	LinkButton,
@@ -22,7 +24,7 @@ import sendIcon from '../../../static/images/send-btn.svg';
 import backArrowIcon from '../../../static/images/linkButton.svg';
 import avatarIcon from '../../../static/images/Avatar.svg';
 import addIcon from '../../../static/images/add.svg';
-import { IUser } from '../../utils/Store/Store';
+import store, { IUser } from '../../utils/Store/Store';
 import { AVATAR_URL, EMPTY_CHATS, NO_SELECTED_CHAT } from '../../constants';
 import { chatController, userController } from '../../controllers';
 import { Form, IForm } from '../../utils/form';
@@ -308,13 +310,19 @@ class ChatList extends Block {
 	// }
 
 	protected initChildren(): void {
+		// const { state, router }: IProps = this.props as IProps;
+		// const { chats } = state;
+		// const { chatId } = router.getParams();
+		// const currentChat = chats?.filter((el: IChats) => el.id === parseInt(chatId));
+		// const [chat] = currentChat as IChats[];
+
 		this.children = {
 			btnAddChat: new Button({
 				text: `<img class="chat-add-btn__img" src="${addIcon}" alt="add new chat"/>`,
 				className: 'chat-add-btn',
 				isDisabled: false,
 				events: {
-					click: (e: Event) => this.handleSearchUsers(e),
+					click: (e: Event) => this.handleOpenModal(e),
 				},
 			}),
 			modalAddUsetToChatBtn: new Button({
@@ -338,7 +346,89 @@ class ChatList extends Block {
 					},
 				},
 			}),
-			chatItems: this.getChatsList(this.props.chats),
+			modalTitle: new Title({
+				tag: 'h2',
+				className: 'modal-title',
+				text: 'Укажите название чата',
+			}),
+			modalInput: new InputWithLabel({
+				name: 'title',
+				value: '',
+				className: 'modal-chat-input',
+				labelClassName: 'chat-label',
+				labelText: 'Чат',
+				labelId: 'title',
+				attributes: `
+					type="text"
+					id="title"
+					placeholder="Введите имя чата"
+					required
+				`,
+				events: {
+					input: (e: Event) => {
+						e.preventDefault();
+						this.inputsValue = {
+							[(e.target as HTMLInputElement).name]: (
+								e.target as HTMLInputElement
+							).value,
+						};
+					},
+				},
+			}),
+			modalBtn: new Button({
+				text: 'Создать',
+				className: 'btn btn-modal btn-modal__create-chat',
+				isDisabled: false,
+				events: {
+					click: (e: Event) => this.handleClickCreateChat(e),
+				},
+			}),
+			chatItems:
+				this.props.chats === undefined
+					? new Items({
+							className: '',
+							items: ' ',
+					  })
+					: new ChatsList({ chats: this.props.chats }),
+		};
+	}
+
+	private async handleClickCreateChat(event: Event): Promise<any> {
+		event.preventDefault();
+
+		const { element } = this;
+		const modal: HTMLElement = element.querySelector(
+			'#createChatModal',
+		) as HTMLElement;
+
+		await chatController
+			.createChat(this.inputsValue)
+			.then(() => {
+				const { user }: Record<string, IUser> = store.getState();
+				const { chats } = user;
+				this.children.chatItems.setProps({
+					chats,
+				});
+			})
+			.finally(() => {
+				this.inputsValue = {};
+			});
+
+		modal.style.display = 'none';
+	}
+
+	private handleOpenModal(event: Event) {
+		event.preventDefault();
+		const { element } = this;
+		const modal: HTMLElement = element.querySelector(
+			'#createChatModal',
+		) as HTMLElement;
+
+		modal.style.display = 'flex';
+		window.onclick = (event: Event) => {
+			if (event.target === modal) {
+				modal.style.display = 'none';
+			}
 		};
 	}
 
@@ -373,13 +463,19 @@ class ChatList extends Block {
 		});
 	}
 
+	componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): boolean {
+		return !isEqual(oldProps, newProps);
+	}
+
 	private async handleSearchUsers(event: Event): Promise<any> {
 		event.preventDefault();
 		await userController
 			.searchUser({ login: 'vv' })
 			.then((res) => {
 				this.searchUserList = res;
-				this.children.linkButton.setProps({ name: 'dadsd' });
 			})
 			.finally(() => {
 				this.inputsValue = {};
@@ -425,12 +521,12 @@ class ChatList extends Block {
 		// 				className: 'btn-modal btn-modal__add-to-chat',
 		// 				isDisabled: false,
 		// 			}).render(),
-		// 			modalInput: this.getInputs(),
-		// 			modalBtn: new Button({
-		// 				text: 'Создать',
-		// 				className: 'btn-modal btn-modal__create-chat',
-		// 				isDisabled: false,
-		// 			}).render(),
+		// modalInput: this.getInputs(),
+		// modalBtn: new Button({
+		// 	text: 'Создать',
+		// 	className: 'btn-modal btn-modal__create-chat',
+		// 	isDisabled: false,
+		// }).render(),
 		// 			modalAddBtn: addUserIcon,
 		// 			modalRemoveBtn: removeUserIcon,
 		// 			chatItems: chats?.length

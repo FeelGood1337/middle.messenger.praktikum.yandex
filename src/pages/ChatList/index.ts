@@ -15,10 +15,10 @@ function withChildren(Component: typeof Block) {
 
 			const currentChat = chats?.filter((el: IChats) => el.id === parseInt(chatId));
 			const [chat] = currentChat as IChats[];
-
 			super({
 				...props,
 				chats,
+				chat,
 				startMessage:
 					chats === undefined || chats.length === 0
 						? EMPTY_CHATS
