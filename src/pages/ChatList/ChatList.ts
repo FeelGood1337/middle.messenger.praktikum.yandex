@@ -9,6 +9,7 @@ import { template } from './chatList.tmpl';
 import {
 	AvatarMini,
 	Button,
+	Chat,
 	ChatsList,
 	InputWithLabel,
 	Items,
@@ -16,13 +17,7 @@ import {
 	Title,
 } from '../../components/index';
 
-import kebabIcon from '../../../static/images/kebab-menu.svg';
-import addUserIcon from '../../../static/images/addUser.svg';
-import removeUserIcon from '../../../static/images/remove.svg';
-import clipIcon from '../../../static/images/clip.svg';
-import sendIcon from '../../../static/images/send-btn.svg';
 import backArrowIcon from '../../../static/images/linkButton.svg';
-import avatarIcon from '../../../static/images/Avatar.svg';
 import addIcon from '../../../static/images/add.svg';
 import store, { IUser } from '../../utils/Store/Store';
 import { AVATAR_URL } from '../../constants';
@@ -311,7 +306,7 @@ class ChatList extends Block {
 	// }
 
 	protected initChildren(): void {
-		const isChatSelected = Object.keys(router.getParams()).length === 0;
+		const isChatSelected = Object.keys(router.getParams()).length !== 0;
 
 		this.children = {
 			btnAddChat: new Button({
@@ -382,8 +377,11 @@ class ChatList extends Block {
 			}),
 			chatItems: new ChatsList({ chats: this.props.chats }),
 			startMessage: isChatSelected
-				? new Message({ chats: this.props.chats, msgDisplay: 'flex' })
-				: new Message({ chats: this.props.chats, msgDisplay: 'none' }),
+				? new Message({ chats: this.props.chats, msgDisplay: 'none' })
+				: new Message({ chats: this.props.chats, msgDisplay: 'flex' }),
+			currentChat: isChatSelected
+				? new Chat({ chat: this.props.chat, mainDisplay: 'flex' })
+				: new Chat({ chat: this.props.chat, mainDisplay: 'none' }),
 		};
 	}
 

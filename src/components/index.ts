@@ -8,6 +8,7 @@ import { Items } from './Items/Items';
 import { LinkButton } from './LinkButton/LinkButton';
 import { Title } from './Title/Title';
 import ChatsList from './ChatsList/ChatsList';
+import Chat from './Chat/Chat';
 
 export {
 	Avatar,
@@ -20,4 +21,5 @@ export {
 	LinkButton,
 	Title,
 	ChatsList,
+	Chat,
 };

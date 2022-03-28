@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block/Block';
+import isEqual from '../../utils/isEqualProps';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './avatarMini.tmpl';
 
@@ -22,11 +23,17 @@ class AvatarMini extends Block implements IAvatarMini {
 
 	constructor(props: TProps) {
 		super(props);
-		this.props = props;
+	}
+
+	componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): boolean {
+		return !isEqual(oldProps, newProps);
 	}
 
 	render() {
-		return avatarMiniTmpl.compile({ ...this.props }).getNode();
+		return this.compile(avatarMiniTmpl, { ...this.props });
 	}
 }
 
