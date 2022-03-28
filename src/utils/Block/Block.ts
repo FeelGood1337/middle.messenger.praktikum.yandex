@@ -29,7 +29,7 @@ abstract class Block {
 	private _arrId = '';
 
 	protected props: Record<string, any>;
-	protected children: Record<string, Block>;
+	protected children: Record<string, Block | Block[]>;
 	protected eventBus: () => IEventBus;
 
 	constructor(propsAndChildren: Record<string, any> = {}) {

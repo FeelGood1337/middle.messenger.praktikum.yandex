@@ -5,16 +5,10 @@ import { template } from './inputWithLabel.tmpl';
 import './inputWithLabel.css';
 
 type TProps = {
-	className: string;
 	labelClassName: string;
 	labelText: string;
 	labelId: string;
-	attributes: string;
-	name: string;
-	value: string;
-	events?: {
-		input: (args: any) => any;
-	};
+	input: Block;
 };
 
 interface IInputWithLabel {

@@ -1,4 +1,4 @@
-export const template: string = `
+export const template = `
 	<div class="inner">
 		<label 
 			class="label {% labelClassName %}" 
@@ -6,12 +6,7 @@ export const template: string = `
 		>
 			{% labelText %}
 		</label>
-		<input 
-			class="input {% className %}" 
-			{% attributes %} 
-			name="{% name %}" 
-			{% value %}
-		/>
+		{% input %}
 		<span class="auth__error"></span>
 	</div>
 `;

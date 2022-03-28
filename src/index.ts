@@ -15,7 +15,7 @@ import { chatController, userController } from './controllers';
 
 document.addEventListener('DOMContentLoaded', async () => {
 	router
-		// .use('/', SigninPage)
+		.use('/', SigninPage)
 		// .use('/sign-up', SignupPage)
 		// .use('/error', ServerErrorPage)
 		// .use('/notfound', NotFoundPage)

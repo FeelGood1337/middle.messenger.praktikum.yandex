@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 interface IInputValidate {
 	_FIELD_REQUIRED: string;
 	_customValidate: Function;
@@ -29,7 +30,7 @@ class InputValidate implements IInputValidate {
 	};
 
 	handleBlur = (event: Event): void => {
-		if((<HTMLInputElement>event?.target).validity.valueMissing) {
+		if ((<HTMLInputElement>event?.target).validity.valueMissing) {
 			this.toggleError(true, this._FIELD_REQUIRED);
 			return;
 		}
