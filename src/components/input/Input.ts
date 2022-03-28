@@ -3,6 +3,7 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './input.tmpl';
 
 import './input.css';
+import isEqual from '../../utils/isEqualProps';
 
 type TProps = {
 	attributes: string;
@@ -27,6 +28,13 @@ class Input extends Block implements IInput {
 	props: TProps;
 	constructor(props: TProps) {
 		super(props);
+	}
+
+	componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): boolean {
+		return !isEqual(oldProps, newProps);
 	}
 
 	render() {

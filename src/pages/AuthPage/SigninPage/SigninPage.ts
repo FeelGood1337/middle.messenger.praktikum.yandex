@@ -66,6 +66,9 @@ class SigninPage extends Block {
 					},
 				}),
 				inputs: this.getInputs(),
+				events: {
+					onchange: (e: Event) => console.log(e.target),
+				},
 			}),
 		};
 	}
@@ -104,7 +107,7 @@ class SigninPage extends Block {
 						value,
 						events: {
 							blur: (e: Event) => vlArr[index].handleBlur(e),
-							focus: () => vlArr[index].handleFocus,
+							focus: () => vlArr[index].handleFocus(),
 						},
 					}),
 				});
