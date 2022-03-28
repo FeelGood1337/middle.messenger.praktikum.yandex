@@ -5,13 +5,7 @@ export const template = `
 				{% avatarMini %}
 				{% chatName %}
 			</div>
-			<button class="message-header__menu">
-				<img
-					class="kebab-img"
-					src="{% kebab %}"
-					alt="kebab menu"
-				/>
-			</button>
+			{% addUserKebab %}
 			<div class="modalFly" id="kebabMenuModal">
 				<div class="modalFly-wrapper modalFly-wrapper__kebab-menu">
 					<form class="auth__form auth__form_menu" novalidate="true">
@@ -47,26 +41,14 @@ export const template = `
 		<div class="message-body"></div>
 		<div class="message-footer">
 			<form class="message-form">
-				<button class="message-form__clip">
-					<img
-						class="clip-img"
-						src="{% clip %}"
-						alt="clip btn"
-					/>
-				</button>
+				{% clipBtn %}
 				<input
 					type="text"
 					name="message"
 					class="input control-panel__input"
 					placeholder="Сообщение"
 				/>
-				<button class="message-form__send">
-					<img
-						class="send-img"
-						src="{% send %}"
-						alt="send message"
-					/>
-				</button>
+				{% sendBtn %}
 			</form>
 		</div>
 	</div>

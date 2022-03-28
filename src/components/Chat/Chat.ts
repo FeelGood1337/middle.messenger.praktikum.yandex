@@ -6,7 +6,7 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './Chat.tmpl';
 import avatarIcon from '../../../static/images/Avatar.svg';
 
-import { AvatarMini, Title } from '..';
+import { AvatarMini, Button, Title } from '..';
 import { AVATAR_URL } from '../../constants';
 
 import kebabIcon from '../../../static/images/kebab-menu.svg';
@@ -40,6 +40,21 @@ class Chat extends Block {
 				tag: 'h2',
 				className: 'message-header__name',
 				text: chat.title,
+			}),
+			addUserKebab: new Button({
+				text: `<img class="kebab-img" src="${kebabIcon}" alt="kebab menu"/>`,
+				className: 'message-header__menu',
+				isDisabled: false,
+			}),
+			clipBtn: new Button({
+				text: `<img class="clip-img" src="${clipIcon}" alt="clip btn"/>`,
+				className: 'message-form__clip',
+				isDisabled: false,
+			}),
+			sendBtn: new Button({
+				text: `<img class="send-img" src="${sendIcon}" alt="send message"/>`,
+				className: 'message-form__send',
+				isDisabled: false,
 			}),
 		};
 	}
