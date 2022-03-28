@@ -11,6 +11,7 @@ import {
 	Button,
 	Chat,
 	ChatsList,
+	Input,
 	InputWithLabel,
 	Items,
 	LinkButton,
@@ -344,28 +345,30 @@ class ChatList extends Block {
 				text: 'Укажите название чата',
 			}),
 			modalInput: new InputWithLabel({
-				name: 'title',
-				value: '',
-				className: 'modal-chat-input',
 				labelClassName: 'chat-label',
 				labelText: 'Чат',
 				labelId: 'title',
-				attributes: `
+				input: new Input({
+					className: 'modal-chat-input',
+					name: 'title',
+					value: '',
+					attributes: `
 					type="text"
 					id="title"
 					placeholder="Введите имя чата"
 					required
 				`,
-				events: {
-					input: (e: Event) => {
-						e.preventDefault();
-						this.inputsValue = {
-							[(e.target as HTMLInputElement).name]: (
-								e.target as HTMLInputElement
-							).value,
-						};
+					events: {
+						input: (e: Event) => {
+							e.preventDefault();
+							this.inputsValue = {
+								[(e.target as HTMLInputElement).name]: (
+									e.target as HTMLInputElement
+								).value,
+							};
+						},
 					},
-				},
+				}),
 			}),
 			modalBtn: new Button({
 				text: 'Создать',

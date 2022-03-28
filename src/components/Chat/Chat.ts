@@ -30,16 +30,20 @@ class Chat extends Block {
 
 	protected initChildren(): void {
 		const { chat } = this.props;
+
 		this.children = {
 			avatarMini: new AvatarMini({
-				imgPath: chat.avatar ? `${AVATAR_URL}${chat.avatar}` : avatarIcon,
+				imgPath:
+					chat !== undefined && chat.avatar
+						? `${AVATAR_URL}${chat.avatar}`
+						: avatarIcon,
 				width: '32',
 				height: '32',
 			}),
 			chatName: new Title({
 				tag: 'h2',
 				className: 'message-header__name',
-				text: chat.title,
+				text: chat !== undefined ? chat.title : '',
 			}),
 			addUserKebab: new Button({
 				text: `<img class="kebab-img" src="${kebabIcon}" alt="kebab menu"/>`,

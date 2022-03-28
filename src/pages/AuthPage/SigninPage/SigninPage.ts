@@ -67,7 +67,8 @@ class SigninPage extends Block {
 				}),
 				inputs: this.getInputs(),
 				events: {
-					onchange: (e: Event) => console.log(e.target),
+					change: () => this.getInputsValue(),
+					input: () => this.form.formIsValid(),
 				},
 			}),
 		};
@@ -129,6 +130,10 @@ class SigninPage extends Block {
 	private goToSignup(event: Event): void {
 		event?.preventDefault();
 		router.go('/sign-up');
+	}
+
+	componentDidMount(): void {
+		this.form = new Form(this.children.form, this.children.form.children.button);
 	}
 
 	render() {

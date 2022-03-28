@@ -8,8 +8,8 @@ type TProps = {
 	button: Block;
 	linkButton: Block;
 	events?: {
-		onchange?: (arg: any) => any;
-		oninput?: (arg: any) => any;
+		change?: (arg: any) => any;
+		input?: (arg: any) => any;
 		click?: (arg: any) => any;
 	};
 };
@@ -20,12 +20,6 @@ class Form extends Block {
 	props: TProps;
 	constructor(props: TProps) {
 		super(props);
-	}
-
-	componentDidMount(): void {
-		// const fromData = new FormData(this.getContent() as HTMLFormElement);
-		// console.log(fromData);
-		// console.log(this.children);
 	}
 
 	componentDidUpdate(
