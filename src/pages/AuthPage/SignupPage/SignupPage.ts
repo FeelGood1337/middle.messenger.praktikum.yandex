@@ -12,10 +12,14 @@ import {
 	InputValidate,
 	IInputValidate,
 } from '../../../components/InputWithLabel/InputValidate';
-import { Title } from '../../../components/Title/Title';
-import { Button } from '../../../components/Button/Button';
-import { LinkButton } from '../../../components/LinkButton/LinkButton';
-import { InputWithLabel } from '../../../components/InputWithLabel/InputWithLabel';
+import {
+	Title,
+	Form as MainForm,
+	Button,
+	LinkButton,
+	InputWithLabel,
+	Input,
+} from '../../../components';
 import backArrowIcon from '../../../../static/images/linkButton.svg';
 
 import './signup.css';
@@ -28,63 +32,88 @@ class SignupPage extends Block {
 	form: IForm;
 
 	constructor() {
-		super({
-			title: new Title({
-				tag: 'h2',
-				className: 'auth__title signup__title',
-				text: 'Регистрация',
-			}).render(),
-			button: new Button({
-				text: 'Зарегистрировать',
-				className: 'signup__btn',
-				isDisabled: true,
-			}).render(),
-			linkButton: new LinkButton({
-				text: 'Войти',
-				className: 'signup__btn-link',
-				href: '/',
-				svgIcon: backArrowIcon,
-				hasSvgIcon: true,
-			}).render(),
-		});
+		super();
 
 		this.inputsValue;
 		this.form;
 		this.validate = [];
 	}
 
+	protected initChildren(): void {
+		this.children = {
+			title: new Title({
+				tag: 'h2',
+				className: 'auth__title signup__title',
+				text: 'Регистрация',
+			}),
+			form: new MainForm({
+				button: new Button({
+					text: 'Зарегистрировать',
+					className: 'btn signup__btn',
+					isDisabled: true,
+					events: {
+						click: (e: Event) => this.handleClick(e),
+					},
+				}),
+				linkButton: new LinkButton({
+					text: 'Войти',
+					className: 'signup__btn-link',
+					href: '/',
+					svgIcon: backArrowIcon,
+					hasSvgIcon: true,
+					events: {
+						click: (e: Event) => this.goToSignin(e),
+					},
+				}),
+				inputs: this.getInputs(),
+				events: {
+					change: () => this.getInputsValue(),
+					input: () => this.form.formIsValid(),
+				},
+			}),
+		};
+	}
+
 	private getInputs() {
 		this.inputsValue = this.inputsValue || {};
 		this.validate = this.validate || [];
 
-		return inputsProps
-			.map(
-				({
+		return inputsProps.map(
+			(
+				{
 					className,
-					labelClassName,
 					labelText,
+					labelClassName,
 					labelId,
 					attributes,
 					name,
 					handleBlur,
-				}) => {
-					const value = this.inputsValue[name]
-						? `value="${this.inputsValue[name]}"`
-						: ' ';
-					this.validate.push(new InputValidate(handleBlur));
+				},
+				index: number,
+			) => {
+				const value = this.inputsValue[name]
+					? `value="${this.inputsValue[name]}"`
+					: ' ';
+				this.validate.push(new InputValidate(handleBlur));
+				const vlArr = [...this.validate];
 
-					return new InputWithLabel({
+				return new InputWithLabel({
+					labelClassName,
+					labelText,
+					labelId,
+					input: new Input({
 						className,
-						labelClassName,
-						labelText,
-						labelId,
 						attributes,
 						name,
 						value,
-					}).render().outerHTML;
-				},
-			)
-			.join('');
+						events: {
+							blur: (e: Event) => vlArr[index].handleBlur(e),
+							focus: () => vlArr[index].handleFocus(),
+						},
+					}),
+				});
+			},
+		);
 	}
 
 	private getInputsValue(): void {
@@ -104,42 +133,11 @@ class SignupPage extends Block {
 	}
 
 	componentDidMount(): void {
-		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, validate, getInputsValue, handleClick, goToSignin } = this;
-
-			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
-			const formButton: HTMLButtonElement = element.querySelector('.signup__btn')!;
-			const inputs: NodeListOf<HTMLInputElement> =
-				element.querySelectorAll('.input');
-			const linkBtn: HTMLButtonElement = element.querySelector(
-				'.signup__btn-link',
-			) as HTMLButtonElement;
-
-			this.form = new Form(formContainer, formButton);
-
-			inputs.forEach((input, index) => {
-				(input as HTMLInputElement).onfocus = validate[index].handleFocus;
-				(input as HTMLInputElement).onblur = validate[index].handleBlur;
-			});
-
-			formContainer.onchange = getInputsValue.bind(this);
-			formContainer.oninput = this.form.formIsValid;
-			formButton.onclick = handleClick.bind(this);
-			linkBtn.onclick = goToSignin;
-		});
+		this.form = new Form(this.children.form, this.children.form.children.button);
 	}
 
 	render() {
-		const { title, button, linkButton } = this.props;
-
-		return signUpTmpl
-			.compile({
-				title,
-				button,
-				linkButton,
-				inputs: this.getInputs(),
-			})
-			.getNode();
+		return this.compile(signUpTmpl, {});
 	}
 }
 

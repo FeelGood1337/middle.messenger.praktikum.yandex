@@ -16,14 +16,14 @@ import { chatController, userController } from './controllers';
 document.addEventListener('DOMContentLoaded', async () => {
 	router
 		.use('/', SigninPage)
-		// .use('/sign-up', SignupPage)
-		// .use('/error', ServerErrorPage)
-		// .use('/notfound', NotFoundPage)
+		.use('/messenger', ChatList)
+		.use('/error', ServerErrorPage)
+		.use('/notfound', NotFoundPage)
 		// .use('/settings', ProfilePage)
 		// .use('/settings/change-user-info', ChangeUserInfo)
 		// .use('/settings/change-user-password', ChangeUserPassword)
-		.use('/messenger', ChatList)
-		.use('/messenger/{chatId}', ChatList);
+		.use('/messenger/{chatId}', ChatList)
+		.use('/sign-up', SignupPage);
 
 	try {
 		await userController.getUser();

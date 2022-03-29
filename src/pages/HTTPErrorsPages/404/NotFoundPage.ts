@@ -11,24 +11,31 @@ import './notFound.css';
 const notFoundTmpl = new Templator(template);
 class NotFoundPage extends Block {
 	constructor() {
-		super({
+		super();
+	}
+
+	protected initChildren(): void {
+		this.children = {
 			title: new Title({
 				tag: 'h1',
 				className: 'http-error__title',
 				text: '404',
-			}).render(),
+			}),
 			subTitle: new Title({
 				tag: 'h2',
 				className: 'http-error__subtitle',
 				text: 'Page not found',
-			}).render(),
+			}),
 			linkButton: new LinkButton({
 				text: 'Назад к чатам',
 				className: 'http-error__btn btn',
 				href: '/messenger',
 				hasSvgIcon: false,
-			}).render(),
-		});
+				events: {
+					click: (e: Event) => this.goToChat(e),
+				},
+			}),
+		};
 	}
 
 	private goToChat(event: Event): void {
@@ -36,19 +43,8 @@ class NotFoundPage extends Block {
 		router.go('/messenger');
 	}
 
-	componentDidMount(): void {
-		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, goToChat } = this;
-
-			const linkBtn: HTMLButtonElement = element.querySelector(
-				'.http-error__btn',
-			) as HTMLButtonElement;
-			linkBtn.onclick = goToChat;
-		});
-	}
-
 	render() {
-		return notFoundTmpl.compile({ ...this.props }).getNode();
+		return this.compile(notFoundTmpl, {});
 	}
 }
 
