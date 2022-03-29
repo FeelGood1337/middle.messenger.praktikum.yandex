@@ -123,7 +123,7 @@ abstract class Block {
 		return !isEqual(oldProps, newProps);
 	}
 
-	setProps = (nextProps: Record<string, any>): void => {
+	setProps = <T>(nextProps: T): void => {
 		if (!nextProps) {
 			return;
 		}

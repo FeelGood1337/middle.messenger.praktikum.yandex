@@ -15,7 +15,9 @@ import removeUserIcon from '../../../static/images/remove.svg';
 import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
 import { userController } from '../../controllers';
-import { Input } from '..';
+import { Input, SerchedUsersList } from '..';
+import { IUser } from '../../utils/Store/Store';
+import { STP } from '../SerchedUsersList/SerchedUsersList';
 
 type TProps = {
 	chat: IChats;
@@ -117,6 +119,9 @@ class Chat extends Block {
 				className: 'message-form__send',
 				isDisabled: false,
 			}),
+			serchedUserList: new SerchedUsersList({
+				users: this.searchUserList,
+			}),
 		};
 	}
 
@@ -141,7 +146,9 @@ class Chat extends Block {
 				this.inputsValue = {};
 			});
 
-		console.log(this.searchUserList);
+		(this.children.serchedUserList as Block).setProps<Pick<STP, 'users'>>({
+			users: this.searchUserList,
+		});
 	}
 
 	private handleOpenModal(event: Event, elementId: string) {
