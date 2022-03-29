@@ -59,7 +59,7 @@ class ChatAPI extends BaseAPI {
 			.then((res: any) => this.getResponseWithParse(res));
 	}
 
-	getToken(id: string): Promise<any> {
+	getToken(id: number): Promise<any> {
 		const options = {
 			headers: {
 				'Content-Type': 'application/json',

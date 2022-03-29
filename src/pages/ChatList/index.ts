@@ -18,6 +18,8 @@ function withChildren(Component: typeof Block) {
 				...props,
 				chats,
 				chat,
+				chatId,
+				userId: user.id,
 			});
 		}
 	};

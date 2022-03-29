@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { IChats } from '../../API/chat-api';
@@ -9,6 +10,8 @@ import isEqual from '../../utils/isEqualProps';
 import { Items } from '../Items/Items';
 import avatarIcon from '../../../static/images/Avatar.svg';
 import { Templator } from '../../utils/Template-engine/templater';
+import store, { IUser } from '../../utils/Store/Store';
+import { chatController, messageController } from '../../controllers';
 
 type TProps = {
 	chats: IChats[];
@@ -27,6 +30,10 @@ class ChatsList extends Block {
 		newProps: Record<string, any>,
 	): boolean {
 		return !isEqual(oldProps, newProps);
+	}
+
+	private async handleGetToken(id: number): Promise<void> {
+		await chatController.getToken(id);
 	}
 
 	render() {
@@ -57,8 +64,16 @@ class ChatsList extends Block {
 								<div class="date">${created_by}</div>
 							</div>`,
 							events: {
-								click: (e: Event) => {
+								click: async (e: Event) => {
 									e.preventDefault();
+									await this.handleGetToken(id);
+									const { user }: Record<string, IUser> =
+										store.getState();
+									await messageController.connect({
+										userId: user.id,
+										chatId: id,
+										token: user.token!,
+									});
 									router.go(`/messenger/${id}`);
 								},
 							},

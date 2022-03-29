@@ -14,7 +14,7 @@ import addUserIcon from '../../../static/images/addUser.svg';
 import removeUserIcon from '../../../static/images/remove.svg';
 import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
-import { chatController, userController } from '../../controllers';
+import { chatController, userController, messageController } from '../../controllers';
 import { Input, SerchedUsersList } from '..';
 import { STP } from '../SerchedUsersList/SerchedUsersList';
 
@@ -121,10 +121,37 @@ class Chat extends Block {
 				className: 'message-form__clip',
 				isDisabled: false,
 			}),
+			input: new Input({
+				className: 'input control-panel__input',
+				name: 'message',
+				value: '',
+				attributes: `
+				type="text"
+				id="message"
+				placeholder="Сообщение"
+				required
+			`,
+				events: {
+					input: (e: Event) => {
+						e.preventDefault();
+						this.inputsValue = {
+							[(e.target as HTMLInputElement).name]: (
+								e.target as HTMLInputElement
+							).value,
+						};
+					},
+				},
+			}),
 			sendBtn: new Button({
 				text: `<img class="send-img" src="${sendIcon}" alt="send message"/>`,
 				className: 'message-form__send',
 				isDisabled: false,
+				events: {
+					click: (e: Event) => {
+						e.preventDefault();
+						messageController.sendMessage(this.inputsValue.message as string);
+					},
+				},
 			}),
 			serchedUserList: new SerchedUsersList({
 				users: this.searchUserList,

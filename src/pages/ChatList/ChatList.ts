@@ -19,7 +19,7 @@ import {
 import backArrowIcon from '../../../static/images/linkButton.svg';
 import addIcon from '../../../static/images/add.svg';
 import store, { IUser } from '../../utils/Store/Store';
-import { chatController } from '../../controllers';
+import { chatController, messageController } from '../../controllers';
 import isEqual from '../../utils/isEqualProps';
 import Message from '../../components/Message/Message';
 
@@ -91,7 +91,9 @@ class ChatList extends Block {
 					click: (e: Event) => this.handleClickCreateChat(e),
 				},
 			}),
-			chatItems: new ChatsList({ chats: this.props.chats }),
+			chatItems: new ChatsList({
+				chats: this.props.chats,
+			}),
 			startMessage: isChatSelected
 				? new Message({ chats: this.props.chats, msgDisplay: 'none' })
 				: new Message({ chats: this.props.chats, msgDisplay: 'flex' }),
@@ -152,7 +154,7 @@ class ChatList extends Block {
 
 	render() {
 		this.initChildren();
-
+		console.log(store.getState());
 		return this.compile(chatTmpl, {
 			...this.props,
 		});

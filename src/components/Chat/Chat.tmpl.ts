@@ -28,12 +28,7 @@ export const template = `
 		<div class="message-footer">
 			<form class="message-form">
 				{% clipBtn %}
-				<input
-					type="text"
-					name="message"
-					class="input control-panel__input"
-					placeholder="Сообщение"
-				/>
+				{% input %}
 				{% sendBtn %}
 			</form>
 		</div>
