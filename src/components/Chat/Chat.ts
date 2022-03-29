@@ -6,7 +6,7 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './Chat.tmpl';
 import avatarIcon from '../../../static/images/Avatar.svg';
 
-import { AvatarMini, Button, Title } from '..';
+import { AvatarMini, Button, Title, UsersList } from '..';
 import { AVATAR_URL } from '../../constants';
 
 import kebabIcon from '../../../static/images/kebab-menu.svg';
@@ -121,6 +121,7 @@ class Chat extends Block {
 			}),
 			serchedUserList: new SerchedUsersList({
 				users: this.searchUserList,
+				chatId: chat !== undefined ? chat.id : 0,
 			}),
 		};
 	}
