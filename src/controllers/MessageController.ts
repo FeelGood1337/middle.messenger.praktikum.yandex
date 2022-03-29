@@ -59,9 +59,9 @@ class MessageController {
 
 	private _handleOpen() {
 		this.getMessages({ offset: 0 });
-		this._ping = setInterval(() => {
-			this._ws.send('');
-		}, 10000);
+		// this._ping = setInterval(() => {
+		// 	this._ws.send('');
+		// }, 10000);
 	}
 
 	private _handleMassage(evt: MessageEvent) {
@@ -79,7 +79,7 @@ class MessageController {
 				store.set('user.messages', messages);
 			}
 		} else if (typeof data === 'object' && data.type === 'message') {
-			const messages = [convertKeysToCamelCase(data), ...store.getState().user];
+			const messages = [convertKeysToCamelCase(data)];
 			store.set('user.messages', messages);
 		}
 	}

@@ -1,10 +1,8 @@
 import { Block } from '../../utils/Block/Block';
 import isEqual from '../../utils/isEqualProps';
 import { Templator } from '../../utils/Template-engine/templater';
-import { Element } from '..';
+import { Items } from '..';
 import { template } from './MessageList.tmpl';
-import { IUser } from '../../utils/Store/Store';
-
 interface IMessage {
 	chatId: number;
 	content: string;
@@ -17,7 +15,7 @@ interface IMessage {
 }
 
 type TProps = {
-	messages: Record<number, IMessage>[];
+	messages: IMessage[];
 	userId: number;
 };
 
@@ -30,15 +28,30 @@ class MessageList extends Block {
 	}
 
 	protected initChildren(): void {
-		const { messages, userId } = this.props;
-		console.log(messages, userId);
-		this.children = {
-			children: new Element({
-				tag: 'h2',
-				className: ' ',
-				content: 'Z',
-			}),
-		};
+		const { messages, userId: id } = this.props;
+
+		if (messages !== undefined) {
+			this.children = {
+				children: messages
+					.slice(0)
+					.reverse()
+					.map((msg: IMessage) => {
+						const { content, time, userId } = msg;
+						const positionClass = userId === id ? 'right' : 'left';
+						const dateMsg = new Date(time).toLocaleTimeString([], {
+							hour: '2-digit',
+							minute: '2-digit',
+						});
+						return new Items({
+							className: `message-body_msg ${positionClass}`,
+							items: `
+							<div class="content">${content}</div>
+							<div class="time">${dateMsg}</div>
+						`,
+						});
+					}),
+			};
+		}
 	}
 
 	componentDidUpdate(

@@ -1,5 +1,5 @@
 export const template = `
-	<div class="message-body">
+	<ul class="message-body">
 		{% children %}
-	</div>
+	</ul>
 `;

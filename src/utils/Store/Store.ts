@@ -33,7 +33,7 @@ export interface IUser {
 	phone: string;
 	token?: string;
 	chatId?: string | null;
-	messages: Record<number, IMessages>[];
+	messages: IMessages[];
 }
 export interface IStoreData {
 	user?: IUser;
