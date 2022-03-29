@@ -70,7 +70,6 @@ class ChatList extends Block {
 	private inputsValue: Record<string, string>;
 	private form: IForm;
 	private formSearch: IForm;
-	private searchUserList: any[];
 
 	// private goToProfile(event: Event): void {
 	// 	event?.preventDefault();
@@ -318,14 +317,6 @@ class ChatList extends Block {
 					click: (e: Event) => this.handleOpenModal(e),
 				},
 			}),
-			modalAddUsetToChatBtn: new Button({
-				text: 'Добавить в чат',
-				className: 'btn-modal btn-modal__add-to-chat',
-				isDisabled: false,
-				events: {
-					click: (e: Event) => this.handleSearchUsers(e),
-				},
-			}),
 			linkButton: new LinkButton({
 				text: 'Профиль',
 				className: 'section-caht-list__link-btn',
@@ -401,10 +392,10 @@ class ChatList extends Block {
 			.then(() => {
 				const { user }: Record<string, IUser> = store.getState();
 				const { chats } = user;
-				this.children.chatItems.setProps({
+				(this.children.chatItems as Block).setProps({
 					chats,
 				});
-				this.children.startMessage.setProps({
+				(this.children.startMessage as Block).setProps({
 					chats,
 				});
 			})
@@ -435,19 +426,6 @@ class ChatList extends Block {
 		newProps: Record<string, any>,
 	): boolean {
 		return !isEqual(oldProps, newProps);
-	}
-
-	private async handleSearchUsers(event: Event): Promise<any> {
-		event.preventDefault();
-		await userController
-			.searchUser({ login: 'vv' })
-			.then((res) => {
-				this.searchUserList = res;
-			})
-			.finally(() => {
-				this.inputsValue = {};
-			});
-		console.log(this.searchUserList);
 	}
 
 	render() {
