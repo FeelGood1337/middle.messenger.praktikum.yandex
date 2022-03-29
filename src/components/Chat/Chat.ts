@@ -19,6 +19,7 @@ import { chatController, userController, messageController } from '../../control
 import { Input, SerchedUsersList } from '..';
 import { STP } from '../SerchedUsersList/SerchedUsersList';
 import store, { IUser } from '../../utils/Store/Store';
+import router from '../../router';
 
 type TProps = {
 	chat: IChats;
@@ -160,7 +161,10 @@ class Chat extends Block {
 			serchedUserList: new SerchedUsersList({
 				users: this.searchUserList,
 			}),
-			messageList: new MessageList({ messages, userId: user.id }),
+			messageList: new MessageList({
+				messages,
+				userId: user.id,
+			}),
 		};
 	}
 
@@ -203,6 +207,15 @@ class Chat extends Block {
 		};
 	}
 
+	private async handleGetToken(id: number): Promise<void> {
+		await chatController.getToken(id);
+	}
+
+	componentDidMount(): void {
+		const { chatId } = router.getParams();
+		this.handleGetToken(parseInt(chatId));
+	}
+
 	componentDidUpdate(
 		oldProps: Record<string, any>,
 		newProps: Record<string, any>,
@@ -211,6 +224,16 @@ class Chat extends Block {
 	}
 
 	render() {
+		const { chatId } = router.getParams();
+		const { user } = store.getState() as { user: IUser };
+		const { token } = user;
+		if (token !== undefined) {
+			messageController.connect({
+				userId: user.id,
+				chatId: parseInt(chatId),
+				token,
+			});
+		}
 		return this.compile(chatTmpl, { ...this.props });
 	}
 }

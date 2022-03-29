@@ -10,6 +10,17 @@ type Indexed<T = any> = {
 	[key in string]: T;
 };
 
+interface IMessages {
+	chatId: number;
+	content: string;
+	file: string;
+	id: number;
+	isRead: boolean;
+	time: string;
+	type: string;
+	userId: number;
+}
+
 export interface IUser {
 	id: number;
 	chats?: IChats[];
@@ -22,16 +33,7 @@ export interface IUser {
 	phone: string;
 	token?: string;
 	chatId?: string | null;
-	message?: {
-		chatId: number;
-		content: string;
-		file: string;
-		id: number;
-		isRead: boolean;
-		time: string;
-		type: string;
-		userId: number;
-	};
+	messages: Record<number, IMessages>[];
 }
 export interface IStoreData {
 	user?: IUser;

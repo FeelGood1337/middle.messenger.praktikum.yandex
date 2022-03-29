@@ -17,7 +17,7 @@ interface IMessage {
 }
 
 type TProps = {
-	messages: Record<number, IMessage>;
+	messages: Record<number, IMessage>[];
 	userId: number;
 };
 
