@@ -44,7 +44,7 @@ class ChatsList extends Block {
 						items: ' ',
 				  })
 				: this.props.chats.map((el: IChats): Items => {
-						const { avatar, id, last_message, created_by } = el;
+						const { avatar, id, last_message } = el;
 						return new Items({
 							className: 'chat-item',
 							items: `<img
@@ -57,11 +57,20 @@ class ChatsList extends Block {
 							<div class="item__content-wrapper">
 								<div class="item__name">${el.title}</div>
 								<p class="item__para">
-									${last_message ? last_message : ''}
+									${last_message ? last_message.content : ''}
 								</p>
 							</div>
 							<div class="item__date-wrapper">
-								<div class="date">${created_by}</div>
+								<div class="date">
+									${
+										last_message
+											? new Date(last_message.time).toLocaleString(
+													'ru',
+													{ weekday: 'short', day: 'numeric' },
+											  )
+											: ''
+									}
+								</div>
 							</div>`,
 							events: {
 								click: async (e: Event) => {

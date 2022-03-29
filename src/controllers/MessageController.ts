@@ -59,9 +59,9 @@ class MessageController {
 
 	private _handleOpen() {
 		this.getMessages({ offset: 0 });
-		// this._ping = setInterval(() => {
-		// 	this._ws.send('');
-		// }, 10000);
+		this._ping = setInterval(() => {
+			this._ws.send('');
+		}, 10000);
 	}
 
 	private _handleMassage(evt: MessageEvent) {
