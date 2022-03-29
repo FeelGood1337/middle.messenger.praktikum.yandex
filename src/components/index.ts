@@ -12,6 +12,7 @@ import Chat from './Chat/Chat';
 import Form from './Form/Form';
 import SerchedUsersList from './SerchedUsersList/SerchedUsersList';
 import UsersList from './UsersList/UsersList';
+import MessageList from './MessageList/MessageList';
 
 export {
 	Avatar,
@@ -28,4 +29,5 @@ export {
 	Form,
 	SerchedUsersList,
 	UsersList,
+	MessageList,
 };

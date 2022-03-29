@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { IChats } from '../../API/chat-api';
 import { Block } from '../../utils/Block/Block';
@@ -6,7 +7,7 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './Chat.tmpl';
 import avatarIcon from '../../../static/images/Avatar.svg';
 
-import { AvatarMini, Button, Title } from '..';
+import { AvatarMini, Button, Title, MessageList, Element } from '..';
 import { AVATAR_URL } from '../../constants';
 
 import kebabIcon from '../../../static/images/kebab-menu.svg';
@@ -17,6 +18,7 @@ import sendIcon from '../../../static/images/send-btn.svg';
 import { chatController, userController, messageController } from '../../controllers';
 import { Input, SerchedUsersList } from '..';
 import { STP } from '../SerchedUsersList/SerchedUsersList';
+import store, { IUser } from '../../utils/Store/Store';
 
 type TProps = {
 	chat: IChats;
@@ -36,6 +38,8 @@ class Chat extends Block {
 
 	protected initChildren(): void {
 		const { chat } = this.props;
+		const { user } = store.getState() as { user: IUser };
+		const { messages } = user;
 
 		this.children = {
 			avatarMini: new AvatarMini({
@@ -156,6 +160,7 @@ class Chat extends Block {
 			serchedUserList: new SerchedUsersList({
 				users: this.searchUserList,
 			}),
+			messageList: new MessageList({ messages, userId: user.id }),
 		};
 	}
 

@@ -14,6 +14,7 @@ import {
 	InputWithLabel,
 	LinkButton,
 	Title,
+	Element,
 } from '../../components/index';
 
 import backArrowIcon from '../../../static/images/linkButton.svg';
@@ -99,7 +100,11 @@ class ChatList extends Block {
 				: new Message({ chats: this.props.chats, msgDisplay: 'flex' }),
 			currentChat: isChatSelected
 				? new Chat({ chat: this.props.chat, mainDisplay: 'flex' })
-				: new Chat({ chat: this.props.chat, mainDisplay: 'none' }),
+				: new Element({
+						tag: 'div',
+						className: 'hide',
+						content: ' ',
+				  }),
 		};
 	}
 
@@ -154,7 +159,6 @@ class ChatList extends Block {
 
 	render() {
 		this.initChildren();
-		console.log(store.getState());
 		return this.compile(chatTmpl, {
 			...this.props,
 		});

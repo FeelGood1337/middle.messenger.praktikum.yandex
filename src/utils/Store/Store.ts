@@ -22,6 +22,16 @@ export interface IUser {
 	phone: string;
 	token?: string;
 	chatId?: string | null;
+	message?: {
+		chatId: number;
+		content: string;
+		file: string;
+		id: number;
+		isRead: boolean;
+		time: string;
+		type: string;
+		userId: number;
+	};
 }
 export interface IStoreData {
 	user?: IUser;

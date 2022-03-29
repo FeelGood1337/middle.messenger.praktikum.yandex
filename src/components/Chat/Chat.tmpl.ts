@@ -24,7 +24,7 @@ export const template = `
 				</div>
 			</div>
 		</div>
-		<div class="message-body"></div>
+		{% messageList %}
 		<div class="message-footer">
 			<form class="message-form">
 				{% clipBtn %}

@@ -78,7 +78,7 @@ class ChatsList extends Block {
 									await this.handleGetToken(id);
 									const { user }: Record<string, IUser> =
 										store.getState();
-									await messageController.connect({
+									messageController.connect({
 										userId: user.id,
 										chatId: id,
 										token: user.token!,
