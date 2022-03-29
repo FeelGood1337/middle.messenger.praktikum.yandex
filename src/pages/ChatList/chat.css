@@ -220,3 +220,20 @@
 .remove-user__btn:hover {
 	cursor: pointer;
 }
+
+.serched-users {
+	padding: 0;
+    margin: 16px 0;
+    list-style-type: none;
+	max-height: 168px;
+	overflow-y: scroll;
+}
+
+.serched-users__item {
+	display: flex;
+    align-items: center;
+}
+
+.serched-users div .serched-users__item:not(:last-child) {
+	margin-bottom: 8px;
+}

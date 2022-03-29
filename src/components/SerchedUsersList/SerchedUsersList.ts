@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Block } from '../../utils/Block/Block';
 import isEqual from '../../utils/isEqualProps';
 import { IUser } from '../../utils/Store/Store';
 import { Templator } from '../../utils/Template-engine/templater';
 import { UsersList, AvatarMini, Element } from '..';
+import avatarIcon from '../../../static/images/Avatar.svg';
 import { template } from './SerchedUsersList.tmpl';
 import { AVATAR_URL } from '../../constants';
 
@@ -32,7 +34,9 @@ class SerchedUsersList extends Block {
 				(user: IUser) =>
 					new UsersList({
 						avatar: new AvatarMini({
-							imgPath: `${AVATAR_URL}${user.avatar}`,
+							imgPath: user.avatar
+								? `${AVATAR_URL}${user.avatar}`
+								: avatarIcon,
 							width: '32',
 							height: '32',
 						}),
@@ -42,8 +46,8 @@ class SerchedUsersList extends Block {
 		} else {
 			return new Element({
 				tag: 'div',
-				className: '',
-				content: '',
+				className: 'hiden',
+				content: ' ',
 			});
 		}
 	}

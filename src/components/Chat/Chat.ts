@@ -6,7 +6,7 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './Chat.tmpl';
 import avatarIcon from '../../../static/images/Avatar.svg';
 
-import { AvatarMini, Button, Title, UsersList } from '..';
+import { AvatarMini, Button, Title } from '..';
 import { AVATAR_URL } from '../../constants';
 
 import kebabIcon from '../../../static/images/kebab-menu.svg';
@@ -16,7 +16,6 @@ import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
 import { userController } from '../../controllers';
 import { Input, SerchedUsersList } from '..';
-import { IUser } from '../../utils/Store/Store';
 import { STP } from '../SerchedUsersList/SerchedUsersList';
 
 type TProps = {
