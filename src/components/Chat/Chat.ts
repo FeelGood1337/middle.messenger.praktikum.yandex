@@ -203,10 +203,13 @@ class Chat extends Block {
 			serchedUserListRemove: new SerchedUsersList({
 				users: this.searchUserList,
 			}),
-			messageList: new MessageList({
-				messages,
-				userId: user.id,
-			}),
+			messageList:
+				messages === undefined || !messages.length
+					? new Element({ tag: 'div', className: 'hide', content: ' ' })
+					: new MessageList({
+							messages,
+							userId: user.id,
+					  }),
 		};
 	}
 

@@ -45,8 +45,11 @@ class ChatsList extends Block {
 				  })
 				: this.props.chats.map((el: IChats): Items => {
 						const { avatar, id, last_message } = el;
+						const { chatId } = router.getParams();
+						const active = parseInt(chatId) === id ? 'active' : '';
+
 						return new Items({
-							className: 'chat-item',
+							className: `chat-item ${active}`,
 							items: `<img
 								class="avatar-svg__item"
 								src="${!avatar ? avatarIcon : AVATAR_URL + avatar}"
@@ -84,6 +87,7 @@ class ChatsList extends Block {
 										token: user.token!,
 									});
 									router.go(`/messenger/${id}`);
+									// messageController.leave();
 								},
 							},
 						});

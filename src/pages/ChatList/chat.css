@@ -64,6 +64,10 @@
 	padding: 16px 0 8px;
 }
 
+.chat-item.active {
+	background: #B2DFDB;
+}
+
 .chat-item:hover {
 	cursor: pointer;
 	background: #E0F2F1;
