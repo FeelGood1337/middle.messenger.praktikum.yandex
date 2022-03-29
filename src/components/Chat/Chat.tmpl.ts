@@ -23,6 +23,15 @@ export const template = `
 					</form>
 				</div>
 			</div>
+			<div class="modal" id="searchForRemoveUserModal">
+				<div class="modal-wrapper modal-wrapper__chat-create">
+					<form class="auth__form auth__form_search" novalidate="true">
+						{% modalInputSearchRemove %}
+						{% serchedUserListRemove %}
+						{% modalRemoveUsetToChatBtn %}
+					</form>
+				</div>
+			</div>
 		</div>
 		{% messageList %}
 		<div class="message-footer">

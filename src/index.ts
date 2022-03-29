@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 		.use('/messenger', ChatList)
 		.use('/error', ServerErrorPage)
 		.use('/notfound', NotFoundPage)
-		// .use('/settings', ProfilePage)
+		.use('/settings', ProfilePage)
 		// .use('/settings/change-user-info', ChangeUserInfo)
 		// .use('/settings/change-user-password', ChangeUserPassword)
 		.use('/messenger/{chatId}', ChatList)

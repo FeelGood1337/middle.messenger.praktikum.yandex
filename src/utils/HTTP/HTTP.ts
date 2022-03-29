@@ -49,6 +49,10 @@ class HTTPTransport implements IHTTPTransport {
 		return this.request(url, { ...options, method: METHOD.PUT });
 	}
 
+	delete(url: string, options: Options): Promise<XMLHttpRequest> {
+		return this.request(url, { ...options, method: METHOD.DELETE });
+	}
+
 	getDeepParams(keyName: string, object: deepObject): string {
 		return Object.keys(object).reduce((result, key, index, arr) => {
 			const obj = object[key];

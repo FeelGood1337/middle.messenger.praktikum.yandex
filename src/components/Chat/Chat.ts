@@ -82,6 +82,10 @@ class Chat extends Block {
 				`,
 				className: 'remove-user__btn',
 				isDisabled: false,
+				events: {
+					click: (e: Event) =>
+						this.handleOpenModal(e, 'searchForRemoveUserModal'),
+				},
 			}),
 			modalInputSearch: new Input({
 				name: 'login',
@@ -105,6 +109,26 @@ class Chat extends Block {
 					},
 				},
 			}),
+			modalInputSearchRemove: new Input({
+				name: 'loginRemove',
+				className: 'modal-chat-input',
+				attributes: `
+					type="text"
+					id="loginRemove"
+					placeholder="Введите логин"
+					required
+				`,
+				value: '',
+				events: {
+					input: (e: Event) => {
+						e.preventDefault();
+						this.inputsValue = {
+							login: (e.target as HTMLInputElement).value,
+						};
+						this.handleSearchUsersForRemove(e);
+					},
+				},
+			}),
 			modalAddUsetToChatBtn: new Button({
 				text: 'Добавить в чат',
 				className: 'btn btn-modal btn-modal__add-to-chat',
@@ -117,7 +141,22 @@ class Chat extends Block {
 							users: _usersArr,
 							chatId: chat !== undefined ? chat.id : 0,
 						});
-						console.log(chat);
+					},
+				},
+			}),
+			modalRemoveUsetToChatBtn: new Button({
+				text: 'Удалить из чата',
+				className: 'btn btn-modal btn-modal__remove-from-chat',
+				isDisabled: false,
+				events: {
+					click: async (e: Event) => {
+						e.preventDefault();
+						const _usersArr = (this.children.serchedUserListRemove as any)
+							.usersArr;
+						await chatController.removeUserFromChat({
+							users: _usersArr,
+							chatId: chat !== undefined ? chat.id : 0,
+						});
 					},
 				},
 			}),
@@ -161,6 +200,9 @@ class Chat extends Block {
 			serchedUserList: new SerchedUsersList({
 				users: this.searchUserList,
 			}),
+			serchedUserListRemove: new SerchedUsersList({
+				users: this.searchUserList,
+			}),
 			messageList: new MessageList({
 				messages,
 				userId: user.id,
@@ -190,6 +232,32 @@ class Chat extends Block {
 			});
 
 		(this.children.serchedUserList as Block).setProps<Pick<STP, 'users'>>({
+			users: this.searchUserList,
+		});
+	}
+
+	private async handleSearchUsersForRemove(event: Event): Promise<any> {
+		event.preventDefault();
+
+		const { element } = this;
+		const modal: HTMLElement = element.querySelector(
+			'#searchForRemoveUserModal',
+		) as HTMLElement;
+		const modalFly: HTMLElement = element.querySelector(
+			'#kebabMenuModal',
+		) as HTMLElement;
+
+		modalFly.style.display = 'none';
+		modal.style.display = 'flex';
+
+		await userController
+			.searchUser(this.inputsValue)
+			.then((res) => (this.searchUserList = res))
+			.finally(() => {
+				this.inputsValue = {};
+			});
+
+		(this.children.serchedUserListRemove as Block).setProps<Pick<STP, 'users'>>({
 			users: this.searchUserList,
 		});
 	}

@@ -34,6 +34,16 @@ class ChatController {
 		});
 	}
 
+	async removeUserFromChat(data: Record<string, any>): Promise<void> {
+		await chatApi.removeUserFromChat(data).catch((err) => {
+			const { status } = err;
+
+			if (status === 500) {
+				router.go('/error');
+			}
+		});
+	}
+
 	async getToken(id: number) {
 		await chatApi
 			.getToken(id)
