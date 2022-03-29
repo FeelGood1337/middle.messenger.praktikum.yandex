@@ -7,13 +7,11 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './chatList.tmpl';
 
 import {
-	AvatarMini,
 	Button,
 	Chat,
 	ChatsList,
 	Input,
 	InputWithLabel,
-	Items,
 	LinkButton,
 	Title,
 } from '../../components/index';
@@ -21,55 +19,13 @@ import {
 import backArrowIcon from '../../../static/images/linkButton.svg';
 import addIcon from '../../../static/images/add.svg';
 import store, { IUser } from '../../utils/Store/Store';
-import { AVATAR_URL } from '../../constants';
-import { chatController, userController } from '../../controllers';
-import { Form, IForm } from '../../utils/form';
-import { IChats } from '../../API/chat-api';
+import { chatController } from '../../controllers';
 import isEqual from '../../utils/isEqualProps';
 import Message from '../../components/Message/Message';
-
-interface IProps {
-	state: IUser;
-	router: typeof router;
-}
-
-const inputsPropsAddChat = [
-	{
-		name: 'title',
-		className: 'modal-chat-input',
-		labelClassName: 'chat-label',
-		labelText: 'Чат',
-		labelId: 'title',
-		attributes: `
-			type="text"
-			id="title"
-			placeholder="Введите имя чата"
-			required
-		`,
-	},
-];
-
-const inputsPropsAddUser = [
-	{
-		name: 'login',
-		className: 'modal-chat-input',
-		labelClassName: 'chat-label',
-		labelText: 'Логин',
-		labelId: 'login',
-		attributes: `
-			type="text"
-			id="login"
-			placeholder="Введите логин"
-			required
-		`,
-	},
-];
 
 const chatTmpl = new Templator(template);
 class ChatList extends Block {
 	private inputsValue: Record<string, string>;
-	private form: IForm;
-	private formSearch: IForm;
 
 	protected initChildren(): void {
 		const isChatSelected = Object.keys(router.getParams()).length !== 0;

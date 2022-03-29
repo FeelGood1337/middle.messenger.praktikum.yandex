@@ -71,9 +71,9 @@
 
 .message-main {
 	height: 100%;
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
+	display: none;
+	flex-direction: column;
+	justify-content: space-between;
 	margin-bottom: 16px;
 }
 
@@ -223,15 +223,22 @@
 
 .serched-users {
 	padding: 0;
-    margin: 16px 0;
-    list-style-type: none;
+	margin: 16px 0;
+	list-style-type: none;
 	max-height: 168px;
 	overflow-y: scroll;
 }
 
 .serched-users__item {
 	display: flex;
-    align-items: center;
+	align-items: center;
+	padding: 8px;
+	border-radius: 8px;
+}
+
+.serched-users__item:hover {
+	cursor: pointer;
+	background: #eff1f1;
 }
 
 .serched-users div .serched-users__item:not(:last-child) {

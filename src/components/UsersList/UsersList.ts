@@ -6,6 +6,9 @@ import { template } from './UsersList.tmpl';
 type TProps = {
 	avatar: Block;
 	login: string;
+	events?: {
+		click?: (arg: any) => any;
+	};
 };
 
 const usersListTmpl = new Templator(template);

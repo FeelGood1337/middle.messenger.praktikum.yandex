@@ -10,15 +10,20 @@ import { AVATAR_URL } from '../../constants';
 
 export type TProps = {
 	users: IUser[];
-	chatId: number;
 };
+
+export interface ISerchedUsersList {
+	usersArr: number[];
+}
 
 const searchedUsersListTmpl = new Templator(template);
 
-class SerchedUsersList extends Block {
+class SerchedUsersList extends Block implements ISerchedUsersList {
 	props: TProps;
+	public usersArr: number[];
 	constructor(props: TProps) {
 		super(props);
+		this.usersArr = [];
 	}
 
 	protected initChildren(): void {
@@ -41,6 +46,12 @@ class SerchedUsersList extends Block {
 							height: '32',
 						}),
 						login: user.login,
+						events: {
+							click: (e: Event) => {
+								e.preventDefault();
+								this.usersArr.push(user.id);
+							},
+						},
 					}),
 			);
 		} else {
@@ -65,4 +76,4 @@ class SerchedUsersList extends Block {
 	}
 }
 
-export { SerchedUsersList as default, TProps as STP };
+export { SerchedUsersList as default, TProps as STP, ISerchedUsersList as IST };

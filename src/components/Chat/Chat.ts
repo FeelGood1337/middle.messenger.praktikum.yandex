@@ -14,7 +14,7 @@ import addUserIcon from '../../../static/images/addUser.svg';
 import removeUserIcon from '../../../static/images/remove.svg';
 import clipIcon from '../../../static/images/clip.svg';
 import sendIcon from '../../../static/images/send-btn.svg';
-import { userController } from '../../controllers';
+import { chatController, userController } from '../../controllers';
 import { Input, SerchedUsersList } from '..';
 import { STP } from '../SerchedUsersList/SerchedUsersList';
 
@@ -105,7 +105,15 @@ class Chat extends Block {
 				className: 'btn btn-modal btn-modal__add-to-chat',
 				isDisabled: false,
 				events: {
-					click: (e: Event) => this.handleSearchUsers(e),
+					click: async (e: Event) => {
+						e.preventDefault();
+						const _usersArr = (this.children.serchedUserList as any).usersArr;
+						await chatController.addUserToChat({
+							users: _usersArr,
+							chatId: chat !== undefined ? chat.id : 0,
+						});
+						console.log(chat);
+					},
 				},
 			}),
 			clipBtn: new Button({
@@ -120,7 +128,6 @@ class Chat extends Block {
 			}),
 			serchedUserList: new SerchedUsersList({
 				users: this.searchUserList,
-				chatId: chat !== undefined ? chat.id : 0,
 			}),
 		};
 	}
