@@ -37,7 +37,11 @@ export const template = `
 						</div>
 						<div class="profile-paper__fields-wrapper">
 							<ul class="fields-items">{% items %}</ul>
-							<ul class="btns-items">{% btnItems %}</ul>
+							<ul class="btns-items">
+								{% btnChangeInfo %}
+								{% btnChangePassword %}
+								{% btnLogout %}
+							</ul>
 						</div>
 					</div>
 				</div>

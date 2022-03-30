@@ -3,6 +3,7 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './avatar.tmpl';
 
 import './avatar.css';
+import isEqual from '../../utils/isEqualProps';
 
 type TProps = {
 	link?: string;
@@ -20,11 +21,17 @@ class Avatar extends Block implements IAvatar {
 
 	constructor(props: TProps) {
 		super(props);
-		this.props = props;
+	}
+
+	componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): boolean {
+		return !isEqual(oldProps, newProps);
 	}
 
 	render() {
-		return avatarTmpl.compile({ ...this.props }).getNode();
+		return this.compile(avatarTmpl, { ...this.props });
 	}
 }
 

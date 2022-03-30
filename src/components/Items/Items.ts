@@ -1,4 +1,5 @@
 import { Block } from '../../utils/Block/Block';
+import isEqual from '../../utils/isEqualProps';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './items.tmpl';
 
@@ -18,26 +19,15 @@ class Items extends Block {
 		super(props);
 	}
 
+	componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): boolean {
+		return !isEqual(oldProps, newProps);
+	}
+
 	render() {
-		const { className, items }: TProps = this.props;
-
-		if (Array.isArray(items)) {
-			const liList: any[] = [];
-			items.map((el) => {
-				liList.push(
-					this.compile(itemTmpl, {
-						className,
-						items: el,
-					}),
-				);
-			});
-			return liList;
-		}
-
-		return this.compile(itemTmpl, {
-			className,
-			items,
-		});
+		return this.compile(itemTmpl, { ...this.props });
 	}
 }
 
