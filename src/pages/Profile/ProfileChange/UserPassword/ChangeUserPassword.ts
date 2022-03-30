@@ -10,15 +10,20 @@ import {
 	InputValidate,
 	IInputValidate,
 } from '../../../../components/InputWithLabel/InputValidate';
-import { Avatar } from '../../../../components/Avatar/Avatar';
-import { Title } from '../../../../components/Title/Title';
-import { InputWithLabel } from '../../../../components/InputWithLabel/InputWithLabel';
-import { Button } from '../../../../components/Button/Button';
+import {
+	Input,
+	Form as MainForm,
+	LinkButton,
+	BackBtn,
+	Avatar,
+	Title,
+	InputWithLabel,
+	Button,
+} from '../../../../components';
 
 import { IUser } from '../../../../utils/Store/Store';
 import router from '../../../../router';
 import { userController } from '../../../../controllers';
-import { Input, Form as MainForm, LinkButton } from '../../../../components';
 
 const userPasswordTmpl = new Templator(template);
 class ChangeUserPassword extends Block {
@@ -58,6 +63,12 @@ class ChangeUserPassword extends Block {
 				events: {
 					change: () => this.getInputsValue(),
 					input: () => this.form.formIsValid(),
+				},
+			}),
+			backBtn: new BackBtn({
+				href: '/settings',
+				events: {
+					click: (e: Event) => this.goToSettings(e),
 				},
 			}),
 		};

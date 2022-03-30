@@ -12,13 +12,18 @@ import {
 	InputValidate,
 	IInputValidate,
 } from '../../../../components/InputWithLabel/InputValidate';
-import { Avatar } from '../../../../components/Avatar/Avatar';
-import { Title } from '../../../../components/Title/Title';
-import { InputWithLabel } from '../../../../components/InputWithLabel/InputWithLabel';
-import { Button } from '../../../../components/Button/Button';
+import {
+	Input,
+	LinkButton,
+	Form as MainForm,
+	BackBtn,
+	Avatar,
+	Title,
+	InputWithLabel,
+	Button,
+} from '../../../../components';
 
 import router from '../../../../router';
-import { Input, LinkButton, Form as MainForm } from '../../../../components';
 
 const userInfoTmpl = new Templator(template);
 
@@ -59,6 +64,12 @@ class ChangeUserInfo extends Block {
 				events: {
 					change: () => this.getInputsValue(),
 					input: () => this.form.formIsValid(),
+				},
+			}),
+			backBtn: new BackBtn({
+				href: '/settings',
+				events: {
+					click: (e: Event) => this.goToSettings(e),
 				},
 			}),
 		};

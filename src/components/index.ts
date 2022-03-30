@@ -13,6 +13,7 @@ import Form from './Form/Form';
 import SerchedUsersList from './SerchedUsersList/SerchedUsersList';
 import UsersList from './UsersList/UsersList';
 import MessageList from './MessageList/MessageList';
+import BackBtn from './BackBtn/BackBtn';
 
 export {
 	Avatar,
@@ -30,4 +31,5 @@ export {
 	SerchedUsersList,
 	UsersList,
 	MessageList,
+	BackBtn,
 };

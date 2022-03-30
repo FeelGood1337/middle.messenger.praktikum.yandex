@@ -6,11 +6,19 @@ import { Block } from '../../utils/Block/Block';
 import router from '../../router';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './profile.tmpl';
-import { btnsProps, avatarProps } from './itemsProps';
+import { avatarProps } from './itemsProps';
 
 import { userController, authController } from '../../controllers';
 import { AVATAR_URL } from '../../constants';
-import { Title, Input, Avatar, Items, LinkButton, Button } from '../../components';
+import {
+	Title,
+	Input,
+	Avatar,
+	Items,
+	LinkButton,
+	Button,
+	BackBtn,
+} from '../../components';
 
 import './profile.css';
 import isEqual from '../../utils/isEqualProps';
@@ -128,6 +136,12 @@ class ProfilePage extends Block {
 				hasSvgIcon: false,
 				events: {
 					click: (e: Event) => this.logoutClick(e),
+				},
+			}),
+			backBtn: new BackBtn({
+				href: '/messenger',
+				events: {
+					click: (e: Event) => this.goToChat(e),
 				},
 			}),
 		};
