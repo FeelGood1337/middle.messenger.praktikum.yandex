@@ -14,7 +14,7 @@ type TProps = {
 
 interface IInputWithLabel {
 	props: TProps;
-	render(): ChildNode | HTMLElement;
+	render(): DocumentFragment;
 }
 
 const inputTmplt = new Templator(template);

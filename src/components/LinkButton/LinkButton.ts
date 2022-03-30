@@ -18,7 +18,7 @@ type TProps = {
 
 interface ILinkButton {
 	props: TProps;
-	render(): ChildNode | HTMLElement;
+	render(): DocumentFragment;
 }
 
 const linkBtnTmpl = new Templator(template);

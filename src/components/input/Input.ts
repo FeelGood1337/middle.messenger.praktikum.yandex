@@ -20,7 +20,7 @@ type TProps = {
 
 interface IInput {
 	props: TProps;
-	render(): ChildNode | HTMLElement;
+	render(): DocumentFragment;
 }
 
 const input = new Templator(template);

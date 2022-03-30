@@ -13,7 +13,7 @@ type TProps = {
 
 interface IAvatarMini {
 	props: TProps;
-	render(): ChildNode | HTMLElement;
+	render(): DocumentFragment;
 }
 
 const avatarMiniTmpl = new Templator(template);

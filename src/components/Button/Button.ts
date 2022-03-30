@@ -15,7 +15,7 @@ type TProps = {
 
 interface IButton {
 	props: TProps;
-	render(): ChildNode | HTMLElement;
+	render(): DocumentFragment;
 }
 
 const btnTmpl = new Templator(template);

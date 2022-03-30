@@ -10,7 +10,7 @@ type TProps = {
 
 interface IElement {
 	props: TProps;
-	render(): ChildNode | HTMLElement;
+	render(): DocumentFragment;
 }
 
 const elTmpl = new Templator(template);

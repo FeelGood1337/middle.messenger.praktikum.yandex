@@ -46,14 +46,14 @@ class MessageController {
 	private _addEvents() {
 		this._ws.addEventListener('open', this._handleOpen);
 		this._ws.addEventListener('message', this._handleMassage);
-		this._ws.addEventListener('error', this._handleError);
+		this._ws.addEventListener('error', (e) => this._handleError(e as ErrorEvent));
 		this._ws.addEventListener('close', this._handleClose);
 	}
 
 	private _removeEvents() {
 		this._ws.removeEventListener('open', this._handleOpen);
 		this._ws.removeEventListener('message', this._handleMassage);
-		this._ws.removeEventListener('error', this._handleError);
+		this._ws.removeEventListener('error', (e) => this._handleError(e as ErrorEvent));
 		this._ws.removeEventListener('close', this._handleClose);
 	}
 

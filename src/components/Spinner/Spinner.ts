@@ -12,7 +12,7 @@ class Spinner extends Block {
 	}
 
 	render() {
-		return spinnerTmpl.compile({ ...this.props }).getNode();
+		return this.compile(spinnerTmpl, { ...this.props });
 	}
 }
 

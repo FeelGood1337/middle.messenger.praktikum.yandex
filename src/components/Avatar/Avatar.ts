@@ -15,7 +15,7 @@ type TProps = {
 
 interface IAvatar {
 	props: TProps;
-	render(): ChildNode | HTMLElement;
+	render(): DocumentFragment;
 }
 
 const avatarTmpl = new Templator(template);

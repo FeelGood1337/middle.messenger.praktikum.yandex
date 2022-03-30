@@ -20,7 +20,7 @@ import {
 import backArrowIcon from '../../../static/images/linkButton.svg';
 import addIcon from '../../../static/images/add.svg';
 import store, { IUser } from '../../utils/Store/Store';
-import { chatController, messageController } from '../../controllers';
+import { chatController } from '../../controllers';
 import isEqual from '../../utils/isEqualProps';
 import Message from '../../components/Message/Message';
 
