@@ -7,6 +7,7 @@ import router from '../../router';
 import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './profile.tmpl';
 import { avatarProps } from './itemsProps';
+import avaIcon from '../../../static/images/Avatar.svg';
 
 import { userController, authController } from '../../controllers';
 import { AVATAR_URL } from '../../constants';
@@ -76,6 +77,8 @@ class ProfilePage extends Block {
 		const { state }: Record<string, IUser> = this.props;
 		const { avatar, first_name, second_name } = state;
 
+		const avaImg = avatar ? `${AVATAR_URL}${avatar}` : avaIcon;
+
 		this.children = {
 			title: new Title({
 				tag: 'h2',
@@ -83,7 +86,7 @@ class ProfilePage extends Block {
 				text: `${first_name} ${second_name}`,
 			}),
 			avatar: new Avatar({
-				imgPath: `${AVATAR_URL}${avatar}`,
+				imgPath: avaImg,
 				events: {
 					click: () => this.handleClickModal(),
 				},

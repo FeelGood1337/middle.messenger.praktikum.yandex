@@ -27,6 +27,7 @@ class AuthController {
 		await this.authApi
 			.signup(data)
 			.then(() => userController.getUser())
+			.then(() => chatController.getChat())
 			.then(() => router.go('/messenger'))
 			.catch((err) => {
 				const { status } = err;
