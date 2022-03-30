@@ -66,7 +66,6 @@ function getTextItems(state: IUser) {
 class ProfilePage extends Block {
 	protected initChildren(): void {
 		const { state }: Record<string, IUser> = this.props;
-		console.log(state);
 		const { avatar, first_name, second_name } = state;
 
 		this.children = {

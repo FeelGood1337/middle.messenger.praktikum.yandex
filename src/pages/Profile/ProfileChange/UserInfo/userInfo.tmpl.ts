@@ -20,10 +20,7 @@ export const template = `
 							<div class="signup-wrapper">
 								<div class="auth">
 									{% title %}
-									<form class="auth__form">
-										<div class="form__wrapper">{% inputs %}</div>
-										{% button %}
-									</form>
+									{% form %}
 								</div>
 							</div>
 						</div>
