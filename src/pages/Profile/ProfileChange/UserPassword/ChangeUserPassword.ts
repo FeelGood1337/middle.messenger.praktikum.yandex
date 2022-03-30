@@ -18,6 +18,7 @@ import { Button } from '../../../../components/Button/Button';
 import { IUser } from '../../../../utils/Store/Store';
 import router from '../../../../router';
 import { userController } from '../../../../controllers';
+import { Input, Form as MainForm, LinkButton } from '../../../../components';
 
 const userPasswordTmpl = new Templator(template);
 class ChangeUserPassword extends Block {
@@ -25,38 +26,83 @@ class ChangeUserPassword extends Block {
 	private validate: IInputValidate[];
 	private form: IForm;
 
+	protected initChildren(): void {
+		const { state }: Record<string, IUser> = this.props;
+		const { avatar } = state;
+
+		this.children = {
+			title: new Title({
+				tag: 'h2',
+				className: 'auth__title signup__title',
+				text: 'Изменить пароль',
+			}),
+			avatar: new Avatar({
+				imgPath: `${AVATAR_URL}${avatar}`,
+			}),
+			form: new MainForm({
+				button: new Button({
+					text: 'Сохранить',
+					className: 'btn signup__btn',
+					isDisabled: true,
+					events: {
+						click: (e: Event) => this.handleClick(e),
+					},
+				}),
+				linkButton: new LinkButton({
+					text: ' ',
+					className: 'hiden',
+					href: ' ',
+					hasSvgIcon: false,
+				}),
+				inputs: this.getInputs(),
+				events: {
+					change: () => this.getInputsValue(),
+					input: () => this.form.formIsValid(),
+				},
+			}),
+		};
+	}
+
 	private getInputs() {
 		this.inputsValue = this.inputsValue || {};
 		this.validate = this.validate || [];
 
-		return inputsProps
-			.map(
-				({
+		return inputsProps.map(
+			(
+				{
 					className,
-					labelClassName,
 					labelText,
+					labelClassName,
 					labelId,
 					attributes,
 					name,
 					handleBlur,
-				}) => {
-					const value = this.inputsValue[name]
-						? `value="${this.inputsValue[name]}"`
-						: ' ';
-					this.validate.push(new InputValidate(handleBlur));
+				},
+				index: number,
+			) => {
+				const value = this.inputsValue[name]
+					? `value="${this.inputsValue[name]}"`
+					: ' ';
+				this.validate.push(new InputValidate(handleBlur));
+				const vlArr = [...this.validate];
 
-					return new InputWithLabel({
+				return new InputWithLabel({
+					labelClassName,
+					labelText,
+					labelId,
+					input: new Input({
 						className,
-						labelClassName,
-						labelText,
-						labelId,
 						attributes,
 						name,
 						value,
-					}).render().outerHTML;
-				},
-			)
-			.join('');
+						events: {
+							blur: (e: Event) => vlArr[index].handleBlur(e),
+							focus: () => vlArr[index].handleFocus(),
+						},
+					}),
+				});
+			},
+		);
 	}
 
 	private getInputsValue(): void {
@@ -76,55 +122,17 @@ class ChangeUserPassword extends Block {
 	}
 
 	componentDidMount(): void {
-		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, validate, getInputsValue, handleClick, goToSettings } = this;
-
-			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
-			const formButton: HTMLButtonElement = element.querySelector('.signup__btn')!;
-			const inputs: NodeListOf<HTMLInputElement> =
-				element.querySelectorAll('.input');
-
-			const linkBtn: HTMLButtonElement = element.querySelector(
-				'.profile-section-link',
-			) as HTMLButtonElement;
-
-			this.form = new Form(formContainer, formButton);
-
-			inputs.forEach((input, index) => {
-				(input as HTMLInputElement).onfocus = validate[index].handleFocus;
-				(input as HTMLInputElement).onblur = validate[index].handleBlur;
-			});
-
-			formContainer.onchange = getInputsValue.bind(this);
-			formContainer.oninput = this.form.formIsValid;
-			formButton.onclick = handleClick.bind(this);
-			linkBtn.onclick = goToSettings;
-		});
+		this.form = new Form(
+			this.children.form as Block,
+			(this.children.form as any).children.button,
+		);
 	}
 
 	render() {
-		const { state }: Record<string, IUser> = this.props;
-		const { avatar } = state;
-
-		return userPasswordTmpl
-			.compile({
-				profileSvgClass: 'profile-svg',
-				title: new Title({
-					tag: 'h2',
-					className: 'auth__title signup__title',
-					text: 'Изменить пароль',
-				}).render(),
-				avatar: new Avatar({
-					imgPath: `${AVATAR_URL}${avatar}`,
-				}).render(),
-				button: new Button({
-					text: 'Сохранить',
-					className: 'signup__btn',
-					isDisabled: true,
-				}).render(),
-				inputs: this.getInputs(),
-			})
-			.getNode();
+		return this.compile(userPasswordTmpl, {
+			...this.props,
+			profileSvgClass: 'profile-svg',
+		});
 	}
 }
 

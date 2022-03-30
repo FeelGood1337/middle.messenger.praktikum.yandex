@@ -133,7 +133,10 @@ class SigninPage extends Block {
 	}
 
 	componentDidMount(): void {
-		this.form = new Form(this.children.form, this.children.form.children.button);
+		this.form = new Form(
+			this.children.form as Block,
+			(this.children.form as any).children.button,
+		);
 	}
 
 	render() {

@@ -12,6 +12,7 @@ type TProps = {
 	value: string;
 	events?: {
 		input?: (args: any) => any;
+		change?: (args: any) => any;
 		focus?: (args: any) => any;
 		blur?: (args: any) => any;
 	};

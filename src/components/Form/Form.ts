@@ -6,7 +6,7 @@ import { template } from './Form.tmpl';
 type TProps = {
 	inputs: Block[];
 	button: Block;
-	linkButton: Block;
+	linkButton?: Block;
 	events?: {
 		change?: (arg: any) => any;
 		input?: (arg: any) => any;

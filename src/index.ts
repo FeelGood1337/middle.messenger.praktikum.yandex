@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 		.use('/error', ServerErrorPage)
 		.use('/notfound', NotFoundPage)
 		.use('/settings', ProfilePage)
-		// .use('/settings/change-user-info', ChangeUserInfo)
-		// .use('/settings/change-user-password', ChangeUserPassword)
+		.use('/settings/change-user-info', ChangeUserInfo)
+		.use('/settings/change-user-password', ChangeUserPassword)
 		.use('/messenger/{chatId}', ChatList)
 		.use('/sign-up', SignupPage);
 

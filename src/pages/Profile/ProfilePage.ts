@@ -13,6 +13,7 @@ import { AVATAR_URL } from '../../constants';
 import { Title, Input, Avatar, Items, LinkButton, Button } from '../../components';
 
 import './profile.css';
+import isEqual from '../../utils/isEqualProps';
 
 const profileTmpl = new Templator(template);
 
@@ -76,6 +77,9 @@ class ProfilePage extends Block {
 			}),
 			avatar: new Avatar({
 				imgPath: `${AVATAR_URL}${avatar}`,
+				events: {
+					click: () => this.handleClickModal(),
+				},
 			}),
 			modalTitle: new Title({
 				tag: 'h2',
@@ -87,11 +91,17 @@ class ProfilePage extends Block {
 				attributes: avatarProps[0].attributes,
 				name: avatarProps[0].name,
 				value: ' ',
+				events: {
+					change: (e: Event) => this.handleChangeAvatarInput(e),
+				},
 			}),
 			modalBtn: new Button({
 				text: 'Загрузить',
-				className: 'btn-modal',
+				className: 'btn btn-modal',
 				isDisabled: false,
+				events: {
+					click: (e: Event) => this.handleUploadAvatar(e),
+				},
 			}),
 			items: getTextItems(state),
 			btnChangeInfo: new LinkButton({
@@ -144,88 +154,48 @@ class ProfilePage extends Block {
 		router.go('/settings/change-user-password');
 	}
 
-	// private handleClickModal(modal: HTMLElement): void {
-	// 	modal.style.display = 'flex';
-	// 	window.onclick = (event: Event) => {
-	// 		if (event.target === modal) {
-	// 			modal.style.display = 'none';
-	// 		}
-	// 	};
-	// }
+	private handleClickModal(): void {
+		const modal: HTMLElement = document.querySelector('#avatarModal') as HTMLElement;
+		modal.style.display = 'flex';
+		window.onclick = (event: Event) => {
+			if (event.target === modal) {
+				modal.style.display = 'none';
+			}
+		};
+	}
 
-	// private handleChangeAvatarInput(event: Event): void {
-	// 	const [file]: any = (<HTMLInputElement>event.target).files;
-	// 	const { name: fileName, size } = file;
-	// 	const fileSize = (size / Math.pow(1024, 2)).toFixed(2);
-	// 	const fileNameAndSize = `${fileName} - ${fileSize} MB`;
-	// 	(document.querySelector('.file-name') as HTMLParagraphElement).textContent =
-	// 		fileNameAndSize;
-	// }
+	private handleChangeAvatarInput(event: Event): void {
+		const [file]: any = (<HTMLInputElement>event.target).files;
+		const { name: fileName, size } = file;
+		const fileSize = (size / Math.pow(1024, 2)).toFixed(2);
+		const fileNameAndSize = `${fileName} - ${fileSize} MB`;
+		(document.querySelector('.file-name') as HTMLParagraphElement).textContent =
+			fileNameAndSize;
+	}
 
-	// private async handleUploadAvatar(event: Event): Promise<void> {
-	// 	event?.preventDefault();
-	// 	const avatarInput: HTMLInputElement = document.querySelector(
-	// 		'#avatarInput',
-	// 	) as HTMLInputElement;
-	// 	const modal: HTMLElement = document.querySelector('#avatarModal') as HTMLElement;
-	// 	const formData = new FormData();
-	// 	formData.append('avatar', avatarInput.files![0]);
+	private async handleUploadAvatar(event: Event): Promise<void> {
+		event?.preventDefault();
+		const avatarInput: HTMLInputElement = document.querySelector(
+			'#avatarInput',
+		) as HTMLInputElement;
+		const modal: HTMLElement = document.querySelector('#avatarModal') as HTMLElement;
+		const formData = new FormData();
+		formData.append('avatar', avatarInput.files![0]);
 
-	// 	await userController.updateAvatar(formData);
+		await userController.updateAvatar(formData);
 
-	// 	modal.style.display = 'none';
-	// }
+		modal.style.display = 'none';
+	}
 
-	// componentDidMount(): void {
-	// 	this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-	// 		const {
-	// 			element,
-	// 			goToChat,
-	// 			logoutClick,
-	// 			handleClickModal,
-	// 			handleChangeAvatarInput,
-	// 			handleUploadAvatar,
-	// 			handleUserInfoChange,
-	// 			handleUserPasswordChange,
-	// 		} = this;
-
-	// 		const avatarImg: HTMLImageElement = element.querySelector(
-	// 			'.avatar__img',
-	// 		) as HTMLImageElement;
-	// 		const avatarInput: HTMLInputElement = element.querySelector(
-	// 			'#avatarInput',
-	// 		) as HTMLInputElement;
-	// 		const modal: HTMLElement = element.querySelector(
-	// 			'#avatarModal',
-	// 		) as HTMLElement;
-	// 		const btnUploadAvatar: HTMLButtonElement = element.querySelector(
-	// 			'.btn-modal',
-	// 		) as HTMLButtonElement;
-
-	// 		const linkBtn: HTMLButtonElement = element.querySelector(
-	// 			'.profile-section-link',
-	// 		) as HTMLButtonElement;
-	// 		const userInfoBtn: HTMLButtonElement = element.querySelector(
-	// 			'.btn-user-info',
-	// 		) as HTMLButtonElement;
-	// 		const userPasswordBtn: HTMLButtonElement = element.querySelector(
-	// 			'.btn-user-password',
-	// 		) as HTMLButtonElement;
-	// 		const logOutBtn: HTMLButtonElement = element.querySelector(
-	// 			'.btn-logout',
-	// 		) as HTMLButtonElement;
-
-	// 		linkBtn.onclick = goToChat;
-	// 		logOutBtn.onclick = logoutClick;
-	// 		avatarImg.onclick = () => handleClickModal(modal);
-	// 		avatarInput.onchange = handleChangeAvatarInput;
-	// 		btnUploadAvatar.onclick = handleUploadAvatar.bind(this);
-	// 		userInfoBtn.onclick = handleUserInfoChange;
-	// 		userPasswordBtn.onclick = handleUserPasswordChange;
-	// 	});
-	// }
+	componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): boolean {
+		return !isEqual(oldProps, newProps);
+	}
 
 	render() {
+		this.initChildren();
 		return this.compile(profileTmpl, {
 			...this.props,
 			profileSvgClass: 'profile-svg',

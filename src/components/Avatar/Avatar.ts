@@ -8,6 +8,9 @@ import isEqual from '../../utils/isEqualProps';
 type TProps = {
 	link?: string;
 	imgPath: string;
+	events?: {
+		click?: (arg: any) => any;
+	};
 };
 
 interface IAvatar {
