@@ -36,5 +36,5 @@ https://www.figma.com/file/aHBixUZNjTk1gddyYbZV4H/Practicum-chat?node-id=17%3A34
 - NodeJs.
 - TypeScript
 
-### Sprint 2 - PR
-https://github.com/FeelGood1337/middle.messenger.praktikum.yandex/pull/2
+### Sprint 3 - PR
+https://github.com/FeelGood1337/middle.messenger.praktikum.yandex/pull/3
