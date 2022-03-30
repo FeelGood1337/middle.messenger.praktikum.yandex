@@ -1,9 +1,4 @@
-const { JSDOM } = require('jsdom');
-
+require('regenerator-runtime');
 const register = require('@babel/register').default;
 
-register({ extensions: ['.ts', '.js'] });
-
-const dom = new JSDOM('<div id="Chat-app"><div>', { url: 'http://localhost' });
-global.window = dom.window;
-global.document = dom.window.document;
+register({ extensions: ['.ts', '.tsx', '.js', '.jsx'] });
