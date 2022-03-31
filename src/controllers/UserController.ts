@@ -43,14 +43,7 @@ class UserController {
 			.then((user: IUser): void => {
 				store.set('user', user);
 			})
-			.then(() => router.go('/settings'))
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 500) {
-					router.go('/error');
-				}
-			});
+			.then(() => router.go('/settings'));
 	}
 
 	async searchUser(body: Record<string, string>): Promise<any> {

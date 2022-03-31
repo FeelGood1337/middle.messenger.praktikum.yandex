@@ -9,33 +9,17 @@ class AuthController {
 	}
 
 	async signIn(data: Record<string, string>): Promise<void> {
-		await this.authApi
-			.signin(data)
-			.then(() => userController.getUser())
-			.then(() => chatController.getChat())
-			.then(() => router.go('/messenger'))
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 500) {
-					router.go('/error');
-				}
-			});
+		await this.authApi.signin(data);
+		await userController.getUser();
+		await chatController.getChat();
+		await router.go('/messenger');
 	}
 
 	async signUp(data: Record<string, string>): Promise<void> {
-		await this.authApi
-			.signup(data)
-			.then(() => userController.getUser())
-			.then(() => chatController.getChat())
-			.then(() => router.go('/messenger'))
-			.catch((err) => {
-				const { status } = err;
-
-				if (status === 500) {
-					router.go('/error');
-				}
-			});
+		await this.authApi.signup(data);
+		await userController.getUser();
+		await chatController.getChat();
+		await router.go('/messenger');
 	}
 
 	async logout(): Promise<void> {

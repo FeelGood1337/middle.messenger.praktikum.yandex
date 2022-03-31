@@ -22,6 +22,7 @@ import {
 } from '../../../../components';
 
 import { IUser } from '../../../../utils/Store/Store';
+import avaIcon from '../../../../../static/images/Avatar.svg';
 import router from '../../../../router';
 import { userController } from '../../../../controllers';
 
@@ -35,6 +36,8 @@ class ChangeUserPassword extends Block {
 		const { state }: Record<string, IUser> = this.props;
 		const { avatar } = state;
 
+		const avaImg = avatar ? `${AVATAR_URL}${avatar}` : avaIcon;
+
 		this.children = {
 			title: new Title({
 				tag: 'h2',
@@ -42,7 +45,7 @@ class ChangeUserPassword extends Block {
 				text: 'Изменить пароль',
 			}),
 			avatar: new Avatar({
-				imgPath: `${AVATAR_URL}${avatar}`,
+				imgPath: avaImg,
 			}),
 			form: new MainForm({
 				button: new Button({
@@ -122,9 +125,23 @@ class ChangeUserPassword extends Block {
 
 	private async handleClick(event: Event): Promise<void> {
 		event.preventDefault();
-		await userController.changePassword(this.inputsValue).finally(() => {
-			this.inputsValue = {};
-		});
+		try {
+			await userController.changePassword(this.inputsValue);
+		} catch (error: any) {
+			if (error.status > 200 && error.status !== 500) {
+				this.inputsValue = {};
+				const { inputs } = (this.children.form as Block).getChild() as {
+					inputs: Block[];
+				};
+				inputs.forEach((el) => {
+					(el.getChild().input as Block).setProps({
+						value: '',
+					});
+				});
+			} else if (error.status === 500) {
+				router.go('/error');
+			}
+		}
 	}
 
 	private goToSettings(event: Event): void {

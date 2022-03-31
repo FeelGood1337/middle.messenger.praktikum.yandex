@@ -7,6 +7,7 @@ import { inputsProps } from './inputProps';
 import { IUser } from '../../../../utils/Store/Store';
 import { userController } from '../../../../controllers';
 import { AVATAR_URL } from '../../../../constants';
+import avaIcon from '../../../../../static/images/Avatar.svg';
 import { Form, IForm } from '../../../../utils/form';
 import {
 	InputValidate,
@@ -36,6 +37,8 @@ class ChangeUserInfo extends Block {
 		const { state }: Record<string, IUser> = this.props;
 		const { avatar } = state;
 
+		const avaImg = avatar ? `${AVATAR_URL}${avatar}` : avaIcon;
+
 		this.children = {
 			title: new Title({
 				tag: 'h2',
@@ -43,7 +46,7 @@ class ChangeUserInfo extends Block {
 				text: 'Изменить данные',
 			}),
 			avatar: new Avatar({
-				imgPath: `${AVATAR_URL}${avatar}`,
+				imgPath: avaImg,
 			}),
 			form: new MainForm({
 				button: new Button({
@@ -123,7 +126,23 @@ class ChangeUserInfo extends Block {
 
 	private async handleClick(event: Event): Promise<void> {
 		event?.preventDefault();
-		await userController.updateProfile(this.inputsValue);
+		try {
+			await userController.updateProfile(this.inputsValue);
+		} catch (error: any) {
+			if (error.status > 200 && error.status !== 500) {
+				this.inputsValue = {};
+				const { inputs } = (this.children.form as Block).getChild() as {
+					inputs: Block[];
+				};
+				inputs.forEach((el) => {
+					(el.getChild().input as Block).setProps({
+						value: '',
+					});
+				});
+			} else if (error.status === 500) {
+				router.go('/error');
+			}
+		}
 	}
 
 	private goToSettings(event: Event): void {
@@ -137,33 +156,6 @@ class ChangeUserInfo extends Block {
 			(this.children.form as any).children.button,
 		);
 	}
-
-	// componentDidMount(): void {
-	// 	this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-	// 		const { element, validate, getInputsValue, handleClick, goToSettings } = this;
-
-	// 		const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
-	// 		const formButton: HTMLButtonElement = element.querySelector('.signup__btn')!;
-	// 		const inputs: NodeListOf<HTMLInputElement> =
-	// 			element.querySelectorAll('.input');
-
-	// 		const linkBtn: HTMLButtonElement = element.querySelector(
-	// 			'.profile-section-link',
-	// 		) as HTMLButtonElement;
-
-	// 		this.form = new Form(formContainer, formButton);
-
-	// 		inputs.forEach((input, index) => {
-	// 			(input as HTMLInputElement).onfocus = validate[index].handleFocus;
-	// 			(input as HTMLInputElement).onblur = validate[index].handleBlur;
-	// 		});
-
-	// 		formContainer.onchange = getInputsValue.bind(this);
-	// 		formContainer.oninput = this.form.formIsValid;
-	// 		formButton.onclick = handleClick.bind(this);
-	// 		linkBtn.onclick = goToSettings;
-	// 	});
-	// }
 
 	render() {
 		return this.compile(userInfoTmpl, {

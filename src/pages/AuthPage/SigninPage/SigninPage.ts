@@ -122,9 +122,23 @@ class SigninPage extends Block {
 
 	private async handleClick(event: Event): Promise<void> {
 		event.preventDefault();
-		await authController.signIn(this.inputsValue).finally(() => {
-			this.inputsValue = {};
-		});
+		try {
+			await authController.signIn(this.inputsValue);
+		} catch (error: any) {
+			if (error.status > 200 && error.status !== 500) {
+				this.inputsValue = {};
+				const { inputs } = (this.children.form as Block).getChild() as {
+					inputs: Block[];
+				};
+				inputs.forEach((el) => {
+					(el.getChild().input as Block).setProps({
+						value: '',
+					});
+				});
+			} else if (error.status === 500) {
+				router.go('/error');
+			}
+		}
 	}
 
 	private goToSignup(event: Event): void {

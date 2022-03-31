@@ -159,6 +159,10 @@ abstract class Block {
 		return document.createElement(tagName);
 	}
 
+	getChild() {
+		return this.children;
+	}
+
 	compile(template: Templator, context: Record<string, any>): DocumentFragment {
 		const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
 
