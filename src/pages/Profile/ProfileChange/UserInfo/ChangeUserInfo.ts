@@ -63,7 +63,7 @@ class ChangeUserInfo extends Block {
 					href: ' ',
 					hasSvgIcon: false,
 				}),
-				inputs: this.getInputs(),
+				inputs: this.getInputs(state),
 				events: {
 					change: () => this.getInputsValue(),
 					input: () => this.form.formIsValid(),
@@ -78,8 +78,8 @@ class ChangeUserInfo extends Block {
 		};
 	}
 
-	private getInputs() {
-		this.inputsValue = this.inputsValue || {};
+	private getInputs(state: IUser) {
+		this.inputsValue = this.inputsValue || { ...state };
 		this.validate = this.validate || [];
 
 		return inputsProps.map(
@@ -96,7 +96,7 @@ class ChangeUserInfo extends Block {
 				index: number,
 			) => {
 				const value = this.inputsValue[name]
-					? `value="${this.inputsValue[name]}"`
+					? `value=${this.inputsValue[name]}`
 					: ' ';
 				this.validate.push(new InputValidate(handleBlur));
 				const vlArr = [...this.validate];

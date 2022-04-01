@@ -79,13 +79,13 @@ class ChatsList extends Block {
 								click: async (e: Event) => {
 									e.preventDefault();
 									await this.handleGetToken(id);
-									const { user }: Record<string, IUser> =
-										store.getState();
-									messageController.connect({
-										userId: user.id,
-										chatId: id,
-										token: user.token!,
-									});
+									// const { user }: Record<string, IUser> =
+									// 	store.getState();
+									// messageController.connect({
+									// 	userId: user.id,
+									// 	chatId: id,
+									// 	token: user.token!,
+									// });
 									router.go(`/messenger/${id}`);
 									// messageController.leave();
 								},

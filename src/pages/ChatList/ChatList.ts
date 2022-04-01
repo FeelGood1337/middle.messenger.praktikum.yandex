@@ -30,6 +30,7 @@ class ChatList extends Block {
 
 	protected initChildren(): void {
 		const isChatSelected = Object.keys(router.getParams()).length !== 0;
+		const { messages } = this.props.state;
 
 		this.children = {
 			btnAddChat: new Button({
@@ -99,7 +100,7 @@ class ChatList extends Block {
 				? new Message({ chats: this.props.chats, msgDisplay: 'none' })
 				: new Message({ chats: this.props.chats, msgDisplay: 'flex' }),
 			currentChat: isChatSelected
-				? new Chat({ chat: this.props.chat, mainDisplay: 'flex' })
+				? new Chat({ chat: this.props.chat, messages, mainDisplay: 'flex' })
 				: new Element({
 						tag: 'div',
 						className: 'hide',

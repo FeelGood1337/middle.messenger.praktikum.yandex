@@ -49,6 +49,7 @@ class ChatController {
 			.getToken(id)
 			.then(({ token }: Record<string, string>) => {
 				store.set('user.token', token);
+				localStorage.setItem('token', token);
 			})
 			.catch((err) => {
 				const { status } = err;

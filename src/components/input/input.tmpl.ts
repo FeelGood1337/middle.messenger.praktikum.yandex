@@ -3,6 +3,6 @@ export const template = `
 		class="input {% className %}"
 		{% attributes %}
       	name="{% name %}"
-      	"{% value %}"
+      	{% value %}
 	/>
 `;

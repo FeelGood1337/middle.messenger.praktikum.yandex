@@ -24,6 +24,7 @@ import router from '../../router';
 type TProps = {
 	chat: IChats;
 	mainDisplay: string;
+	messages: any[];
 };
 
 const chatTmpl = new Templator(template);
@@ -38,9 +39,8 @@ class Chat extends Block {
 	}
 
 	protected initChildren(): void {
-		const { chat } = this.props;
+		const { chat, messages } = this.props;
 		const { user } = store.getState() as { user: IUser };
-		const { messages } = user;
 
 		this.children = {
 			avatarMini: new AvatarMini({
@@ -278,13 +278,17 @@ class Chat extends Block {
 		};
 	}
 
-	private async handleGetToken(id: number): Promise<void> {
-		await chatController.getToken(id);
-	}
-
 	componentDidMount(): void {
 		const { chatId } = router.getParams();
-		this.handleGetToken(parseInt(chatId));
+		const { user } = store.getState() as { user: IUser };
+		const token = localStorage.getItem('token') as string;
+		if (token !== undefined) {
+			messageController.connect({
+				userId: user.id,
+				chatId: parseInt(chatId),
+				token,
+			});
+		}
 	}
 
 	componentDidUpdate(
@@ -295,16 +299,6 @@ class Chat extends Block {
 	}
 
 	render() {
-		const { chatId } = router.getParams();
-		const { user } = store.getState() as { user: IUser };
-		const { token } = user;
-		if (token !== undefined) {
-			messageController.connect({
-				userId: user.id,
-				chatId: parseInt(chatId),
-				token,
-			});
-		}
 		return this.compile(chatTmpl, { ...this.props });
 	}
 }

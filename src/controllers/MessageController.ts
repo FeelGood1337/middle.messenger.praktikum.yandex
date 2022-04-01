@@ -140,6 +140,7 @@ class MessageController {
 				type: 'message',
 			}),
 		);
+		this.getMessages({ offset: 0 });
 	}
 }
 
