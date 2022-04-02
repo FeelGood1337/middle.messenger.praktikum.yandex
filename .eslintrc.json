@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 {
     "root": true,
     "env": {
@@ -8,6 +9,7 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -16,13 +18,15 @@
         "project": ["./tsconfig.json"]
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "prettier"
     ],
     "rules": {
-        "indent": ["error", 4],
+        "indent": ["error", "tab"],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
+        "no-var": "error",
         "@typescript-eslint/strict-boolean-expressions": [
             2,
             {
@@ -30,6 +34,8 @@
                 "allowNumber": false
             }
         ],
-        "for-direction": "off"
+        "@typescript-eslint/no-explicit-any": ["off"],
+        "for-direction": "off",
+        "prettier/prettier": "error"
     }
 }

@@ -1,14 +1,12 @@
-export const template: string = `
+export const template = `
 	<div class="avatar">
-		<a class="avatar__link" href="{% link %}">
-			<img 
-				class="avatar__img" 
-				src="{% imgPath %}"
-				alt="Avatar" 
-				width="130"
-				height="130"
-			/>
-		</a>
+		<img 
+			class="avatar__img" 
+			src="{% imgPath %}"
+			alt="Avatar" 
+			width="130"
+			height="130"
+		/>
 		<div class="avatar-edit">
 			<div class="avatar-icon">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

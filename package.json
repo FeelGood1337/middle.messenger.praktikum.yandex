@@ -6,7 +6,10 @@
     "start": "npm run build && node server.js",
     "dev": "parcel static/*.html -p 3000 --no-cache",
     "build": "parcel build static/*.html",
-    "check": "tsc --noEmit"
+    "check": "tsc --noEmit",
+    "test": "./node_modules/.bin/mocha",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
   },
   "repository": {
     "type": "git",
@@ -19,17 +22,29 @@
   },
   "homepage": "https://github.com/FeelGood1337/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
+    "@babel/register": "^7.17.0",
+    "@parcel/babel-preset-env": "^2.3.2",
     "@parcel/config-default": "^2.2.1",
     "@parcel/resolver-default": "^2.2.1",
     "@parcel/resolver-glob": "^2.2.1",
     "@parcel/transformer-postcss": "^2.2.1",
     "@parcel/transformer-typescript-tsc": "^2.3.1",
     "@parcel/validator-typescript": "^2.3.1",
+    "@types/chai": "^4.3.0",
+    "@types/mocha": "^9.1.0",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "autoprefixer": "^10.4.2",
+    "chai": "^4.3.6",
     "cssnano": "^5.0.17",
     "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "mocha": "^9.2.1",
     "parcel": "^2.2.1",
     "postcss": "^8.4.6",
     "postcss-calc": "^8.2.4",
@@ -42,6 +57,7 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "express": "^4.17.2",
     "uuid": "^8.3.2"
   }

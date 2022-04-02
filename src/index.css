@@ -5,7 +5,7 @@
 @import './pages/AuthPage/SigninPage/signin.css';
 @import './pages/AuthPage/SignupPage/signup.css';
 @import './pages/Profile/profile.css';
-@import './pages/Chat/chat.css';
+@import './pages/ChatList/chat.css';
 
 /* HTTP Errors */
 @import './pages/HTTPErrorsPages/style.css';
@@ -20,6 +20,7 @@
 @import '../src/components/Title/title.css';
 @import '../src/components/Avatar/avatar.css';
 @import '../src/components/AvatarMini/avatarMini.css';
+@import '../src/components/Spinner/spinner.css';
 
 body {
 	margin: 0;
@@ -58,4 +59,46 @@ body {
 .input-error {
 	border: 1px solid #E57373;
 	border-radius: 4px;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #fff;
+	border-radius: 16px;
+	max-width: 384px;
+	width: 384px;
+	padding: 56px 0 72px;
+	box-shadow: 0px 4px 30px rgba(108, 72, 0, 0.2);
+}
+
+.modal-title {
+	font-style: normal;
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 28px;
+}
+
+.modal-chat-input {
+	margin-bottom: 16px;
+}
+
+.hiden {
+	display: none;
 }

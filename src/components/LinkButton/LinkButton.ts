@@ -3,16 +3,22 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './linkButton.tmpl';
 
 import './linkButton.css';
+import isEqual from '../../utils/isEqualProps';
 
 type TProps = {
 	text: string;
 	className: string;
-	link: string;
-}
+	href: string;
+	svgIcon?: string;
+	hasSvgIcon: boolean;
+	events?: {
+		click?: (arg?: any) => any;
+	};
+};
 
 interface ILinkButton {
 	props: TProps;
-	render(): ChildNode | HTMLElement;
+	render(): DocumentFragment;
 }
 
 const linkBtnTmpl = new Templator(template);
@@ -21,15 +27,26 @@ class LinkButton extends Block implements ILinkButton {
 	props: TProps;
 	constructor(props: TProps) {
 		super(props);
-		this.props = props;
+	}
+
+	componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): boolean {
+		return !isEqual(oldProps, newProps);
 	}
 
 	render() {
-		// return this.compile(template, { ...this.props });
-		return linkBtnTmpl.compile({ ...this.props }).getNode();
+		const { text, className, href, svgIcon, hasSvgIcon } = this.props;
+		return this.compile(linkBtnTmpl, {
+			text,
+			className,
+			href,
+			svgIcon: hasSvgIcon
+				? `<img class="link-btn__svg" src="${svgIcon}" alt="go to settings" />`
+				: '<div class="hiden"></div>',
+		});
 	}
 }
 
-export {
-	LinkButton
-};
+export { LinkButton };

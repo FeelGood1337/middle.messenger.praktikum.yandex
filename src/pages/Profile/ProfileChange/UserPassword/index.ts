@@ -1,5 +1,4 @@
-import { ChangeUserPassword } from "./ChangeUserPassword";
-import { render } from "../../../../utils/renderDOM";
+import { withUser } from '../../../../HOC/withUser';
+import { ChangeUserPassword } from './ChangeUserPassword';
 
-const changeUserPassword = new ChangeUserPassword();
-render("#Chat-app", changeUserPassword);
+export default withUser(ChangeUserPassword);

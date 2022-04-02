@@ -3,21 +3,18 @@ import { Templator } from '../../utils/Template-engine/templater';
 import { template } from './inputWithLabel.tmpl';
 
 import './inputWithLabel.css';
-
+import isEqual from '../../utils/isEqualProps';
 
 type TProps = {
-	className: string;
 	labelClassName: string;
 	labelText: string;
 	labelId: string;
-	attributes: string;
-	name: string;
-	value: string;
-}
+	input: Block;
+};
 
 interface IInputWithLabel {
 	props: TProps;
-	render(): ChildNode | HTMLElement;
+	render(): DocumentFragment;
 }
 
 const inputTmplt = new Templator(template);
@@ -26,15 +23,18 @@ class InputWithLabel extends Block implements IInputWithLabel {
 
 	constructor(props: TProps) {
 		super(props);
-		this.props = props;
+	}
+
+	componentDidUpdate(
+		oldProps: Record<string, any>,
+		newProps: Record<string, any>,
+	): boolean {
+		return !isEqual(oldProps, newProps);
 	}
 
 	render() {
-		// return this.compile(template, { ...this.props });
-		return inputTmplt.compile({ ...this.props }).getNode();
+		return this.compile(inputTmplt, { ...this.props });
 	}
 }
 
-export {
-	InputWithLabel
-};
+export { InputWithLabel };

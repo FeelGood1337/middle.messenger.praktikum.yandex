@@ -20,6 +20,10 @@
 	justify-content: center;
 }
 
+.profile-section-link {
+	height: 32px;
+}
+
 .profile-paper {
 	width: 100%;
 	border-radius: 24px 0px 0px 24px;
@@ -100,4 +104,27 @@
 
 .link-btn.btn-item_red {
 	color: #E57373;
+}
+
+.auth__form_avatar {
+	justify-content: center;
+	align-items: center;
+}
+
+.auth__input_avatar {
+	opacity: 0;
+	width: 0.1px;
+	height: 0.1px;
+	position: absolute;
+}
+
+.input-avatar__label {
+	color: #26A69A;
+	cursor: pointer;
+	padding-bottom: 24px;
+	display: inline-block;
+}
+
+.file-name {
+	color: #A0A0A0;
 }

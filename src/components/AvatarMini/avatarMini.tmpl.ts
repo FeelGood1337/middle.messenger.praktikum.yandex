@@ -1,4 +1,4 @@
-export const template: string = `
+export const template = `
 	<div class="avatar-mini">
 		<img 
 			class="avatar__img" 

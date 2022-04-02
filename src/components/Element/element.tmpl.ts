@@ -1,3 +1,3 @@
-export const template: string = `
+export const template = `
 	<{% tag %} class="{% className %}">{% content %}</{% tag %}>
 `;

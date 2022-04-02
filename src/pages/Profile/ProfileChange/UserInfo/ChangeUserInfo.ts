@@ -1,115 +1,167 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Block } from '../../../../utils/Block/Block';
 import { Templator } from '../../../../utils/Template-engine/templater';
 import { template } from './userInfo.tmpl';
 import { inputsProps } from './inputProps';
 
+import { IUser } from '../../../../utils/Store/Store';
+import { userController } from '../../../../controllers';
+import { AVATAR_URL } from '../../../../constants';
+import avaIcon from '../../../../../static/images/Avatar.svg';
 import { Form, IForm } from '../../../../utils/form';
-import { InputValidate, IInputValidate } from '../../../../components/InputWithLabel/InputValidate';
-import { Avatar } from '../../../../components/Avatar/Avatar';
-import { Title } from '../../../../components/Title/Title';
-import { InputWithLabel } from '../../../../components/InputWithLabel/InputWithLabel';
-import { Button } from '../../../../components/Button/Button';
+import {
+	InputValidate,
+	IInputValidate,
+} from '../../../../components/InputWithLabel/InputValidate';
+import {
+	Input,
+	LinkButton,
+	Form as MainForm,
+	BackBtn,
+	Avatar,
+	Title,
+	InputWithLabel,
+	Button,
+} from '../../../../components';
 
-import avatar from '../../../../../static/images/Avatar.svg';
+import router from '../../../../router';
 
 const userInfoTmpl = new Templator(template);
-class ChangeUserInfo extends Block {
-	inputsValue: { [key: string]: string };
-	validate: IInputValidate[];
-	form: IForm;
 
-	constructor() {
-		super({
-			profileSvgClass: 'profile-svg',
+class ChangeUserInfo extends Block {
+	private inputsValue: Record<string, string>;
+	private validate: IInputValidate[] = [];
+	private form: IForm;
+
+	protected initChildren(): void {
+		const { state }: Record<string, IUser> = this.props;
+		const { avatar } = state;
+
+		const avaImg = avatar ? `${AVATAR_URL}${avatar}` : avaIcon;
+
+		this.children = {
 			title: new Title({
 				tag: 'h2',
 				className: 'auth__title signup__title',
 				text: 'Изменить данные',
-			}).render(),
+			}),
 			avatar: new Avatar({
-				link: 'profile.html',
-				imgPath: avatar,
-			}).render(),
-			button: new Button({
-				text: 'Сохранить',
-				className: 'signup__btn',
-				isDisabled: true,
-			}).render(),
-		});
-
-		this.inputsValue;
-		this.form;
-		this.validate = [];
+				imgPath: avaImg,
+			}),
+			form: new MainForm({
+				button: new Button({
+					text: 'Сохранить',
+					className: 'btn signup__btn',
+					isDisabled: true,
+					events: {
+						click: (e: Event) => this.handleClick(e),
+					},
+				}),
+				linkButton: new LinkButton({
+					text: ' ',
+					className: 'hiden',
+					href: ' ',
+					hasSvgIcon: false,
+				}),
+				inputs: this.getInputs(state),
+				events: {
+					change: () => this.getInputsValue(),
+					input: () => this.form.formIsValid(),
+				},
+			}),
+			backBtn: new BackBtn({
+				href: '/settings',
+				events: {
+					click: (e: Event) => this.goToSettings(e),
+				},
+			}),
+		};
 	}
 
-	private getInputs() {
-		this.inputsValue = this.inputsValue || {};
+	private getInputs(state: IUser) {
+		this.inputsValue = this.inputsValue || { ...state };
 		this.validate = this.validate || [];
 
-		return inputsProps.map(({
-			className,
-			labelClassName,
-			labelText,
-			labelId,
-			attributes,
-			name,
-			handleBlur
-		}) => {
-			const value = this.inputsValue[name] ? `value="${this.inputsValue[name]}"` : ' ';
-			this.validate.push(new InputValidate(handleBlur));
+		return inputsProps.map(
+			(
+				{
+					className,
+					labelText,
+					labelClassName,
+					labelId,
+					attributes,
+					name,
+					handleBlur,
+				},
+				index: number,
+			) => {
+				const value = this.inputsValue[name]
+					? `value=${this.inputsValue[name]}`
+					: ' ';
+				this.validate.push(new InputValidate(handleBlur));
+				const vlArr = [...this.validate];
 
-			return new InputWithLabel({
-				className,
-				labelClassName,
-				labelText,
-				labelId,
-				attributes,
-				name,
-				value,
-			}).render().outerHTML;
-		}).join('');
+				return new InputWithLabel({
+					labelClassName,
+					labelText,
+					labelId,
+					input: new Input({
+						className,
+						attributes,
+						name,
+						value,
+						events: {
+							blur: (e: Event) => vlArr[index].handleBlur(e),
+							focus: () => vlArr[index].handleFocus(),
+						},
+					}),
+				});
+			},
+		);
 	}
 
 	private getInputsValue(): void {
 		this.form.saveValue(<HTMLInputElement>event?.target, this.inputsValue);
 	}
 
-	private handleClick(event: Event): void {
-		event.preventDefault();
-		console.log(this.inputsValue);
+	private async handleClick(event: Event): Promise<void> {
+		event?.preventDefault();
+		try {
+			await userController.updateProfile(this.inputsValue);
+		} catch (error: any) {
+			if (error.status > 200 && error.status !== 500) {
+				this.inputsValue = {};
+				const { inputs } = (this.children.form as Block).getChild() as {
+					inputs: Block[];
+				};
+				inputs.forEach((el) => {
+					(el.getChild().input as Block).setProps({
+						value: '',
+					});
+				});
+			} else if (error.status === 500) {
+				router.go('/error');
+			}
+		}
+	}
+
+	private goToSettings(event: Event): void {
+		event?.preventDefault();
+		router.go('/settings');
 	}
 
 	componentDidMount(): void {
-		this.eventBus().on(Block.EVENTS.FLOW_RENDER, () => {
-			const { element, validate, getInputsValue, handleClick } = this;
-
-			const formContainer: HTMLFormElement = element.querySelector('.auth__form')!;
-			const formButton: HTMLButtonElement = element.querySelector('.signup__btn')!;
-			const inputs: NodeListOf<HTMLInputElement> = element.querySelectorAll('.input');
-
-			this.form = new Form(formContainer, formButton);
-
-			inputs.forEach((input, index) => {
-				(input as HTMLInputElement).onfocus = validate[index].handleFocus;
-				(input as HTMLInputElement).onblur = validate[index].handleBlur;
-			});
-
-			formContainer.onchange = getInputsValue.bind(this);
-			formContainer.oninput = this.form.formIsValid;
-			formButton.onclick = handleClick.bind(this);
-		});
+		this.form = new Form(
+			this.children.form as Block,
+			(this.children.form as any).children.button,
+		);
 	}
 
 	render() {
-		const { profileSvgClass, title, avatar, button } = this.props;
-		return userInfoTmpl.compile({
-			profileSvgClass,
-			title,
-			avatar,
-			button,
-			inputs: this.getInputs(),
-		}).getNode();
+		return this.compile(userInfoTmpl, {
+			profileSvgClass: 'profile-svg',
+		});
 	}
 }
 
-export { ChangeUserInfo }
+export { ChangeUserInfo };

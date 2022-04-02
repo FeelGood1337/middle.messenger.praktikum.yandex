@@ -13,6 +13,9 @@
 
 .link-btn__text {
 	font-family: "Helvetica", Arial, sans-serif;
-	margin-right: var(--link-btn-text-margin-right);
 	font-size: var(--link-btn-text-font-size);
+}
+
+.link-btn__svg {
+	margin-left: var(--link-btn-text-margin-right);
 }

@@ -8,6 +8,7 @@
 
 .avatar__img {
 	clip-path: circle();
+	object-fit: cover;
 }
 
 .avatar {
@@ -19,6 +20,7 @@
 	overflow: hidden;
 	position: relative;
 	user-select: none;
+	cursor: pointer;
 }
 
 .avatar-edit {

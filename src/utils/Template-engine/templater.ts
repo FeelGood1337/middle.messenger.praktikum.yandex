@@ -1,6 +1,6 @@
 type TObjectKeys = {
 	[key: string]: any;
-}
+};
 
 interface ITemplator {
 	_TEMPLATE_REGEXP: RegExp;
@@ -10,13 +10,12 @@ interface ITemplator {
 	compile(ctx: TObjectKeys): any;
 	_compileTemplate(ctx: TObjectKeys): string;
 	get(
-		obj: TObjectKeys, 
-		path: string, 
-		defaultValue?: string | boolean | Function | undefined
-	): string | boolean | Function | undefined | TObjectKeys;
+		obj: TObjectKeys,
+		path: string,
+		defaultValue?: string | boolean | (() => any) | undefined,
+	): string | boolean | (() => any) | undefined | TObjectKeys;
 	getNode(): ChildNode | HTMLElement;
 }
-
 
 class Templator implements ITemplator {
 	_TEMPLATE_REGEXP = /\{\%(.*?)\%\}/gi;
@@ -24,14 +23,15 @@ class Templator implements ITemplator {
 	_template: string;
 	_html: string;
 
-	constructor(template:string) {
+	constructor(template: string) {
 		this._template = template;
 		this._html = '';
 	}
 
-	compile(ctx: TObjectKeys) {
-		this._html = this._compileTemplate(ctx)
-		return this;
+	compile(ctx: TObjectKeys): string {
+		this._html = this._compileTemplate(ctx);
+		// return this;
+		return this._html;
 	}
 
 	_compileTemplate(ctx: TObjectKeys) {
@@ -47,22 +47,22 @@ class Templator implements ITemplator {
 				const tmplValue: any = key[1].trim();
 				const data: any = this.get(ctx, tmplValue);
 
-				if (typeof data === "object") {
+				if (typeof data === 'object') {
 					const element = document.createElement('div');
 					if (Array.isArray(data)) {
-						data.map(el => {
+						data.map((el) => {
 							element.insertAdjacentHTML('beforeend', el.outerHTML);
 						});
-						tmpl = tmpl.replace(new RegExp(key[0], "gi"), element.outerHTML);
+						tmpl = tmpl.replace(new RegExp(key[0], 'gi'), element.outerHTML);
 					}
-					tmpl = tmpl.replace(new RegExp(key[0], "gi"), data.outerHTML);
+					tmpl = tmpl.replace(new RegExp(key[0], 'gi'), data.outerHTML);
 				}
 
-				if (typeof data === "function") {
+				if (typeof data === 'function') {
 					window[tmplValue] = data;
 					tmpl = tmpl.replace(
-						new RegExp(key[0], "gi"),
-						`window.${tmplValue}()`
+						new RegExp(key[0], 'gi'),
+						`window.${tmplValue}()`,
 					);
 
 					const keyCtx = this._REGEXP_CTX.exec(tmpl);
@@ -77,12 +77,16 @@ class Templator implements ITemplator {
 			continue;
 		}
 
-		arrData.map((el, i) => tmpl = tmpl.replace(new RegExp(arrRegKey[i], "gi"), el));
+		arrData.map((el, i) => (tmpl = tmpl.replace(new RegExp(arrRegKey[i], 'gi'), el)));
 
 		return tmpl;
 	}
-	
-	get(obj: TObjectKeys, path: string, defaultValue?: string | boolean | Function | undefined) {
+
+	get(
+		obj: TObjectKeys,
+		path: string,
+		defaultValue?: string | boolean | Function | undefined,
+	) {
 		const keys = path.split('.');
 		let result = obj;
 		for (const key of keys) {
@@ -104,6 +108,4 @@ class Templator implements ITemplator {
 	}
 }
 
-export {
-	Templator
-};
+export { Templator };
