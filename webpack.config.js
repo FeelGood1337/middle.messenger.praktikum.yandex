@@ -6,14 +6,16 @@ const {
 } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDevelopment = process.env.NODE_ENV === 'development';
+const ASSET_PATH = process.env.ASSET_PATH ? process.env.ASSET_PATH + '/' : '/';
 
 module.exports = {
 	mode: 'development',
 	entry: path.resolve(__dirname, 'src/index.ts'),
 	output: {
+		filename: '[hash].bundle.js',
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'main.[chunkhash].js',
+		publicPath: ASSET_PATH,
 	},
 	devtool: "inline-source-map",
 	resolve: {
@@ -62,15 +64,29 @@ module.exports = {
 		new CleanWebpackPlugin({
 			cleanStaleWebpackAssets: false
 		}),
-		new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'static/index.html') }),
-		new webpack.DefinePlugin({
-			NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+		new HtmlWebpackPlugin({
+			template: path.resolve(__dirname, 'static/index.html'),
+			scriptLoading: 'defer',
+			meta: {
+				mobile: true,
+				'X-UA-Compatible': 'edge',
+				robots: 'noindex',
+				charset: 'utf-8',
+			},
 		}),
-	],
+		isDevelopment && new webpack.HotModuleReplacementPlugin(),
+		new webpack.DefinePlugin({
+			'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
+			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+		}),
+	].filter(Boolean),
 	devServer: {
 		port: 3000,
 		open: false,
 		historyApiFallback: true,
-		hot: isDev,
+		hot: isDevelopment,
+		static: {
+			directory: path.join(__dirname, 'static'),
+		},
 	},
 };
