@@ -57,6 +57,10 @@ module.exports = {
 			},
 		]
 	},
+	stats: {
+		children: true,
+		errorDetails: true,
+	},
 	plugins: [
 		new MiniCssExtractPlugin({
 			filename: "style.[contenthash].css"
