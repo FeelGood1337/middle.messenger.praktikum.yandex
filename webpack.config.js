@@ -80,8 +80,8 @@ module.exports = {
 		}),
 		isDevelopment && new webpack.HotModuleReplacementPlugin(),
 		new webpack.DefinePlugin({
-			'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
-			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+			ASSET_PATH: JSON.stringify(ASSET_PATH),
+			NODE_ENV: JSON.stringify(process.env.NODE_ENV),
 		}),
 	].filter(Boolean),
 	devServer: {
@@ -92,5 +92,9 @@ module.exports = {
 		static: {
 			directory: path.join(__dirname, 'static'),
 		},
+		client: {
+			webSocketTransport: 'ws',
+		},
+		webSocketServer: 'ws',
 	},
 };
