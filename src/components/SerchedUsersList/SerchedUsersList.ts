@@ -4,6 +4,7 @@ import isEqual from '../../utils/isEqualProps';
 import { IUser } from '../../utils/Store/Store';
 import { Templator } from '../../utils/Template-engine/templater';
 import { UsersList, AvatarMini, Element } from '..';
+import { TUsersList } from '../UsersList/UsersList';
 import avatarIcon from '../../../static/images/Avatar.svg';
 import { template } from './SerchedUsersList.tmpl';
 import { AVATAR_URL } from '../../constants';
@@ -36,7 +37,7 @@ class SerchedUsersList extends Block implements ISerchedUsersList {
 		const { users } = this.props;
 		if (users !== undefined) {
 			return users.map(
-				(user: IUser) =>
+				(user: IUser, i: number) =>
 					new UsersList({
 						avatar: new AvatarMini({
 							imgPath: user.avatar
@@ -49,6 +50,10 @@ class SerchedUsersList extends Block implements ISerchedUsersList {
 						events: {
 							click: (e: Event) => {
 								e.preventDefault();
+								const el = (this.children as any).children[i];
+								(el as Block).setProps<Pick<TUsersList, 'isActive'>>({
+									isActive: true,
+								});
 								this.usersArr.push(user.id);
 							},
 						},
