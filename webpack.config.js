@@ -37,23 +37,12 @@ module.exports = {
 				use: ["style-loader", "css-loader", "postcss-loader"],
 			},
 			{
-				test: /\.(woff|woff2|ttf|otf|eot)?$/i,
-				use: [{
-					loader: "file-loader",
-					options: {
-						name: "fonts/[name].[ext]",
-					},
-				}, ],
+				test: /\.(woff|woff2|eot|ttf|otf)$/i,
+				type: 'asset/resource',
 			},
 			{
-				test: /\.(jpe?g|png|gif|svg)$/,
-				use: [{
-					loader: "file-loader",
-					options: {
-						name: "images/[name].[ext]",
-						esModule: false,
-					},
-				}, ],
+				test: /\.(png|svg|jpg|jpeg|gif)$/i,
+				type: 'asset/resource',
 			},
 		]
 	},
