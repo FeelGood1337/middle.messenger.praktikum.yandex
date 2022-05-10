@@ -257,17 +257,15 @@
 .message-body {
 	padding: 0;
 	display: flex;
-	flex-direction: column;
+	flex-direction: column-reverse;
 	height: 100%;
+	max-height: calc(100% - 10px);
 	overflow-y: scroll;
 }
 
 .message-body div {
 	display: flex;
 	flex-direction: column;
-	height: 100%;
-	overflow-y: scroll;
-    max-height: calc(100% - 10px);
 }
 
 .message-body_msg {
@@ -277,7 +275,7 @@
 	margin-bottom: 8px;
 }
 
-.message-body_msg.right.itemб
+.message-body_msg.right.item,
 .message-body_msg.left.item {
 	border: none;
 }
@@ -288,6 +286,7 @@
 	align-self: flex-start;
 	background: #EAEAEA;
 	border-radius: 16px 16px 16px 0px;
+	width: max-content;
 }
 
 .message-body_msg.right {
@@ -296,6 +295,7 @@
 	background: rgba(86, 204, 242, .2);
 	align-self: flex-end;
 	border-radius: 16px 16px 0px 16px;
+	width: max-content;
 }
 
 .content {
