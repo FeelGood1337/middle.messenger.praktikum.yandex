@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM --platform=linux/amd64 node:12-alpine
 WORKDIR /app
 COPY ./server.js ./package*.json ./webpack.config.js ./tsconfig.json ./
 COPY ./src src
