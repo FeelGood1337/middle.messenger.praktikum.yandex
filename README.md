@@ -2,7 +2,8 @@
 ---
 
 ## **Ссылка на проект**
-https://awesome-visvesvaraya-a332fa.netlify.app
+Опубликованное в Netlify приложение: https://awesome-visvesvaraya-a332fa.netlify.app
+Опубликованное в Heroku (через контейнер docker) приложение: https://messenger-sv.herokuapp.com
 ## **Макет в Figma**
 https://www.figma.com/file/aHBixUZNjTk1gddyYbZV4H/Practicum-chat?node-id=17%3A346
 
@@ -36,6 +37,7 @@ https://www.figma.com/file/aHBixUZNjTk1gddyYbZV4H/Practicum-chat?node-id=17%3A34
 - JS,
 - NodeJs.
 - TypeScript
+- Docker
 
 ### Sprint 3 - PR
 https://github.com/FeelGood1337/middle.messenger.praktikum.yandex/pull/3
