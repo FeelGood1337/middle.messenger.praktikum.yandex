@@ -10,8 +10,7 @@ import isEqual from '../../utils/isEqualProps';
 import { Items } from '../Items/Items';
 import avatarIcon from '../../../static/images/Avatar.svg';
 import { Templator } from '../../utils/Template-engine/templater';
-import store, { IUser } from '../../utils/Store/Store';
-import { chatController, messageController } from '../../controllers';
+import { chatController } from '../../controllers';
 
 type TProps = {
 	chats: IChats[];

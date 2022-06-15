@@ -6,6 +6,7 @@ import { template } from './UsersList.tmpl';
 type TProps = {
 	avatar: Block;
 	login: string;
+	isActive?: boolean;
 	events?: {
 		click?: (arg: any) => any;
 	};
@@ -27,8 +28,12 @@ class UsersList extends Block {
 	}
 
 	render() {
-		return this.compile(usersListTmpl, { ...this.props });
+		const { isActive } = this.props as { isActive: boolean };
+		return this.compile(usersListTmpl, {
+			...this.props,
+			activeClass: isActive ? 'active-user' : ' ',
+		});
 	}
 }
 
-export default UsersList;
+export { UsersList as default, TProps as TUsersList };

@@ -102,3 +102,7 @@ body {
 .hiden {
 	display: none;
 }
+
+.active-user {
+	background-color: #6bc17a;
+}

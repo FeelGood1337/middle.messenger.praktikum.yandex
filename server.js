@@ -1,11 +1,40 @@
 const express = require('express');
 const path = require('path');
 
-const app = express();
-const PORT = 3000;
+const config = require('./webpack.config');
+const webpack = require('webpack');
+const historyApiFallback = require('connect-history-api-fallback');
 
-app.use(express.static(path.join(__dirname, '/dist')));
+const app = express();
+const compiler = webpack(config);
+
+const PORT = process.env.PORT || 3000;
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.use(
+	historyApiFallback({
+		verbose: false,
+	}),
+);
+
+app.use(
+	require('webpack-dev-middleware')(compiler, {
+		publicPath: config.output.publicPath,
+	}),
+);
+
+app.use(
+	require('webpack-hot-middleware')(compiler, {
+		path: `/__webpack_hmr`,
+		heartbeat: 3 * 1000,
+	}),
+);
+
+app.get('/', (_, res) =>
+	res.sendFile(__dirname + '/static/index.html'),
+);
 
 app.listen(PORT, () => {
-	console.log(`Example app listening on port ${PORT}!`);
+	console.log(`dev server started on port ${PORT}!`);
 });
